@@ -4,11 +4,9 @@
   <meta charset="UTF-8">
   <title>Top 5 Artist Poster Generator</title>
 
-  <!-- Fonts -->
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Playfair+Display:wght@700&display=swap">
 
-  <!-- Fuse.js -->
   <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.min.js"></script>
 
   <style>
@@ -24,21 +22,15 @@
     .container {
       width: 480px;
       max-width: 100%;
-      position: relative; /* enables absolutely positioned autocomplete */
-    }
-    h1 {
-      font-weight: 600;
-      font-size: 26px;
-      margin-bottom: 10px;
-      text-align: center;
+      position: relative;
     }
     input {
       width: 100%;
       padding: 10px;
       border-radius: 6px;
       border: 1px solid #444;
-      box-sizing: border-box;
       font-size: 15px;
+      box-sizing: border-box;
     }
     button {
       margin-top: 12px;
@@ -51,40 +43,43 @@
       font-weight: 600;
       font-size: 14px;
     }
+
+    #download_btn {
+      display: none;    /* hidden until poster generated */
+      margin-left: 10px;
+    }
+
     #status_msg {
-      font-size: 11px;
-      opacity: .8;
+      font-size: 12px;
+      opacity: .85;
       margin-top: 6px;
       min-height: 14px;
     }
+
     #top5_canvas {
+      display: none;   /* hidden until poster generation */
       width: 100%;
       max-width: 480px;
-      margin-top: 18px;
+      margin-top: 20px;
       border: 1px solid #333;
-      display: block;
       background: #000;
     }
 
-    /* === FIXED AUTOCOMPLETE DROPDOWN === */
+    /* Cargo-safe autocomplete overlay */
     .autocomplete-box {
-      position: absolute;
-      top: 48px;   /* sits directly under input */
-      left: 0;
-      width: 100%;
+      position: fixed;
       background: #222;
       border: 1px solid #444;
       border-radius: 4px;
       display: none;
       max-height: 200px;
       overflow-y: auto;
-      z-index: 9999; /* Always show above button */
+      z-index: 999999;
     }
     .autocomplete-item {
       padding: 10px;
       cursor: pointer;
       border-bottom: 1px solid #333;
-      font-size: 14px;
     }
     .autocomplete-item:hover {
       background: #444;
@@ -94,26 +89,28 @@
 
 <body>
   <div class="container">
-    <h1>Top 5 Artist – Poster Generator</h1>
+    <h1 style="text-align:center;margin-bottom:10px;">Top 5 Artist – Poster Generator</h1>
 
     <p style="font-size:13px;opacity:.8;margin-bottom:10px;">
-      Start typing an artist name — suggestions will appear automatically.
+      Start typing an artist name — suggestions will appear.
     </p>
 
     <input id="artist_name" placeholder="Enter artist name">
-    <div id="autocomplete" class="autocomplete-box"></div>
 
     <button id="generate_top5">Generate Poster</button>
+    <button id="download_btn">Download Poster</button>
 
     <p id="status_msg"></p>
 
     <canvas id="top5_canvas" width="1080" height="1920"></canvas>
   </div>
 
-  <script>
-    // ========= CONFIG =========
+  <!-- Autocomplete floating outside Cargo blocks -->
+  <div id="autocomplete" class="autocomplete-box"></div>
 
-    const TEMPLATE_URL = "https://freight.cargo.site/t/original/i/W2687942959401309016670551378695/template.png";
+  <script>
+    const TEMPLATE_URL =
+      "https://freight.cargo.site/t/original/i/W2687942959401309016670551378695/template.png";
 
     const SHEET_URL =
       "https://opensheet.vercel.app/1Vd0xHSleFDlgI0NsM7HkfYQxFQx-m0_eacpYXO7CeMQ/google_doc";
@@ -133,17 +130,16 @@
     let SHEET_DATA = null;
     let fuse = null;
 
-    // ========= MAIN =========
-
     document.addEventListener("DOMContentLoaded", async () => {
       const canvas = document.getElementById("top5_canvas");
       const ctx = canvas.getContext("2d");
-      const button = document.getElementById("generate_top5");
       const status = document.getElementById("status_msg");
       const input = document.getElementById("artist_name");
       const box = document.getElementById("autocomplete");
+      const generateBtn = document.getElementById("generate_top5");
+      const downloadBtn = document.getElementById("download_btn");
 
-      // Load sheet immediately so autocomplete works instantly
+      // Load Sheet for autocomplete + generator
       const res = await fetch(SHEET_URL);
       SHEET_DATA = await res.json();
 
@@ -152,22 +148,25 @@
         threshold: 0.3
       });
 
-      // ========== AUTOCOMPLETE LISTENER ==========
-
+      // ===== AUTOCOMPLETE (Cargo safe) =====
       input.addEventListener("input", () => {
-        const query = input.value.trim();
-        if (!query) {
+        const q = input.value.trim();
+        if (!q) {
           box.style.display = "none";
           return;
         }
 
-        const results = fuse.search(query).slice(0, 10);
+        const results = fuse.search(q).slice(0, 10);
         box.innerHTML = "";
-
         if (results.length === 0) {
           box.style.display = "none";
           return;
         }
+
+        const r = input.getBoundingClientRect();
+        box.style.left = r.left + "px";
+        box.style.top = (r.bottom + 4) + "px";
+        box.style.width = r.width + "px";
 
         results.forEach(r => {
           const item = document.createElement("div");
@@ -183,27 +182,25 @@
         box.style.display = "block";
       });
 
-      // Hide suggestions when clicking outside
-      document.addEventListener("click", (e) => {
+      document.addEventListener("click", e => {
         if (!box.contains(e.target) && e.target !== input) {
           box.style.display = "none";
         }
       });
 
-      // ========= GENERATE POSTER =========
-
-      button.addEventListener("click", () => {
-        const artistInput = input.value.trim();
-        if (!artistInput) {
-          alert("Please enter an artist name.");
+      // ===== GENERATION FUNCTION =====
+      async function generatePoster() {
+        const artistName = input.value.trim();
+        if (!artistName) {
+          alert("Type an artist name");
           return;
         }
 
         status.textContent = "Finding artist...";
 
-        const results = fuse.search(artistInput);
+        const results = fuse.search(artistName);
         if (results.length === 0) {
-          alert("Artist not found.");
+          status.textContent = "No data found.";
           return;
         }
 
@@ -214,32 +211,50 @@
         );
 
         rows.sort((a, b) =>
-          (parseFloat(b.Somma_rank || 0)) - (parseFloat(a.Somma_rank || 0))
+          (parseFloat(b.Somma_rank || 0)) -
+          (parseFloat(a.Somma_rank || 0))
         );
 
         const top5 = rows.slice(0, 5);
 
-        status.textContent = `Found: ${bestArtist}. Drawing poster...`;
+        status.textContent = `Generating poster for ${bestArtist}...`;
 
+        // Load template
         const img = new Image();
         img.crossOrigin = "anonymous";
+
         img.onload = () => {
           canvas.width = img.width;
           canvas.height = img.height;
+          canvas.style.display = "block";    // SHOW poster
+
           ctx.drawImage(img, 0, 0);
 
           drawArtistName(ctx, bestArtist);
           drawSongs(ctx, top5);
 
-          downloadCanvas(canvas, bestArtist.replace(/\s+/g, "_") + "-top5.png");
-          status.textContent = "Poster generated.";
+          status.textContent = "Poster ready.";
+          downloadBtn.style.display = "inline-block"; // enable download
         };
+
         img.src = TEMPLATE_URL;
-      });
+      }
+
+      // ===== DOWNLOAD FUNCTION =====
+      function downloadPoster() {
+        const canvas = document.getElementById("top5_canvas");
+        const link = document.createElement("a");
+        link.download = "top5-poster.png";
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+      }
+
+      // Button actions
+      generateBtn.onclick = generatePoster;
+      downloadBtn.onclick = downloadPoster;
     });
 
-    // ========= DRAWING =========
-
+    // ===== DRAWING TEXT =====
     function drawArtistName(ctx, artist) {
       ctx.fillStyle = "rgb(217,189,76)";
       ctx.textAlign = "center";
@@ -250,7 +265,6 @@
     function drawSongs(ctx, rows) {
       rows.forEach((row, i) => {
         const p = PANELS[i];
-
         ctx.fillStyle = "#000";
         ctx.textAlign = "left";
 
@@ -263,15 +277,6 @@
         ctx.fillText(`Sum_Ranks: ${row.Somma_rank}`, p.xLeft, p.sumY);
         ctx.fillText(`Sum_appearances: ${row.Numero_comparse}`, p.xRight, p.sumY);
       });
-    }
-
-    // ========= DOWNLOAD =========
-
-    function downloadCanvas(canvas, filename) {
-      const link = document.createElement("a");
-      link.download = filename;
-      link.href = canvas.toDataURL("image/png");
-      link.click();
     }
   </script>
 </body>
