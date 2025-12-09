@@ -8,7 +8,7 @@
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Playfair+Display:wght@700&display=swap">
 
-  <!-- Fuse.js for fuzzy search -->
+  <!-- Fuse.js -->
   <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.min.js"></script>
 
   <style>
@@ -24,6 +24,7 @@
     .container {
       width: 480px;
       max-width: 100%;
+      position: relative;
     }
     h1 {
       font-weight: 600;
@@ -62,17 +63,42 @@
       display: block;
       background: #000;
     }
+
+    /* === AUTOCOMPLETE DROPDOWN === */
+    .autocomplete-box {
+      position: absolute;
+      width: 100%;
+      background: #222;
+      border: 1px solid #444;
+      border-radius: 4px;
+      margin-top: 2px;
+      display: none;
+      max-height: 200px;
+      overflow-y: auto;
+      z-index: 10;
+    }
+    .autocomplete-item {
+      padding: 8px;
+      cursor: pointer;
+      border-bottom: 1px solid #333;
+    }
+    .autocomplete-item:hover {
+      background: #444;
+    }
   </style>
 </head>
+
 <body>
   <div class="container">
     <h1>Top 5 Artist – Poster Generator</h1>
 
     <p style="font-size:13px;opacity:.8;margin-bottom:10px;">
-      Type the artist name (no need to match exactly — smart search enabled).
+      Start typing an artist name — suggestions will appear automatically.
     </p>
 
-    <input id="artist_name" placeholder="Enter artist name (e.g. 10cc)">
+    <input id="artist_name" placeholder="Enter artist name">
+    <div id="autocomplete" class="autocomplete-box"></div>
+
     <button id="generate_top5">Generate Poster</button>
 
     <p id="status_msg"></p>
@@ -101,86 +127,109 @@
     const ARTIST_BASELINE_Y = 520;
 
     let SHEET_DATA = null;
+    let fuse = null;
 
     // ========= MAIN =========
 
-    document.addEventListener("DOMContentLoaded", () => {
+    document.addEventListener("DOMContentLoaded", async () => {
       const canvas = document.getElementById("top5_canvas");
       const ctx = canvas.getContext("2d");
       const button = document.getElementById("generate_top5");
       const status = document.getElementById("status_msg");
+      const input = document.getElementById("artist_name");
+      const box = document.getElementById("autocomplete");
 
-      button.addEventListener("click", async () => {
-        const artistInput = (document.getElementById("artist_name").value || "").trim();
-        if (!artistInput) {
-          alert("Please type an artist name.");
+      // Load sheet immediately so autocomplete works instantly
+      const res = await fetch(SHEET_URL);
+      SHEET_DATA = await res.json();
+
+      fuse = new Fuse(SHEET_DATA, {
+        keys: ["Artista"],
+        threshold: 0.3
+      });
+
+      // ========== AUTOCOMPLETE LISTENER ==========
+      input.addEventListener("input", () => {
+        const query = input.value.trim();
+        if (!query) {
+          box.style.display = "none";
           return;
         }
 
-        status.textContent = "Loading data from Google Sheet...";
+        const results = fuse.search(query).slice(0, 10); // show top 10
+        box.innerHTML = "";
 
-        try {
-          if (!SHEET_DATA) {
-            const res = await fetch(SHEET_URL);
-            if (!res.ok) throw new Error("Cannot fetch sheet");
-            SHEET_DATA = await res.json();
-          }
-
-          // ========== Fuzzy Search (Fuse.js) ==========
-          const fuse = new Fuse(SHEET_DATA, {
-            keys: ["Artista"],
-            threshold: 0.3  // lower = stricter, higher = more fuzzy
-          });
-
-          const results = fuse.search(artistInput);
-
-          if (results.length === 0) {
-            status.textContent = "No similar artist found.";
-            alert("No artist found similar to: " + artistInput);
-            return;
-          }
-
-          const bestArtist = results[0].item.Artista;
-
-          // Get all sheet rows for the matched artist
-          const rows = SHEET_DATA.filter(row =>
-            (row.Artista || "").trim().toLowerCase() === bestArtist.toLowerCase()
-          );
-
-          rows.sort((a, b) =>
-            (parseFloat(b.Somma_rank || 0)) - (parseFloat(a.Somma_rank || 0))
-          );
-
-          const top5 = rows.slice(0, 5);
-
-          status.textContent = `Found: ${bestArtist}. Drawing poster...`;
-
-          // ========= DRAW =========
-
-          const img = new Image();
-          img.crossOrigin = "anonymous";
-          img.onload = () => {
-            canvas.width = img.width;
-            canvas.height = img.height;
-            ctx.drawImage(img, 0, 0);
-
-            drawArtistName(ctx, bestArtist);
-            drawSongs(ctx, top5);
-
-            downloadCanvas(canvas, bestArtist.replace(/\s+/g, "_") + "-top5.png");
-            status.textContent = "Poster generated and downloaded.";
-          };
-          img.onerror = () => {
-            status.textContent = "Error loading template image.";
-            alert("Could not load template image.");
-          };
-          img.src = TEMPLATE_URL;
-
-        } catch (err) {
-          console.error(err);
-          status.textContent = "Error reading sheet.";
-          alert("Error loading data from Google Sheet.");
+        if (results.length === 0) {
+          box.style.display = "none";
+          return;
         }
+
+        results.forEach(r => {
+          const item = document.createElement("div");
+          item.className = "autocomplete-item";
+          item.textContent = r.item.Artista;
+          item.onclick = () => {
+            input.value = r.item.Artista;
+            box.style.display = "none";
+          };
+          box.appendChild(item);
+        });
+
+        box.style.display = "block";
+      });
+
+      // Hide suggestions when clicking outside
+      document.addEventListener("click", (e) => {
+        if (!box.contains(e.target) && e.target !== input) {
+          box.style.display = "none";
+        }
+      });
+
+      // ========= GENERATE POSTER =========
+
+      button.addEventListener("click", async () => {
+        const artistInput = input.value.trim();
+        if (!artistInput) {
+          alert("Please enter an artist name.");
+          return;
+        }
+
+        status.textContent = "Finding artist...";
+
+        const results = fuse.search(artistInput);
+        if (results.length === 0) {
+          alert("Artist not found.");
+          return;
+        }
+
+        const bestArtist = results[0].item.Artista;
+
+        const rows = SHEET_DATA.filter(r =>
+          (r.Artista || "").trim().toLowerCase() === bestArtist.toLowerCase()
+        );
+
+        rows.sort((a, b) =>
+          (parseFloat(b.Somma_rank || 0)) - (parseFloat(a.Somma_rank || 0))
+        );
+
+        const top5 = rows.slice(0, 5);
+
+        status.textContent = `Found: ${bestArtist}. Drawing poster...`;
+
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+        img.onload = () => {
+          canvas.width = img.width;
+          canvas.height = img.height;
+          ctx.drawImage(img, 0, 0);
+
+          drawArtistName(ctx, bestArtist);
+          drawSongs(ctx, top5);
+
+          downloadCanvas(canvas, bestArtist.replace(/\s+/g, "_") + "-top5.png");
+          status.textContent = "Poster generated.";
+        };
+        img.src = TEMPLATE_URL;
       });
     });
 
@@ -215,7 +264,7 @@
 
     function downloadCanvas(canvas, filename) {
       const link = document.createElement("a");
-      link.download = filename || "top5-artist.png";
+      link.download = filename;
       link.href = canvas.toDataURL("image/png");
       link.click();
     }
