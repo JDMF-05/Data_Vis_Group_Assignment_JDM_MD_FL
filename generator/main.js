@@ -85,7 +85,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     img.onload = () => {
       canvas.width = img.width;
       canvas.height = img.height;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
       canvas.style.display = "block";
+
       ctx.drawImage(img, 0, 0);
 
       drawArtistName(ctx, best);
@@ -93,9 +95,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       status.textContent = "Poster ready";
       document.getElementById("download_btn").style.display = "inline-block";
+      document.getElementById("reset_btn").style.display = "inline-block";
     };
 
-    img.src = TEMPLATE_URL;
+    // ensure fresh load every time
+    img.src = TEMPLATE_URL + "?cache=" + Date.now();
   };
 
   // DOWNLOAD
@@ -104,5 +108,20 @@ document.addEventListener("DOMContentLoaded", async () => {
     link.download = "top5-poster.png";
     link.href = canvas.toDataURL("image/png");
     link.click();
+  };
+
+  // RESET
+  document.getElementById("reset_btn").onclick = () => {
+    input.value = "";
+    status.textContent = "";
+
+    const downloadBtn = document.getElementById("download_btn");
+    const resetBtn = document.getElementById("reset_btn");
+
+    canvas.style.display = "none";
+    downloadBtn.style.display = "none";
+    resetBtn.style.display = "none";
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
   };
 });
