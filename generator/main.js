@@ -1,5 +1,5 @@
 const SHEET_URL =
-  "https://opensheet.vercel.app/1VfAJhE8r2Iv3NWEOd8x1DKSeSARmPzzFgqi_I-rrCVc/google_doc";
+  "https://opensheet.vercel.app/1IAOpoIK4K0ToI8hYZlTRtIwN7XQwFHEGX8sE46PKvI8/google_doc";
 
 let SHEET_DATA = null;
 
@@ -98,7 +98,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       document.getElementById("reset_btn").style.display = "inline-block";
     };
 
-    // ensure fresh load every time
     img.src = TEMPLATE_URL + "?cache=" + Date.now();
   };
 
@@ -115,13 +114,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     input.value = "";
     status.textContent = "";
 
-    const downloadBtn = document.getElementById("download_btn");
-    const resetBtn = document.getElementById("reset_btn");
-
     canvas.style.display = "none";
-    downloadBtn.style.display = "none";
-    resetBtn.style.display = "none";
-
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    document.getElementById("download_btn").style.display = "none";
+    document.getElementById("reset_btn").style.display = "none";
   };
 });
