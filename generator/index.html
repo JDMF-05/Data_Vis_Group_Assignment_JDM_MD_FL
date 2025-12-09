@@ -9,7 +9,7 @@
   <!-- Fuse.js -->
   <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.min.js"></script>
 
-  <!-- Your scripts -->
+  <!-- Scripts -->
   <script defer src="search.js"></script>
   <script defer src="poster.js"></script>
   <script defer src="main.js"></script>
@@ -18,11 +18,15 @@
 <body>
   <div class="container">
     <h1>Artist – Poster Generator</h1>
+
     <input id="artist_name" placeholder="Enter artist name">
 
-    <button id="generate_top5">Generate Poster</button>
-    <button id="download_btn" style="display:none;">Download Poster</button>
-    <button id="reset_btn" style="margin-left:10px; display:none;">Reset</button>
+    <div class="button-row">
+      <button id="generate_top5">Generate Poster</button>
+      <button id="download_btn" style="display:none;">Download Poster</button>
+      <button id="reset_btn" style="display:none;">Reset</button>
+    </div>
+
     <p id="status_msg"></p>
 
     <canvas id="top5_canvas" width="1080" height="1920"></canvas>
