@@ -8,6 +8,9 @@
   <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Playfair+Display:wght@700&display=swap">
 
+  <!-- Fuse.js for fuzzy search -->
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.min.js"></script>
+
   <style>
     body {
       margin: 0;
@@ -66,8 +69,7 @@
     <h1>Top 5 Artist – Poster Generator</h1>
 
     <p style="font-size:13px;opacity:.8;margin-bottom:10px;">
-      Type the artist name exactly as in the Google Sheet (e.g. <b>10cc</b>), then click
-      <b>Generate Poster</b>. A PNG will download automatically.
+      Type the artist name (no need to match exactly — smart search enabled).
     </p>
 
     <input id="artist_name" placeholder="Enter artist name (e.g. 10cc)">
@@ -81,16 +83,12 @@
   <script>
     // ========= CONFIG =========
 
-    // Use the Cargo-hosted template image (no CORS issues now)
     const TEMPLATE_URL = "https://freight.cargo.site/t/original/i/W2687942959401309016670551378695/template.png";
 
-    // Google Sheet JSON (tab: google_doc)
     const SHEET_URL =
       "https://opensheet.vercel.app/1Vd0xHSleFDlgI0NsM7HkfYQxFQx-m0_eacpYXO7CeMQ/google_doc";
 
-    // Panel positions (adjusted — may refine later)
     const PANEL_CENTERS = [520, 779, 1038, 1297, 1567];
-
     const PANELS = PANEL_CENTERS.map(cy => ({
       xLeft: 170,
       xRight: 580,
@@ -115,7 +113,7 @@
       button.addEventListener("click", async () => {
         const artistInput = (document.getElementById("artist_name").value || "").trim();
         if (!artistInput) {
-          alert("Please type an artist name (e.g. 10cc).");
+          alert("Please type an artist name.");
           return;
         }
 
@@ -128,16 +126,26 @@
             SHEET_DATA = await res.json();
           }
 
-          const target = artistInput.toLowerCase();
-          const rows = SHEET_DATA.filter(row =>
-            (row.Artista || "").trim().toLowerCase() === target
-          );
+          // ========== Fuzzy Search (Fuse.js) ==========
+          const fuse = new Fuse(SHEET_DATA, {
+            keys: ["Artista"],
+            threshold: 0.3  // lower = stricter, higher = more fuzzy
+          });
 
-          if (rows.length === 0) {
-            status.textContent = "No data found for this artist.";
-            alert("No rows found for: " + artistInput);
+          const results = fuse.search(artistInput);
+
+          if (results.length === 0) {
+            status.textContent = "No similar artist found.";
+            alert("No artist found similar to: " + artistInput);
             return;
           }
+
+          const bestArtist = results[0].item.Artista;
+
+          // Get all sheet rows for the matched artist
+          const rows = SHEET_DATA.filter(row =>
+            (row.Artista || "").trim().toLowerCase() === bestArtist.toLowerCase()
+          );
 
           rows.sort((a, b) =>
             (parseFloat(b.Somma_rank || 0)) - (parseFloat(a.Somma_rank || 0))
@@ -145,7 +153,9 @@
 
           const top5 = rows.slice(0, 5);
 
-          status.textContent = "Drawing poster...";
+          status.textContent = `Found: ${bestArtist}. Drawing poster...`;
+
+          // ========= DRAW =========
 
           const img = new Image();
           img.crossOrigin = "anonymous";
@@ -154,10 +164,10 @@
             canvas.height = img.height;
             ctx.drawImage(img, 0, 0);
 
-            drawArtistName(ctx, artistInput);
+            drawArtistName(ctx, bestArtist);
             drawSongs(ctx, top5);
 
-            downloadCanvas(canvas, artistInput.replace(/\s+/g, "_") + "-top5.png");
+            downloadCanvas(canvas, bestArtist.replace(/\s+/g, "_") + "-top5.png");
             status.textContent = "Poster generated and downloaded.";
           };
           img.onerror = () => {
