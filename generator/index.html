@@ -81,15 +81,15 @@
   <script>
     // ========= CONFIG =========
 
-    // Your template PNG located in the same folder as this index.html
+    // Use the PNG renamed to template.png, placed in the SAME folder
     const TEMPLATE_URL = "template.png";
 
     // Google Sheet JSON (tab: google_doc)
     const SHEET_URL =
       "https://opensheet.vercel.app/1Vd0xHSleFDlgI0NsM7HkfYQxFQx-m0_eacpYXO7CeMQ/google_doc";
 
-    // Approx centers of the 5 grey panels (from your 1080x1920 template)
-    const PANEL_CENTERS = [460, 719, 978, 1237, 1507];
+    // Panel positions (may adjust later)
+    const PANEL_CENTERS = [520, 779, 1038, 1297, 1567];
 
     const PANELS = PANEL_CENTERS.map(cy => ({
       xLeft: 170,
@@ -100,7 +100,7 @@
     }));
 
     const ARTIST_CENTER_X = 540;
-    const ARTIST_BASELINE_Y = 420;
+    const ARTIST_BASELINE_Y = 520;
 
     let SHEET_DATA = null;
 
