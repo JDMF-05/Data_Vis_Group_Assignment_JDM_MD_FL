@@ -81,14 +81,14 @@
   <script>
     // ========= CONFIG =========
 
-    // Use the PNG renamed to template.png, placed in the SAME folder
-    const TEMPLATE_URL = "template.png";
+    // Use the Cargo-hosted template image (no CORS issues now)
+    const TEMPLATE_URL = "https://freight.cargo.site/t/original/i/W2687942959401309016670551378695/template.png";
 
     // Google Sheet JSON (tab: google_doc)
     const SHEET_URL =
       "https://opensheet.vercel.app/1Vd0xHSleFDlgI0NsM7HkfYQxFQx-m0_eacpYXO7CeMQ/google_doc";
 
-    // Panel positions (may adjust later)
+    // Panel positions (adjusted — may refine later)
     const PANEL_CENTERS = [520, 779, 1038, 1297, 1567];
 
     const PANELS = PANEL_CENTERS.map(cy => ({
@@ -148,6 +148,7 @@
           status.textContent = "Drawing poster...";
 
           const img = new Image();
+          img.crossOrigin = "anonymous";
           img.onload = () => {
             canvas.width = img.width;
             canvas.height = img.height;
