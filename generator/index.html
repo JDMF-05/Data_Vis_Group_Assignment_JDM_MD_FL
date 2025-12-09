@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Top 5 Artist Poster Generator</title>
+
+  <!-- Fonts -->
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Playfair+Display:wght@700&display=swap">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 40px 0;
+      font-family: "Poppins", sans-serif;
+      background: #111;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+    }
+    .container {
+      width: 480px;
+      max-width: 100%;
+    }
+    h1 {
+      font-weight: 600;
+      font-size: 26px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    input {
+      width: 100%;
+      padding: 6px;
+      border-radius: 3px;
+      border: 1px solid #444;
+      box-sizing: border-box;
+    }
+    button {
+      margin-top: 8px;
+      padding: 8px 14px;
+      cursor: pointer;
+      border: none;
+      border-radius: 4px;
+      background: #fff;
+      color: #000;
+      font-weight: 600;
+    }
+    #status_msg {
+      font-size: 11px;
+      opacity: .8;
+      margin-top: 6px;
+      min-height: 14px;
+    }
+    #top5_canvas {
+      width: 100%;
+      max-width: 480px;
+      margin-top: 18px;
+      border: 1px solid #333;
+      display: block;
+      background: #000;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Top 5 Artist – Poster Generator</h1>
+
+    <p style="font-size:13px;opacity:.8;margin-bottom:10px;">
+      Type the artist name exactly as in the Google Sheet (e.g. <b>10cc</b>), then click
+      <b>Generate Poster</b>. A PNG will download automatically.
+    </p>
+
+    <input id="artist_name" placeholder="Enter artist name (e.g. 10cc)">
+    <button id="generate_top5">Generate Poster</button>
+
+    <p id="status_msg"></p>
+
+    <canvas id="top5_canvas" width="1080" height="1920"></canvas>
+  </div>
+
+  <script>
+    // ========= CONFIG =========
+
+    // Use the PNG you put in the same folder as this file
+    const TEMPLATE_URL = "top5-template.png";
+
+    // Google Sheet JSON (tab: google_doc)
+    const SHEET_URL =
+      "https://opensheet.vercel.app/1Vd0xHSleFDlgI0NsM7HkfYQxFQx-m0_eacpYXO7CeMQ/google_doc";
+
+    // Approx centers of the 5 grey panels (from your 1080x1920 template)
+    const PANEL_CENTERS = [460, 719, 978, 1237, 1507];
+
+    const PANELS = PANEL_CENTERS.map(cy => ({
+      xLeft: 170,
+      xRight: 580,
+      nameY: cy - 40, // Song name
+      bestY: cy,      // Best_Rank + Date_Best_Rank
+      sumY: cy + 50   // Sum_Ranks + Sum_appearances
+    }));
+
+    const ARTIST_CENTER_X = 540;   // center of 1080
+    const ARTIST_BASELINE_Y = 420; // slightly below original "Artist"
+
+    let SHEET_DATA = null;
+
+    // ========= MAIN =========
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const canvas = document.getElementById("top5_canvas");
+      const ctx = canvas.getContext("2d");
+      const button = document.getElementById("generate_top5");
+      const status = document.getElementById("status_msg");
+
+      button.addEventListener("click", async () => {
+        const artistInput = (document.getElementById("artist_name").value || "").trim();
+        if (!artistInput) {
+          alert("Please type an artist name (e.g. 10cc).");
+          return;
+        }
+
+        status.textContent = "Loading data from Google Sheet...";
+
+        try {
+          if (!SHEET_DATA) {
+            const res = await fetch(SHEET_URL);
+            if (!res.ok) throw new Error("Cannot fetch sheet");
+            SHEET_DATA = await res.json();
+          }
+
+          const target = artistInput.toLowerCase();
+          const rows = SHEET_DATA.filter(row =>
+            (row.Artista || "").trim().toLowerCase() === target
+          );
+
+          if (rows.length === 0) {
+            status.textContent = "No data found for this artist.";
+            alert("No rows found for: " + artistInput);
+            return;
+          }
+
+          // sort by Somma_rank descending
+          rows.sort((a, b) =>
+            (parseFloat(b.Somma_rank || 0)) - (parseFloat(a.Somma_rank || 0))
+          );
+
+          const top5 = rows.slice(0, 5);
+
+          status.textContent = "Drawing poster...";
+
+          const img = new Image();
+          img.onload = () => {
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0);
+
+            drawArtistName(ctx, artistInput);
+            drawSongs(ctx, top5);
+
+            downloadCanvas(canvas, artistInput.replace(/\s+/g, "_") + "-top5.png");
+            status.textContent = "Poster generated and downloaded.";
+          };
+          img.onerror = () => {
+            status.textContent = "Error loading template image.";
+            alert("Could not load template image (top5-template.png).");
+          };
+          img.src = TEMPLATE_URL;
+
+        } catch (err) {
+          console.error(err);
+          status.textContent = "Error reading sheet.";
+          alert("Error loading data from Google Sheet.");
+        }
+      });
+    });
+
+    // ========= DRAWING =========
+
+    function drawArtistName(ctx, artist) {
+      ctx.fillStyle = "rgb(217,189,76)"; // gold color
+      ctx.textAlign = "center";
+      ctx.font = "700 128px 'Playfair Display'";
+      ctx.fillTex
