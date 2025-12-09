@@ -1,4 +1,4 @@
-const ARTISTS_URL = "artists.txt";
+const ARTISTS_URL = "https://freight.cargo.site/m/Q2687992615859639642085774560007/unique_performers.txt";
 
 let ARTIST_INDEX = null;
 
