@@ -1,5 +1,5 @@
 const ARTISTS_URL =
-  "https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/unique_performers.txt";
+  "https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/unique_performers.txt?v=1";
 
 
 let ARTIST_INDEX = null;
