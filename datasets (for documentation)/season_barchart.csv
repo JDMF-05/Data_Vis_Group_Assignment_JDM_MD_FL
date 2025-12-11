@@ -1,0 +1,21 @@
+season,genre,value_original,value_scaled
+Winter,Comedy / Novelty / Spoken Word,8146,0.0
+Winter,Electronic & Dance,153485,0.0
+Winter,Folk / Acoustic / Roots,73298,0.0
+Winter,Metal,29388,1.0
+Winter,Rock & Alternative,760492,0.35134106905078943
+Spring,Comedy / Novelty / Spoken Word,8572,0.07977528089887641
+Spring,Electronic & Dance,158899,0.3889926713608277
+Spring,Folk / Acoustic / Roots,95610,1.0
+Spring,Metal,29051,0.8848650495387769
+Spring,Rock & Alternative,751257,0.0
+Summer,Comedy / Novelty / Spoken Word,13486,1.0
+Summer,Electronic & Dance,167403,1.0
+Summer,Folk / Acoustic / Roots,80284,0.3131050555754751
+Summer,Metal,27347,0.3026990092244619
+Summer,Rock & Alternative,767647,0.6235495529769831
+Fall,Comedy / Novelty / Spoken Word,10280,0.399625468164794
+Fall,Electronic & Dance,165824,0.8865497916367294
+Fall,Folk / Acoustic / Roots,78195,0.21947830763714593
+Fall,Metal,26461,0.0
+Fall,Rock & Alternative,777542,1.0

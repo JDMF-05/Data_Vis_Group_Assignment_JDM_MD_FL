@@ -1,0 +1,77 @@
+season,genre,value_original,value_scaled
+Winter,African Contemporary & Diaspora,3497,0.6357673808482729
+Winter,Asian & Middle Eastern,12072,0.01830574488802337
+Winter,Caribbean & Afro-Caribbean,26756,0.23589222165734622
+Winter,Classical & Orchestral,43876,1.0
+Winter,Comedy / Novelty / Spoken Word,8146,0.0
+Winter,Country & Americana,391817,0.0
+Winter,Electronic & Dance,153485,0.0
+Winter,Experimental & Avant-Garde,1971,0.4639146307217074
+Winter,Folk / Acoustic / Roots,73298,0.0
+Winter,Hip-Hop & Rap,510808,0.0
+Winter,Holiday & Seasonal,110529,1.0
+Winter,Italian Disco & Dance,13844,1.0
+Winter,Jazz & Blues,241056,1.0
+Winter,Latin & Regional Mexican,61030,0.0
+Winter,Metal,29388,1.0
+Winter,Pop,1137638,0.0
+Winter,R&B / Soul / Funk,669611,0.0
+Winter,Rock & Alternative,760492,0.35134106905078943
+Winter,Soundtrack & Stage,22664,1.0
+Spring,African Contemporary & Diaspora,2491,0.19588981198076083
+Spring,Asian & Middle Eastern,13123,0.22297955209347614
+Spring,Caribbean & Afro-Caribbean,24900,0.0
+Spring,Classical & Orchestral,41042,0.06283068783068783
+Spring,Comedy / Novelty / Spoken Word,8572,0.07977528089887641
+Spring,Country & Americana,414735,0.39503576661208306
+Spring,Electronic & Dance,158899,0.3889926713608277
+Spring,Experimental & Avant-Garde,3880,1.0
+Spring,Folk / Acoustic / Roots,95610,1.0
+Spring,Hip-Hop & Rap,545510,1.0
+Spring,Holiday & Seasonal,56513,0.15107891055965048
+Spring,Italian Disco & Dance,11518,0.5864153627311522
+Spring,Jazz & Blues,236945,0.7460935087394232
+Spring,Latin & Regional Mexican,70152,0.6474095102909865
+Spring,Metal,29051,0.8848650495387769
+Spring,Pop,1189881,1.0
+Spring,R&B / Soul / Funk,702031,1.0
+Spring,Rock & Alternative,751257,0.0
+Spring,Soundtrack & Stage,21822,0.8726750340238923
+Summer,African Contemporary & Diaspora,2043,0.0
+Summer,Asian & Middle Eastern,17113,1.0
+Summer,Caribbean & Afro-Caribbean,32768,1.0
+Summer,Classical & Orchestral,41380,0.1746031746031746
+Summer,Comedy / Novelty / Spoken Word,13486,1.0
+Summer,Country & Americana,449832,1.0
+Summer,Electronic & Dance,167403,1.0
+Summer,Experimental & Avant-Garde,3605,0.92277450154451
+Summer,Folk / Acoustic / Roots,80284,0.3131050555754751
+Summer,Hip-Hop & Rap,523849,0.3757996657253184
+Summer,Holiday & Seasonal,48454,0.0244228260698738
+Summer,Italian Disco & Dance,8220,0.0
+Summer,Jazz & Blues,239524,0.9053795318386758
+Summer,Latin & Regional Mexican,75120,1.0
+Summer,Metal,27347,0.3026990092244619
+Summer,Pop,1185478,0.9157207664184676
+Summer,R&B / Soul / Funk,680075,0.3227637260950031
+Summer,Rock & Alternative,767647,0.6235495529769831
+Summer,Soundtrack & Stage,19488,0.5197338575533041
+Fall,African Contemporary & Diaspora,4330,1.0
+Fall,Asian & Middle Eastern,11978,0.0
+Fall,Caribbean & Afro-Caribbean,32011,0.9037874936451449
+Fall,Classical & Orchestral,40852,0.0
+Fall,Comedy / Novelty / Spoken Word,10280,0.399625468164794
+Fall,Country & Americana,430410,0.6652245109023528
+Fall,Electronic & Dance,165824,0.8865497916367294
+Fall,Experimental & Avant-Garde,319,0.0
+Fall,Folk / Acoustic / Roots,78195,0.21947830763714593
+Fall,Hip-Hop & Rap,530400,0.5645784104662556
+Fall,Holiday & Seasonal,46900,0.0
+Fall,Italian Disco & Dance,9467,0.22172830725462303
+Fall,Jazz & Blues,224865,0.0
+Fall,Latin & Regional Mexican,63551,0.17892122072391767
+Fall,Metal,26461,0.0
+Fall,Pop,1184230,0.8918323985988553
+Fall,R&B / Soul / Funk,674126,0.1392658852560148
+Fall,Rock & Alternative,777542,1.0
+Fall,Soundtrack & Stage,16051,0.0
