@@ -103,12 +103,26 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // DOWNLOAD
   document.getElementById("download_btn").onclick = () => {
+  try {
+    const dataURL = canvas.toDataURL("image/png");
+
+    console.log("DataURL length:", dataURL.length);
+
+    if (!dataURL.startsWith("data:image/png")) {
+      console.error("Canvas returned invalid dataURL — probably tainted or empty.");
+    }
+
     const link = document.createElement("a");
     link.download = "top5-poster.png";
-    link.href = canvas.toDataURL("image/png");
+    link.href = dataURL;
     link.click();
-  };
 
+  } catch (e) {
+    console.error("Canvas toDataURL failed:", e);
+  }
+};
+
+  
   // RESET
   document.getElementById("reset_btn").onclick = () => {
     input.value = "";
