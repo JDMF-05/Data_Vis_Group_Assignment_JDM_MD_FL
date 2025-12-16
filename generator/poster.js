@@ -9,48 +9,32 @@ const TEMPLATE_URL =
    LAYOUT
 ========================= */
 
-// Artist name (moved right + up)
-const ARTIST_CENTER_X = 500;   // was 440
-const ARTIST_BASELINE_Y = 440; // was 470
+// Artist name (moved up + left)
+const ARTIST_CENTER_X = 440;
+const ARTIST_BASELINE_Y = 410;
 const ARTIST_MAX_WIDTH = 900;
 
-// Red bars
+// Layout guides (NO bars drawn)
 const BAR_LEFT_X = 220;
 const BAR_RIGHT_X = 935;
 const BAR_WIDTH = BAR_RIGHT_X - BAR_LEFT_X;
 const BAR_HEIGHT = 52;
-const BAR_PADDING_X = 28; // was 18 → nudges titles + appeared text right
+const BAR_PADDING_X = 36;
 
 /* =========================
-   ROW POSITIONS (ABSOLUTE)
+   ROW POSITIONS
 ========================= */
 
-const BAR_TOP_Y = [
-  625,
-  780,
-  920,
-  1050,
-  1190
-];
+const BAR_TOP_Y = [625, 780, 920, 1050, 1190];
 
-// Title nudges
-const TITLE_NUDGE_Y = [
-  0,
-  -10,
-  -10,
-  0,
-  0
-];
-
-// Prevent touching bar edges
+const TITLE_NUDGE_Y = [0, -10, -10, 0, 0];
 const TITLE_CLAMP_Y = 14;
 
-// Metadata spacing
 const META_OFFSET_Y = 48;
 
 // Metadata columns (nudged right)
-const RANK_X = 690; // was 660
-const DATE_X = 820; // was 780
+const RANK_X = 720;
+const DATE_X = 860;
 
 /* =========================
    UTIL
@@ -90,11 +74,7 @@ function drawArtistName(ctx, artist) {
   const size = fitText(ctx, displayArtist, ARTIST_MAX_WIDTH, 140, 900);
   ctx.font = `900 ${size}px 'Zalando Sans Expanded', sans-serif`;
 
-  ctx.fillText(
-    displayArtist,
-    ARTIST_CENTER_X,
-    ARTIST_BASELINE_Y
-  );
+  ctx.fillText(displayArtist, ARTIST_CENTER_X, ARTIST_BASELINE_Y);
 }
 
 /* =========================
@@ -102,12 +82,15 @@ function drawArtistName(ctx, artist) {
 ========================= */
 
 function drawSongs(ctx, rows) {
-  rows.forEach((row, i) => {
+  // Sort by rank (ascending)
+  const sortedRows = [...rows].sort(
+    (a, b) => a.Miglior_posto_Canzone - b.Miglior_posto_Canzone
+  );
+
+  sortedRows.forEach((row, i) => {
     const barTop = BAR_TOP_Y[i];
 
-    /* =====================
-       TITLE
-    ===================== */
+    /* ===== TITLE ===== */
 
     const title = row.Canzone || "";
     const maxTitleWidth = BAR_WIDTH - BAR_PADDING_X * 2;
@@ -128,24 +111,16 @@ function drawSongs(ctx, rows) {
     ctx.rect(BAR_LEFT_X, barTop, BAR_WIDTH, BAR_HEIGHT);
     ctx.clip();
 
-    ctx.fillText(
-      title,
-      BAR_LEFT_X + BAR_PADDING_X,
-      titleY
-    );
-
+    ctx.fillText(title, BAR_LEFT_X + BAR_PADDING_X, titleY);
     ctx.restore();
 
-    /* =====================
-       METADATA
-    ===================== */
+    /* ===== METADATA ===== */
 
     ctx.font = "500 28px 'Zalando Sans Expanded', sans-serif";
     ctx.textBaseline = "alphabetic";
 
     const metaY = barTop + BAR_HEIGHT + META_OFFSET_Y;
 
-    // Appearances
     ctx.textAlign = "left";
     ctx.fillText(
       `appeared ${row.Numero_comparse} times`,
@@ -153,20 +128,10 @@ function drawSongs(ctx, rows) {
       metaY
     );
 
-    // Rank
     ctx.textAlign = "right";
-    ctx.fillText(
-      `#${row.Miglior_posto_Canzone}`,
-      RANK_X,
-      metaY
-    );
+    ctx.fillText(`#${row.Miglior_posto_Canzone}`, RANK_X, metaY);
 
-    // Date
     ctx.textAlign = "left";
-    ctx.fillText(
-      row.Data_miglior_posto,
-      DATE_X,
-      metaY
-    );
+    ctx.fillText(row.Data_miglior_posto, DATE_X, metaY);
   });
 }
