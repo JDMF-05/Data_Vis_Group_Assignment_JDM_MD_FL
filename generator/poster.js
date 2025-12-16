@@ -6,37 +6,32 @@ const TEMPLATE_URL =
   "https://raw.githubusercontent.com/JDMF-05/Data_Vis_Group_Assignment_JDM_MD_FL/main/generator/template_1.png";
 
 /* =========================
-   GLOBAL LAYOUT
+   LAYOUT
 ========================= */
 
-// Artist name
+// Artist
 const ARTIST_CENTER_X = 540;
 const ARTIST_BASELINE_Y = 520;
 const ARTIST_MAX_WIDTH = 900;
 
-// Red bars geometry
+// Bars
 const BAR_LEFT_X = 170;
 const BAR_RIGHT_X = 900;
 const BAR_WIDTH = BAR_RIGHT_X - BAR_LEFT_X;
 const BAR_HEIGHT = 52;
-const BAR_PADDING_X = 18;
+const BAR_PADDING_X = 20;
 
-// 🔴 Top Y of each red bar (template-tuned)
-const BAR_TOPS = [
-  566,  // row 1
-  742,  // row 2
-  892,  // row 3
-  1042, // row 4
-  1192  // row 5
-];
+// 🔒 Even vertical grid (matches reference)
+const BAR_TOP_START = 585;
+const BAR_GAP = 150;
 
-// Text positions relative to bar top
-const TITLE_BASELINE_FROM_TOP = 30;
-const META_BASELINE_FROM_TOP  = 76;
+// Text inside bar
+const TITLE_BASELINE_FROM_TOP = 32;
+const META_BASELINE_FROM_TOP = 76;
 
-// 🔧 FINAL FINE-TUNING OFFSETS
-const GLOBAL_SHIFT_X = 14;   // move everything right
-const GLOBAL_SHIFT_Y = 18;   // move rows 1–4 down
+// 🔧 GLOBAL SHIFT (ONLY THIS)
+const SHIFT_X = 38;   // move everything right
+const SHIFT_Y = 0;    // vertical handled by grid
 
 /* =========================
    UTIL
@@ -54,7 +49,7 @@ function fitText(ctx, text, maxWidth, baseSize, weight = 700) {
 }
 
 /* =========================
-   ARTIST NAME
+   ARTIST
 ========================= */
 
 function drawArtistName(ctx, artist) {
@@ -68,17 +63,14 @@ function drawArtistName(ctx, artist) {
 }
 
 /* =========================
-   SONG LIST
+   SONGS
 ========================= */
 
 function drawSongs(ctx, rows) {
   rows.forEach((row, i) => {
+    const barTop = BAR_TOP_START + i * BAR_GAP;
 
-    // Rows 1–4 shift down, row 5 stays
-    const barTop =
-      BAR_TOPS[i] + (i < 4 ? GLOBAL_SHIFT_Y : 0);
-
-    /* --- SONG TITLE (INSIDE RED BAR) --- */
+    /* --- TITLE (inside bar) --- */
     ctx.fillStyle = "#000";
     ctx.textAlign = "left";
     ctx.textBaseline = "alphabetic";
@@ -89,11 +81,11 @@ function drawSongs(ctx, rows) {
     const titleSize = fitText(ctx, title, maxTitleWidth, 34, 700);
     ctx.font = `700 ${titleSize}px 'Zalando Sans Expanded', sans-serif`;
 
-    // Clip title strictly to red bar
+    // Clip strictly to bar
     ctx.save();
     ctx.beginPath();
     ctx.rect(
-      BAR_LEFT_X,
+      BAR_LEFT_X + SHIFT_X,
       barTop,
       BAR_WIDTH,
       BAR_HEIGHT
@@ -102,32 +94,31 @@ function drawSongs(ctx, rows) {
 
     ctx.fillText(
       title,
-      BAR_LEFT_X + BAR_PADDING_X + GLOBAL_SHIFT_X,
+      BAR_LEFT_X + BAR_PADDING_X + SHIFT_X,
       barTop + TITLE_BASELINE_FROM_TOP
     );
 
     ctx.restore();
 
-    /* --- METADATA (BELOW BAR) --- */
+    /* --- METADATA --- */
     ctx.font = "400 20px 'Zalando Sans Expanded', sans-serif";
-
     const metaY = barTop + META_BASELINE_FROM_TOP;
 
     ctx.fillText(
       `appeared ${row.Numero_comparse} times`,
-      BAR_LEFT_X + BAR_PADDING_X + GLOBAL_SHIFT_X,
+      BAR_LEFT_X + BAR_PADDING_X + SHIFT_X,
       metaY
     );
 
     ctx.fillText(
       `#${row.Miglior_posto_Canzone}`,
-      BAR_RIGHT_X - 170 + GLOBAL_SHIFT_X,
+      BAR_RIGHT_X - 170 + SHIFT_X,
       metaY
     );
 
     ctx.fillText(
       row.Data_miglior_posto,
-      BAR_RIGHT_X - 40 + GLOBAL_SHIFT_X,
+      BAR_RIGHT_X - 40 + SHIFT_X,
       metaY
     );
   });
