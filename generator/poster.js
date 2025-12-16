@@ -31,24 +31,21 @@ const EXTRA_ROW_SHIFT_Y = [25, 85, 105, 90, 85];
 // 🔧 Title optical nudges (UPDATED AS REQUESTED)
 const TITLE_NUDGE_Y = [
   0,    // 1 → unchanged
-  -8,   // 2 → up a bit
-  -12,  // 3 → up a bit more (but not much)
-  6,    // 4 → a bit down
-  14    // 5 → down
+  -14,  // 2 → UP more
+  -8,   // 3 → up a bit
+  6,    // 4 → down a bit
+  12    // 5 → down
 ];
 
 // 🔒 Clamp to prevent text touching bar edges
 const TITLE_CLAMP_Y = 14;
 
-// Metadata spacing (CONSISTENT for all rows)
+// Metadata spacing (CONSISTENT)
 const META_OFFSET_Y = 42;
 
-// Right metadata columns (MORE SEPARATION)
+// Right metadata columns
 const RANK_X = 700;
 const DATE_X = 820;
-
-// Rank vertical offset (separate lines)
-const RANK_OFFSET_Y = -18;
 
 /* =========================
    UTIL
@@ -93,7 +90,7 @@ function drawSongs(ctx, rows) {
       BAR_TOP_START + i * BAR_GAP + (EXTRA_ROW_SHIFT_Y[i] || 0);
 
     /* =====================
-       TITLE — SAFE INSIDE BAR
+       TITLE — INSIDE BAR
     ===================== */
 
     const title = row.Canzone || "";
@@ -126,36 +123,36 @@ function drawSongs(ctx, rows) {
     ctx.restore();
 
     /* =====================
-       METADATA — CONSISTENT
+       METADATA — SAME HEIGHT
     ===================== */
 
     ctx.font = "500 22px 'Zalando Sans Expanded', sans-serif";
     ctx.textBaseline = "alphabetic";
 
-    const metaBaseY = barTop + BAR_HEIGHT + META_OFFSET_Y;
+    const metaY = barTop + BAR_HEIGHT + META_OFFSET_Y;
 
     // Appearance
     ctx.textAlign = "left";
     ctx.fillText(
       `appeared ${row.Numero_comparse} times`,
       BAR_LEFT_X + BAR_PADDING_X,
-      metaBaseY
+      metaY
     );
 
-    // Rank (separate line)
+    // Rank (SAME BASELINE)
     ctx.textAlign = "right";
     ctx.fillText(
       `#${row.Miglior_posto_Canzone}`,
       RANK_X,
-      metaBaseY + RANK_OFFSET_Y
+      metaY
     );
 
-    // Date
+    // Date (SAME BASELINE)
     ctx.textAlign = "left";
     ctx.fillText(
       row.Data_miglior_posto,
       DATE_X,
-      metaBaseY
+      metaY
     );
   });
 }
