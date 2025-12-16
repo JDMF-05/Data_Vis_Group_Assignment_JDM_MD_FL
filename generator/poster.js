@@ -14,13 +14,13 @@ const ARTIST_CENTER_X = 450;
 const ARTIST_BASELINE_Y = 200;
 const ARTIST_MAX_WIDTH = 900;
 
-// Red bars
-const BAR_LEFT_X = 100;
+// Red bars (SHIFTED RIGHT TO AVOID TEMPLATE NUMBERS)
+const BAR_LEFT_X = 120;   // ← FIX
 const BAR_RIGHT_X = 935;
 const BAR_WIDTH = BAR_RIGHT_X - BAR_LEFT_X;
 const BAR_HEIGHT = 52;
 
-// TEXT PADDING INSIDE BAR (aligned to red bar start)
+// Text padding inside bars
 const BAR_PADDING_X = 32;
 
 /* =========================
@@ -105,7 +105,7 @@ function drawArtistName(ctx, artist) {
 ========================= */
 
 function drawSongs(ctx, rows) {
-  // SORT BY RANK (fixed layout compatible)
+  // Sort by chart rank (numeric)
   const sortedRows = [...rows].sort(
     (a, b) =>
       Number(a.Miglior_posto_Canzone) - Number(b.Miglior_posto_Canzone)
