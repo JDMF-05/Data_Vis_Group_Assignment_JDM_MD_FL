@@ -1,5 +1,5 @@
 const TEMPLATE_URL =
-  "https://freight.cargo.site/t/original/i/W2687942959401309016670551378695/template.png";
+  "https://raw.githubusercontent.com/JDMF-05/Data_Vis_Group_Assignment_JDM_MD_FL/main/generator/template.png";
 
 const PANEL_CENTERS = [520, 779, 1038, 1297, 1567];
 const PANELS = PANEL_CENTERS.map(cy => ({
