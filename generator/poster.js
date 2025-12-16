@@ -102,7 +102,12 @@ function drawArtistName(ctx, artist) {
 ========================= */
 
 function drawSongs(ctx, rows) {
-  rows.forEach((row, i) => {
+  // SORT BY RANK (best rank first)
+  const sortedRows = [...rows].sort(
+    (a, b) => a.Miglior_posto_Canzone - b.Miglior_posto_Canzone
+  );
+
+  sortedRows.forEach((row, i) => {
     const barTop = BAR_TOP_Y[i];
 
     /* =====================
