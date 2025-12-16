@@ -25,7 +25,7 @@ const BAR_PADDING_X = 18;
 const BAR_TOP_START = 600;
 const BAR_GAP = 115;
 
-// Layout row offsets (already correct)
+// Layout row offsets (background / composition)
 const EXTRA_ROW_SHIFT_Y = [
   25,
   85,
@@ -34,20 +34,21 @@ const EXTRA_ROW_SHIFT_Y = [
   85
 ];
 
-// 🔧 Manual title vertical nudges (optical alignment)
+// 🔧 Manual title vertical nudges (FINAL tuning)
 const TITLE_NUDGE_Y = [
-  0,    // row 1
-  -10,  // row 2 → up
-  -12,  // row 3 → up
-  6,    // row 4 → down a bit
-  14    // row 5 → down a lot
+  0,     // row 1
+  -18,   // row 2 → up a lot
+  -10,   // row 3 → up a bit
+  6,     // row 4 → down a bit
+  20     // row 5 → down a lot
 ];
 
-// Metadata spacing — pushed DOWN
+// Metadata spacing (pushed DOWN)
 const META_OFFSET_Y = 38;
 
-// Safe right edge for rank & date (inside canvas)
-const TEXT_RIGHT_X = 860;
+// Right-side metadata columns (NO overlap)
+const RANK_X = 740; // right-aligned
+const DATE_X = 780; // left-aligned
 
 /* =========================
    UTIL
@@ -105,7 +106,7 @@ function drawSongs(ctx, rows) {
       BAR_HEIGHT / 2 +
       (TITLE_NUDGE_Y[i] || 0);
 
-    // Hard clip to keep title inside bar
+    // Hard clip so title never escapes bar
     ctx.save();
     ctx.beginPath();
     ctx.rect(BAR_LEFT_X, barTop, BAR_WIDTH, BAR_HEIGHT);
@@ -135,17 +136,19 @@ function drawSongs(ctx, rows) {
       metaY
     );
 
-    // Right metadata (moved LEFT)
+    // Rank (right-aligned column)
     ctx.textAlign = "right";
     ctx.fillText(
       `#${row.Miglior_posto_Canzone}`,
-      TEXT_RIGHT_X - 90,
+      RANK_X,
       metaY
     );
 
+    // Date (left-aligned column)
+    ctx.textAlign = "left";
     ctx.fillText(
       row.Data_miglior_posto,
-      TEXT_RIGHT_X,
+      DATE_X,
       metaY
     );
   });
