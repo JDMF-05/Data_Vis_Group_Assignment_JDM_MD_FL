@@ -28,7 +28,7 @@ const BAR_GAP = 115;
 // FIXED row alignment (monotonic, correct order)
 const EXTRA_ROW_SHIFT_Y = [
   25,   // 1
-  45,   // 2 → up a bit
+  48,   // 2 → up a bit
   80,   // 3 (reference, unchanged)
   95,  // 4 → slightly up but still under 3
   110   // 5 → more up but still under 4
