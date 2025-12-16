@@ -25,17 +25,20 @@ const BAR_PADDING_X = 18;
 const BAR_TOP_START = 600;
 const BAR_GAP = 115;
 
-// Background alignment
-const EXTRA_ROW_SHIFT_Y = [25, 85, 105, 90, 85];
-
-// 🔧 STRONG title nudges (NOW EFFECTIVE)
-const TITLE_NUDGE_Y = [
-  0,     // row 1
-  -24,   // row 2 → UP
-  -24,   // row 3 → UP
-  14,    // row 4 → DOWN
-  28     // row 5 → DOWN MORE
+/*
+  THIS IS THE ONLY THING YOU NEED TO ADJUST
+  2 & 3 up, 4 down, 5 down more
+*/
+const EXTRA_ROW_SHIFT_Y = [
+  25,   // row 1
+  60,   // row 2 → UP
+  80,   // row 3 → UP
+  120,  // row 4 → DOWN
+  160   // row 5 → DOWN MORE
 ];
+
+// 🔒 Titles are centered — no nudging
+const TITLE_NUDGE_Y = [0, 0, 0, 0, 0];
 
 // Metadata spacing
 const META_OFFSET_Y = 42;
@@ -83,7 +86,7 @@ function drawSongs(ctx, rows) {
       BAR_TOP_START + i * BAR_GAP + (EXTRA_ROW_SHIFT_Y[i] || 0);
 
     /* =====================
-       TITLE — INSIDE BAR
+       TITLE — CENTERED
     ===================== */
 
     const title = row.Canzone || "";
@@ -95,11 +98,7 @@ function drawSongs(ctx, rows) {
     ctx.textAlign = "left";
     ctx.textBaseline = "middle";
 
-    // 🔥 REAL, UNCLAMPED POSITION
-    const titleY =
-      barTop +
-      BAR_HEIGHT / 2 +
-      (TITLE_NUDGE_Y[i] || 0);
+    const titleY = barTop + BAR_HEIGHT / 2;
 
     ctx.save();
     ctx.beginPath();
