@@ -31,7 +31,7 @@ const BAR_TOP_Y = [
   775,  // row 2
   920,  // row 3
   1055, // row 4
-  1375  // row 5
+  1275  // row 5
 ];
 
 // 🔧 Title nudges (minor optical correction only)
