@@ -21,7 +21,7 @@ const BAR_WIDTH = BAR_RIGHT_X - BAR_LEFT_X;
 const BAR_HEIGHT = 52;
 
 // Text padding inside bars
-const BAR_PADDING_X = 110;
+const BAR_PADDING_X = 136;
 
 /* =========================
    ROW POSITIONS (ABSOLUTE)
