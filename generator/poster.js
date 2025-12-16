@@ -28,13 +28,13 @@ const BAR_GAP = 115;
 // Background alignment
 const EXTRA_ROW_SHIFT_Y = [25, 85, 105, 90, 85];
 
-// 🔧 FINAL title nudges
+// 🔧 STRONG title nudges (VISIBLE)
 const TITLE_NUDGE_Y = [
-  0,     // 1
-  -14,   // 2 → up
-  -14,   // 3 → up
-  8,     // 4 → down
-  18     // 5 → down more
+  0,
+  -24,  // row 2 UP
+  -24,  // row 3 UP
+  14,   // row 4 DOWN
+  28    // row 5 DOWN A LOT
 ];
 
 // 🔒 Clamp to prevent text touching bar edges
