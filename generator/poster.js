@@ -6,7 +6,7 @@ const TEMPLATE_URL =
   "https://raw.githubusercontent.com/JDMF-05/Data_Vis_Group_Assignment_JDM_MD_FL/main/generator/template_1.png";
 
 /* =========================
-   LAYOUT CONSTANTS
+   GLOBAL LAYOUT
 ========================= */
 
 // Artist name
@@ -17,28 +17,33 @@ const ARTIST_MAX_WIDTH = 900;
 // Red bars geometry
 const BAR_LEFT_X = 170;
 const BAR_RIGHT_X = 900;
-const BAR_TEXT_PADDING = 18;
+const BAR_PADDING_X = 18;
 
-// Vertical positions (aligned to template)
-const PANEL_CENTERS = [620, 800, 980, 1160, 1340];
+// 🔴 TOP of each red bar (THIS is the key fix)
+const BAR_TOPS = [
+  610, // 1
+  760, // 2
+  910, // 3
+  1060, // 4
+  1210 // 5
+];
 
-// Vertical offsets
-const META_OFFSET_Y = 36;
+// Offsets inside / below bar
+const TITLE_OFFSET_Y = 32;   // text baseline from bar top
+const META_OFFSET_Y = 62;    // metadata baseline from bar top
 
 /* =========================
-   UTILITIES
+   UTIL
 ========================= */
 
-// Auto-fit text to a maximum width
-function fitText(ctx, text, maxWidth, baseSize, fontWeight = 700) {
+function fitText(ctx, text, maxWidth, baseSize, weight = 700) {
   let size = baseSize;
-  ctx.font = `${fontWeight} ${size}px 'Zalando Sans Expanded', sans-serif`;
+  ctx.font = `${weight} ${size}px 'Zalando Sans Expanded', sans-serif`;
 
-  while (ctx.measureText(text).width > maxWidth && size > 12) {
-    size -= 1;
-    ctx.font = `${fontWeight} ${size}px 'Zalando Sans Expanded', sans-serif`;
+  while (ctx.measureText(text).width > maxWidth && size > 14) {
+    size--;
+    ctx.font = `${weight} ${size}px 'Zalando Sans Expanded', sans-serif`;
   }
-
   return size;
 }
 
@@ -64,32 +69,30 @@ function drawArtistName(ctx, artist) {
 }
 
 /* =========================
-   SONG PANELS
+   SONG LIST
 ========================= */
 
 function drawSongs(ctx, rows) {
   rows.forEach((row, i) => {
-    const cy = PANEL_CENTERS[i];
+    const barTop = BAR_TOPS[i];
 
-    /* --- RANK NUMBER (1–5) --- */
+    /* --- RANK NUMBER --- */
     ctx.fillStyle = "#000";
     ctx.textAlign = "right";
-    ctx.textBaseline = "middle";
+    ctx.textBaseline = "alphabetic";
     ctx.font = "900 32px 'Zalando Sans Expanded', sans-serif";
 
     ctx.fillText(
       i + 1,
-      BAR_LEFT_X - 24,
-      cy
+      BAR_LEFT_X - 28,
+      barTop + TITLE_OFFSET_Y
     );
 
-    /* --- SONG TITLE (centered inside red bar) --- */
-    ctx.fillStyle = "#000";
+    /* --- SONG TITLE (TOP-ALIGNED, NOT CENTERED) --- */
     ctx.textAlign = "left";
-    ctx.textBaseline = "middle";
 
     const maxTitleWidth =
-      BAR_RIGHT_X - BAR_LEFT_X - BAR_TEXT_PADDING * 2;
+      BAR_RIGHT_X - BAR_LEFT_X - BAR_PADDING_X * 2;
 
     const titleSize = fitText(
       ctx,
@@ -103,32 +106,29 @@ function drawSongs(ctx, rows) {
 
     ctx.fillText(
       row.Canzone || "",
-      BAR_LEFT_X + BAR_TEXT_PADDING,
-      cy
+      BAR_LEFT_X + BAR_PADDING_X,
+      barTop + TITLE_OFFSET_Y
     );
 
-    /* --- METADATA (below bar) --- */
-    ctx.textBaseline = "alphabetic";
+    /* --- METADATA (EXACTLY LIKE REFERENCE) --- */
     ctx.font = "400 20px 'Zalando Sans Expanded', sans-serif";
-
-    const metaY = cy + META_OFFSET_Y;
 
     ctx.fillText(
       `appeared ${row.Numero_comparse} times`,
-      BAR_LEFT_X + BAR_TEXT_PADDING,
-      metaY
+      BAR_LEFT_X + BAR_PADDING_X,
+      barTop + META_OFFSET_Y
     );
 
     ctx.fillText(
       `#${row.Miglior_posto_Canzone}`,
       BAR_RIGHT_X - 170,
-      metaY
+      barTop + META_OFFSET_Y
     );
 
     ctx.fillText(
       row.Data_miglior_posto,
       BAR_RIGHT_X - 40,
-      metaY
+      barTop + META_OFFSET_Y
     );
   });
 }
