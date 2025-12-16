@@ -10,8 +10,8 @@ const TEMPLATE_URL =
 ========================= */
 
 // Artist name (moved right + up)
-const ARTIST_CENTER_X = 500;   // was 440
-const ARTIST_BASELINE_Y = 440; // was 470
+const ARTIST_CENTER_X = 500;
+const ARTIST_BASELINE_Y = 440;
 const ARTIST_MAX_WIDTH = 900;
 
 // Red bars
@@ -19,7 +19,7 @@ const BAR_LEFT_X = 220;
 const BAR_RIGHT_X = 935;
 const BAR_WIDTH = BAR_RIGHT_X - BAR_LEFT_X;
 const BAR_HEIGHT = 52;
-const BAR_PADDING_X = 28; // was 18 → nudges titles + appeared text right
+const BAR_PADDING_X = 28;
 
 /* =========================
    ROW POSITIONS (ABSOLUTE)
@@ -48,9 +48,9 @@ const TITLE_CLAMP_Y = 14;
 // Metadata spacing
 const META_OFFSET_Y = 48;
 
-// Metadata columns (nudged right)
-const RANK_X = 690; // was 660
-const DATE_X = 820; // was 780
+// Metadata columns
+const RANK_X = 690;
+const DATE_X = 820;
 
 /* =========================
    UTIL
@@ -102,9 +102,10 @@ function drawArtistName(ctx, artist) {
 ========================= */
 
 function drawSongs(ctx, rows) {
-  // SORT BY RANK (best rank first)
+  // SORT BY RANK (numeric, fixed layout compatible)
   const sortedRows = [...rows].sort(
-    (a, b) => a.Miglior_posto_Canzone - b.Miglior_posto_Canzone
+    (a, b) =>
+      Number(a.Miglior_posto_Canzone) - Number(b.Miglior_posto_Canzone)
   );
 
   sortedRows.forEach((row, i) => {
