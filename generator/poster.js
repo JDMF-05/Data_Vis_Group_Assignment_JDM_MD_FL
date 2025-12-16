@@ -14,23 +14,25 @@ const ARTIST_CENTER_X = 540;
 const ARTIST_BASELINE_Y = 520;
 const ARTIST_MAX_WIDTH = 900;
 
-// Red bars geometry
+// Red bars geometry (these match your template)
 const BAR_LEFT_X = 170;
 const BAR_RIGHT_X = 900;
+const BAR_WIDTH = BAR_RIGHT_X - BAR_LEFT_X;
+const BAR_HEIGHT = 52;           // height of the red highlight bar
 const BAR_PADDING_X = 18;
 
-// 🔴 TOP of each red bar (THIS is the key fix)
+// 🔴 Top Y of each red bar (tuned to match the Billie reference)
 const BAR_TOPS = [
-  610, // 1
-  760, // 2
-  910, // 3
-  1060, // 4
-  1210 // 5
+  592, // row 1
+  742, // row 2
+  892, // row 3
+  1042, // row 4
+  1192 // row 5
 ];
 
-// Offsets inside / below bar
-const TITLE_OFFSET_Y = 32;   // text baseline from bar top
-const META_OFFSET_Y = 62;    // metadata baseline from bar top
+// Text positions relative to bar top
+const TITLE_BASELINE_FROM_TOP = 34;  // title baseline inside bar
+const META_BASELINE_FROM_TOP  = 76;  // metadata baseline below bar
 
 /* =========================
    UTIL
@@ -56,14 +58,7 @@ function drawArtistName(ctx, artist) {
   ctx.textAlign = "center";
   ctx.textBaseline = "alphabetic";
 
-  const size = fitText(
-    ctx,
-    artist,
-    ARTIST_MAX_WIDTH,
-    120,
-    900
-  );
-
+  const size = fitText(ctx, artist, ARTIST_MAX_WIDTH, 120, 900);
   ctx.font = `900 ${size}px 'Zalando Sans Expanded', sans-serif`;
   ctx.fillText(artist, ARTIST_CENTER_X, ARTIST_BASELINE_Y);
 }
@@ -76,59 +71,42 @@ function drawSongs(ctx, rows) {
   rows.forEach((row, i) => {
     const barTop = BAR_TOPS[i];
 
-    /* --- RANK NUMBER --- */
+    // -------- SONG TITLE (INSIDE RED BAR) --------
     ctx.fillStyle = "#000";
-    ctx.textAlign = "right";
-    ctx.textBaseline = "alphabetic";
-    ctx.font = "900 32px 'Zalando Sans Expanded', sans-serif";
-
-    ctx.fillText(
-      i + 1,
-      BAR_LEFT_X - 28,
-      barTop + TITLE_OFFSET_Y
-    );
-
-    /* --- SONG TITLE (TOP-ALIGNED, NOT CENTERED) --- */
     ctx.textAlign = "left";
+    ctx.textBaseline = "alphabetic";
 
-    const maxTitleWidth =
-      BAR_RIGHT_X - BAR_LEFT_X - BAR_PADDING_X * 2;
+    const maxTitleWidth = BAR_WIDTH - BAR_PADDING_X * 2;
+    const title = row.Canzone || "";
 
-    const titleSize = fitText(
-      ctx,
-      row.Canzone || "",
-      maxTitleWidth,
-      34,
-      700
-    );
-
+    const titleSize = fitText(ctx, title, maxTitleWidth, 34, 700);
     ctx.font = `700 ${titleSize}px 'Zalando Sans Expanded', sans-serif`;
 
+    // Clip title to the red bar rectangle so it NEVER leaves the bar
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(BAR_LEFT_X, barTop, BAR_WIDTH, BAR_HEIGHT);
+    ctx.clip();
+
     ctx.fillText(
-      row.Canzone || "",
+      title,
       BAR_LEFT_X + BAR_PADDING_X,
-      barTop + TITLE_OFFSET_Y
+      barTop + TITLE_BASELINE_FROM_TOP
     );
 
-    /* --- METADATA (EXACTLY LIKE REFERENCE) --- */
+    ctx.restore();
+
+    // -------- METADATA (BELOW BAR) --------
     ctx.font = "400 20px 'Zalando Sans Expanded', sans-serif";
 
-    ctx.fillText(
-      `appeared ${row.Numero_comparse} times`,
-      BAR_LEFT_X + BAR_PADDING_X,
-      barTop + META_OFFSET_Y
-    );
+    const metaY = barTop + META_BASELINE_FROM_TOP;
 
-    ctx.fillText(
-      `#${row.Miglior_posto_Canzone}`,
-      BAR_RIGHT_X - 170,
-      barTop + META_OFFSET_Y
-    );
+    const appearances = `appeared ${row.Numero_comparse} times`;
+    const bestRank = `#${row.Miglior_posto_Canzone}`;
+    const bestDate = row.Data_miglior_posto;
 
-    ctx.fillText(
-      row.Data_miglior_posto,
-      BAR_RIGHT_X - 40,
-      barTop + META_OFFSET_Y
-    );
+    ctx.fillText(appearances, BAR_LEFT_X + BAR_PADDING_X, metaY);
+    ctx.fillText(bestRank, BAR_RIGHT_X - 170, metaY);
+    ctx.fillText(bestDate, BAR_RIGHT_X - 40, metaY);
   });
 }
