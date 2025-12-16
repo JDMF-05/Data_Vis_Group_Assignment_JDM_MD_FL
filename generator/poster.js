@@ -14,19 +14,22 @@ const ARTIST_CENTER_X = 540;
 const ARTIST_BASELINE_Y = 520;
 const ARTIST_MAX_WIDTH = 900;
 
-// Red bars
+// Red bars geometry
 const BAR_LEFT_X = 170;
 const BAR_RIGHT_X = 900;
 const BAR_TEXT_PADDING = 18;
 
-// Panel vertical centers (aligned to template)
+// Vertical positions (aligned to template)
 const PANEL_CENTERS = [620, 800, 980, 1160, 1340];
+
+// Vertical offsets
+const META_OFFSET_Y = 36;
 
 /* =========================
    UTILITIES
 ========================= */
 
-// Auto-fit text to a max width
+// Auto-fit text to a maximum width
 function fitText(ctx, text, maxWidth, baseSize, fontWeight = 700) {
   let size = baseSize;
   ctx.font = `${fontWeight} ${size}px 'Zalando Sans Expanded', sans-serif`;
@@ -46,6 +49,7 @@ function fitText(ctx, text, maxWidth, baseSize, fontWeight = 700) {
 function drawArtistName(ctx, artist) {
   ctx.fillStyle = "#000";
   ctx.textAlign = "center";
+  ctx.textBaseline = "alphabetic";
 
   const size = fitText(
     ctx,
@@ -67,9 +71,22 @@ function drawSongs(ctx, rows) {
   rows.forEach((row, i) => {
     const cy = PANEL_CENTERS[i];
 
-    /* --- SONG TITLE (inside red bar) --- */
+    /* --- RANK NUMBER (1–5) --- */
+    ctx.fillStyle = "#000";
+    ctx.textAlign = "right";
+    ctx.textBaseline = "middle";
+    ctx.font = "900 32px 'Zalando Sans Expanded', sans-serif";
+
+    ctx.fillText(
+      i + 1,
+      BAR_LEFT_X - 24,
+      cy
+    );
+
+    /* --- SONG TITLE (centered inside red bar) --- */
     ctx.fillStyle = "#000";
     ctx.textAlign = "left";
+    ctx.textBaseline = "middle";
 
     const maxTitleWidth =
       BAR_RIGHT_X - BAR_LEFT_X - BAR_TEXT_PADDING * 2;
@@ -78,40 +95,40 @@ function drawSongs(ctx, rows) {
       ctx,
       row.Canzone || "",
       maxTitleWidth,
-      36,
+      34,
       700
     );
 
     ctx.font = `700 ${titleSize}px 'Zalando Sans Expanded', sans-serif`;
+
     ctx.fillText(
       row.Canzone || "",
       BAR_LEFT_X + BAR_TEXT_PADDING,
-      cy + 12
+      cy
     );
 
     /* --- METADATA (below bar) --- */
-    ctx.font = "400 22px 'Zalando Sans Expanded', sans-serif";
+    ctx.textBaseline = "alphabetic";
+    ctx.font = "400 20px 'Zalando Sans Expanded', sans-serif";
 
-    const appearances = `appeared ${row.Numero_comparse} times`;
-    const bestRank = `#${row.Miglior_posto_Canzone}`;
-    const bestDate = row.Data_miglior_posto;
+    const metaY = cy + META_OFFSET_Y;
 
     ctx.fillText(
-      appearances,
+      `appeared ${row.Numero_comparse} times`,
       BAR_LEFT_X + BAR_TEXT_PADDING,
-      cy + 44
+      metaY
     );
 
     ctx.fillText(
-      bestRank,
-      BAR_RIGHT_X - 180,
-      cy + 44
+      `#${row.Miglior_posto_Canzone}`,
+      BAR_RIGHT_X - 170,
+      metaY
     );
 
     ctx.fillText(
-      bestDate,
+      row.Data_miglior_posto,
       BAR_RIGHT_X - 40,
-      cy + 44
+      metaY
     );
   });
 }
