@@ -28,19 +28,19 @@ const BAR_GAP = 115;
 // Background alignment
 const EXTRA_ROW_SHIFT_Y = [25, 85, 105, 90, 85];
 
-// 🔧 FINAL title optical nudges
+// 🔧 FINAL title nudges
 const TITLE_NUDGE_Y = [
-  0,    // 1 → unchanged
-  -10,  // 2 → up
-  -10,  // 3 → up (same as 2)
-  6,    // 4 → down a bit
-  12    // 5 → down
+  0,     // 1
+  -14,   // 2 → up
+  -14,   // 3 → up
+  8,     // 4 → down
+  18     // 5 → down more
 ];
 
 // 🔒 Clamp to prevent text touching bar edges
 const TITLE_CLAMP_Y = 14;
 
-// Metadata spacing (consistent)
+// Metadata spacing
 const META_OFFSET_Y = 42;
 
 // Right metadata columns
@@ -131,7 +131,6 @@ function drawSongs(ctx, rows) {
 
     const metaY = barTop + BAR_HEIGHT + META_OFFSET_Y;
 
-    // Appearance
     ctx.textAlign = "left";
     ctx.fillText(
       `appeared ${row.Numero_comparse} times`,
@@ -139,7 +138,6 @@ function drawSongs(ctx, rows) {
       metaY
     );
 
-    // Rank
     ctx.textAlign = "right";
     ctx.fillText(
       `#${row.Miglior_posto_Canzone}`,
@@ -147,7 +145,6 @@ function drawSongs(ctx, rows) {
       metaY
     );
 
-    // Date
     ctx.textAlign = "left";
     ctx.fillText(
       row.Data_miglior_posto,
