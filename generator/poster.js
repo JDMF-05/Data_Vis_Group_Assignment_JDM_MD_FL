@@ -9,7 +9,7 @@ const TEMPLATE_URL =
    LAYOUT
 ========================= */
 
-// Artist name (moved right + up)
+// Artist name
 const ARTIST_CENTER_X = 450;
 const ARTIST_BASELINE_Y = 200;
 const ARTIST_MAX_WIDTH = 900;
@@ -19,7 +19,9 @@ const BAR_LEFT_X = 100;
 const BAR_RIGHT_X = 935;
 const BAR_WIDTH = BAR_RIGHT_X - BAR_LEFT_X;
 const BAR_HEIGHT = 52;
-const BAR_PADDING_X = 150
+
+// TEXT PADDING INSIDE BAR (aligned to red bar start)
+const BAR_PADDING_X = 32;
 
 /* =========================
    ROW POSITIONS (ABSOLUTE)
@@ -60,7 +62,8 @@ function fitText(ctx, text, maxWidth, baseSize, weight = 700) {
   let size = baseSize;
   ctx.font = `${weight} ${size}px 'Zalando Sans Expanded', sans-serif`;
 
-  while (ctx.measureText(text).width > maxWidth && size > 14) {
+  // OPTION 2: limit shrinking
+  while (ctx.measureText(text).width > maxWidth && size > 32) {
     size--;
     ctx.font = `${weight} ${size}px 'Zalando Sans Expanded', sans-serif`;
   }
@@ -102,7 +105,7 @@ function drawArtistName(ctx, artist) {
 ========================= */
 
 function drawSongs(ctx, rows) {
-  // SORT BY RANK (numeric, fixed layout compatible)
+  // SORT BY RANK (fixed layout compatible)
   const sortedRows = [...rows].sort(
     (a, b) =>
       Number(a.Miglior_posto_Canzone) - Number(b.Miglior_posto_Canzone)
