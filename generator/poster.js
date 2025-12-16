@@ -25,30 +25,29 @@ const BAR_PADDING_X = 18;
 const BAR_TOP_START = 600;
 const BAR_GAP = 115;
 
-// Hand-tuned row offsets (from screenshot)
+// Layout row offsets (already correct)
 const EXTRA_ROW_SHIFT_Y = [
-  25,   // row 1
-  85,   // row 2
-  105,  // row 3
-  90,   // row 4
-  85    // row 5
+  25,
+  85,
+  105,
+  90,
+  85
 ];
 
-// Hand-tuned title vertical offsets
-const TITLE_BASELINE_SHIFT_Y = [
-  0,    // row 1 → perfect
-  -14,  // row 2 → up
-  -18,  // row 3 → up more
-  -6,   // row 4 → tiny tweak
-  8     // row 5 → down
+// 🔧 Manual title vertical nudges (optical alignment)
+const TITLE_NUDGE_Y = [
+  0,    // row 1
+  -10,  // row 2 → up
+  -12,  // row 3 → up
+  6,    // row 4 → down a bit
+  14    // row 5 → down a lot
 ];
 
-// Metadata spacing
-const META_OFFSET_Y = 26;
+// Metadata spacing — pushed DOWN
+const META_OFFSET_Y = 38;
 
-// Right-side metadata padding (keeps text inside canvas)
-const META_RIGHT_PADDING = 140;
-const META_DATE_PADDING = 20;
+// Safe right edge for rank & date (inside canvas)
+const TEXT_RIGHT_X = 860;
 
 /* =========================
    UTIL
@@ -99,15 +98,14 @@ function drawSongs(ctx, rows) {
     ctx.font = `700 ${titleSize}px 'Zalando Sans Expanded', sans-serif`;
     ctx.fillStyle = "#000";
     ctx.textAlign = "left";
-    ctx.textBaseline = "alphabetic";
+    ctx.textBaseline = "middle";
 
-    const titleBaseline =
+    const titleY =
       barTop +
       BAR_HEIGHT / 2 +
-      titleSize * 0.35 +
-      (TITLE_BASELINE_SHIFT_Y[i] || 0);
+      (TITLE_NUDGE_Y[i] || 0);
 
-    // Hard clip so title NEVER escapes the bar
+    // Hard clip to keep title inside bar
     ctx.save();
     ctx.beginPath();
     ctx.rect(BAR_LEFT_X, barTop, BAR_WIDTH, BAR_HEIGHT);
@@ -116,7 +114,7 @@ function drawSongs(ctx, rows) {
     ctx.fillText(
       title,
       BAR_LEFT_X + BAR_PADDING_X,
-      titleBaseline
+      titleY
     );
 
     ctx.restore();
@@ -126,8 +124,10 @@ function drawSongs(ctx, rows) {
     ===================== */
 
     ctx.font = "400 20px 'Zalando Sans Expanded', sans-serif";
+    ctx.textBaseline = "alphabetic";
     const metaY = barTop + BAR_HEIGHT + META_OFFSET_Y;
 
+    // Left metadata
     ctx.textAlign = "left";
     ctx.fillText(
       `appeared ${row.Numero_comparse} times`,
@@ -135,16 +135,17 @@ function drawSongs(ctx, rows) {
       metaY
     );
 
+    // Right metadata (moved LEFT)
     ctx.textAlign = "right";
     ctx.fillText(
       `#${row.Miglior_posto_Canzone}`,
-      BAR_RIGHT_X - META_RIGHT_PADDING,
+      TEXT_RIGHT_X - 90,
       metaY
     );
 
     ctx.fillText(
       row.Data_miglior_posto,
-      BAR_RIGHT_X - META_DATE_PADDING,
+      TEXT_RIGHT_X,
       metaY
     );
   });
