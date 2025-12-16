@@ -19,7 +19,7 @@ const BAR_LEFT_X = 220;
 const BAR_RIGHT_X = 935;
 const BAR_WIDTH = BAR_RIGHT_X - BAR_LEFT_X;
 const BAR_HEIGHT = 52;
-const BAR_PADDING_X = 28;
+const BAR_PADDING_X = 30;
 
 /* =========================
    ROW POSITIONS (ABSOLUTE)
