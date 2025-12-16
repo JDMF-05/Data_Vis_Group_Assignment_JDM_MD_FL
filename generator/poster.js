@@ -28,7 +28,7 @@ const BAR_PADDING_X = 48;
 ========================= */
 
 const FIRST_ROW_Y = 625;
-const ROW_GAP = 130;
+const ROW_GAP = 100;
 
 // Metadata spacing
 const META_OFFSET_Y = 48;
