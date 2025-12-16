@@ -25,25 +25,31 @@ const BAR_PADDING_X = 18;
 const BAR_TOP_START = 600;
 const BAR_GAP = 115;
 
-/*
-  THIS IS THE ONLY THING YOU NEED TO ADJUST
-  2 & 3 up, 4 down, 5 down more
-*/
+// ✅ FIXED row alignment (monotonic, correct order)
 const EXTRA_ROW_SHIFT_Y = [
-  25,   // row 1
-  60,   // row 2 → UP
-  80,   // row 3 → UP
-  120,  // row 4 → DOWN
-  160   // row 5 → DOWN MORE
+  25,   // 1
+  50,   // 2 → up a bit
+  80,   // 3 (reference, unchanged)
+  100,  // 4 → slightly up but still under 3
+  130   // 5 → more up but still under 4
 ];
 
-// 🔒 Titles are centered — no nudging
-const TITLE_NUDGE_Y = [0, 0, 0, 0, 0];
+// 🔧 Title nudges (minor optical correction only)
+const TITLE_NUDGE_Y = [
+  0,
+  -10,
+  -10,
+  0,
+  0
+];
+
+// Prevent touching bar edges
+const TITLE_CLAMP_Y = 14;
 
 // Metadata spacing
 const META_OFFSET_Y = 42;
 
-// Right metadata columns
+// Metadata columns
 const RANK_X = 700;
 const DATE_X = 820;
 
@@ -60,6 +66,10 @@ function fitText(ctx, text, maxWidth, baseSize, weight = 700) {
     ctx.font = `${weight} ${size}px 'Zalando Sans Expanded', sans-serif`;
   }
   return size;
+}
+
+function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), max);
 }
 
 /* =========================
@@ -83,22 +93,25 @@ function drawArtistName(ctx, artist) {
 function drawSongs(ctx, rows) {
   rows.forEach((row, i) => {
     const barTop =
-      BAR_TOP_START + i * BAR_GAP + (EXTRA_ROW_SHIFT_Y[i] || 0);
+      BAR_TOP_START + i * BAR_GAP + EXTRA_ROW_SHIFT_Y[i];
 
     /* =====================
-       TITLE — CENTERED
+       TITLE
     ===================== */
 
     const title = row.Canzone || "";
     const maxTitleWidth = BAR_WIDTH - BAR_PADDING_X * 2;
-    const titleSize = fitText(ctx, title, maxTitleWidth, 34, 700);
+    const titleSize = fitText(ctx, title, maxTitleWidth, 36, 700);
 
     ctx.font = `700 ${titleSize}px 'Zalando Sans Expanded', sans-serif`;
     ctx.fillStyle = "#000";
     ctx.textAlign = "left";
     ctx.textBaseline = "middle";
 
-    const titleY = barTop + BAR_HEIGHT / 2;
+    const rawTitleY = BAR_HEIGHT / 2 + (TITLE_NUDGE_Y[i] || 0);
+    const titleY =
+      barTop +
+      clamp(rawTitleY, TITLE_CLAMP_Y, BAR_HEIGHT - TITLE_CLAMP_Y);
 
     ctx.save();
     ctx.beginPath();
@@ -114,15 +127,15 @@ function drawSongs(ctx, rows) {
     ctx.restore();
 
     /* =====================
-       METADATA — SAME ROW
+       METADATA (SAME LINE)
     ===================== */
 
-    ctx.font = "500 22px 'Zalando Sans Expanded', sans-serif";
+    ctx.font = "500 24px 'Zalando Sans Expanded', sans-serif";
     ctx.textBaseline = "alphabetic";
 
     const metaY = barTop + BAR_HEIGHT + META_OFFSET_Y;
 
-    // Appearance
+    // Appearances
     ctx.textAlign = "left";
     ctx.fillText(
       `appeared ${row.Numero_comparse} times`,
