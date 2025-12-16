@@ -9,9 +9,9 @@ const TEMPLATE_URL =
    LAYOUT
 ========================= */
 
-// Artist name
-const ARTIST_CENTER_X = 440;   // moved further left
-const ARTIST_BASELINE_Y = 470; // moved up
+// Artist name (moved right + up)
+const ARTIST_CENTER_X = 500;   // was 440
+const ARTIST_BASELINE_Y = 440; // was 470
 const ARTIST_MAX_WIDTH = 900;
 
 // Red bars
@@ -19,7 +19,7 @@ const BAR_LEFT_X = 220;
 const BAR_RIGHT_X = 935;
 const BAR_WIDTH = BAR_RIGHT_X - BAR_LEFT_X;
 const BAR_HEIGHT = 52;
-const BAR_PADDING_X = 18;
+const BAR_PADDING_X = 28; // was 18 → nudges titles + appeared text right
 
 /* =========================
    ROW POSITIONS (ABSOLUTE)
@@ -48,9 +48,9 @@ const TITLE_CLAMP_Y = 14;
 // Metadata spacing
 const META_OFFSET_Y = 48;
 
-// Metadata columns
-const RANK_X = 660;
-const DATE_X = 780;
+// Metadata columns (nudged right)
+const RANK_X = 690; // was 660
+const DATE_X = 820; // was 780
 
 /* =========================
    UTIL
