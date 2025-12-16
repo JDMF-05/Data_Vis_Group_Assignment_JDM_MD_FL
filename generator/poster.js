@@ -9,19 +9,19 @@ const TEMPLATE_URL =
    LAYOUT
 ========================= */
 
-// Artist name (higher + more left)
-const ARTIST_CENTER_X = 380;
-const ARTIST_BASELINE_Y = 360;
+// Artist name (aligned with numbers, higher, italic)
+const ARTIST_CENTER_X = 180;
+const ARTIST_BASELINE_Y = 340;
 const ARTIST_MAX_WIDTH = 900;
 
-// Layout guides (no bars are drawn here)
+// Layout guides (no bars drawn)
 const BAR_LEFT_X = 220;
 const BAR_RIGHT_X = 935;
 const BAR_WIDTH = BAR_RIGHT_X - BAR_LEFT_X;
 const BAR_HEIGHT = 52;
 
-// Titles + metadata pushed right
-const BAR_PADDING_X = 48;
+// Titles + metadata moved right by 2px
+const BAR_PADDING_X = 50;
 
 /* =========================
    ROW LAYOUT (DYNAMIC)
@@ -41,13 +41,13 @@ const DATE_X = 900;
    UTIL
 ========================= */
 
-function fitText(ctx, text, maxWidth, baseSize, weight = 700) {
+function fitText(ctx, text, maxWidth, baseSize, weight = 700, italic = false) {
   let size = baseSize;
-  ctx.font = `${weight} ${size}px 'Zalando Sans Expanded', sans-serif`;
+  ctx.font = `${italic ? "italic " : ""}${weight} ${size}px 'Zalando Sans Expanded', sans-serif`;
 
   while (ctx.measureText(text).width > maxWidth && size > 14) {
     size--;
-    ctx.font = `${weight} ${size}px 'Zalando Sans Expanded', sans-serif`;
+    ctx.font = `${italic ? "italic " : ""}${weight} ${size}px 'Zalando Sans Expanded', sans-serif`;
   }
   return size;
 }
@@ -65,11 +65,11 @@ function drawArtistName(ctx, artist) {
   const displayArtist = capitalizeFirstLetter(artist);
 
   ctx.fillStyle = "#000";
-  ctx.textAlign = "center";
+  ctx.textAlign = "left";
   ctx.textBaseline = "alphabetic";
 
-  const size = fitText(ctx, displayArtist, ARTIST_MAX_WIDTH, 140, 900);
-  ctx.font = `900 ${size}px 'Zalando Sans Expanded', sans-serif`;
+  const size = fitText(ctx, displayArtist, ARTIST_MAX_WIDTH, 140, 900, true);
+  ctx.font = `italic 900 ${size}px 'Zalando Sans Expanded', sans-serif`;
 
   ctx.fillText(
     displayArtist,
@@ -104,7 +104,6 @@ function drawSongs(ctx, rows) {
     ctx.textAlign = "left";
     ctx.textBaseline = "alphabetic";
 
-    // Safe vertical position to avoid clipping
     const titleY = barTop + BAR_HEIGHT - 14;
 
     ctx.save();
@@ -129,7 +128,6 @@ function drawSongs(ctx, rows) {
 
     const metaY = barTop + BAR_HEIGHT + META_OFFSET_Y;
 
-    // Appeared
     ctx.textAlign = "left";
     ctx.fillText(
       `appeared ${row.Numero_comparse} times`,
@@ -137,7 +135,6 @@ function drawSongs(ctx, rows) {
       metaY
     );
 
-    // Rank
     ctx.textAlign = "right";
     ctx.fillText(
       `#${row.Miglior_posto_Canzone}`,
@@ -145,7 +142,6 @@ function drawSongs(ctx, rows) {
       metaY
     );
 
-    // Date
     ctx.textAlign = "left";
     ctx.fillText(
       row.Data_miglior_posto,
