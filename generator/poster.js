@@ -10,8 +10,8 @@ const TEMPLATE_URL =
 ========================= */
 
 // Artist name (moved right + up)
-const ARTIST_CENTER_X = 400;
-const ARTIST_BASELINE_Y = 250;
+const ARTIST_CENTER_X = 150;
+const ARTIST_BASELINE_Y = 100;
 const ARTIST_MAX_WIDTH = 900;
 
 // Red bars
