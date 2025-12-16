@@ -23,7 +23,7 @@ const BAR_PADDING_X = 18;
 
 // 🔴 Top Y of each red bar (template-tuned)
 const BAR_TOPS = [
-  566,  // row 1 (intentionally higher)
+  566,  // row 1
   742,  // row 2
   892,  // row 3
   1042, // row 4
@@ -33,6 +33,10 @@ const BAR_TOPS = [
 // Text positions relative to bar top
 const TITLE_BASELINE_FROM_TOP = 30;
 const META_BASELINE_FROM_TOP  = 76;
+
+// 🔧 FINAL FINE-TUNING OFFSETS
+const GLOBAL_SHIFT_X = 14;   // move everything right
+const GLOBAL_SHIFT_Y = 18;   // move rows 1–4 down
 
 /* =========================
    UTIL
@@ -69,7 +73,10 @@ function drawArtistName(ctx, artist) {
 
 function drawSongs(ctx, rows) {
   rows.forEach((row, i) => {
-    const barTop = BAR_TOPS[i];
+
+    // Rows 1–4 shift down, row 5 stays
+    const barTop =
+      BAR_TOPS[i] + (i < 4 ? GLOBAL_SHIFT_Y : 0);
 
     /* --- SONG TITLE (INSIDE RED BAR) --- */
     ctx.fillStyle = "#000";
@@ -85,12 +92,17 @@ function drawSongs(ctx, rows) {
     // Clip title strictly to red bar
     ctx.save();
     ctx.beginPath();
-    ctx.rect(BAR_LEFT_X, barTop, BAR_WIDTH, BAR_HEIGHT);
+    ctx.rect(
+      BAR_LEFT_X,
+      barTop,
+      BAR_WIDTH,
+      BAR_HEIGHT
+    );
     ctx.clip();
 
     ctx.fillText(
       title,
-      BAR_LEFT_X + BAR_PADDING_X,
+      BAR_LEFT_X + BAR_PADDING_X + GLOBAL_SHIFT_X,
       barTop + TITLE_BASELINE_FROM_TOP
     );
 
@@ -103,19 +115,19 @@ function drawSongs(ctx, rows) {
 
     ctx.fillText(
       `appeared ${row.Numero_comparse} times`,
-      BAR_LEFT_X + BAR_PADDING_X,
+      BAR_LEFT_X + BAR_PADDING_X + GLOBAL_SHIFT_X,
       metaY
     );
 
     ctx.fillText(
       `#${row.Miglior_posto_Canzone}`,
-      BAR_RIGHT_X - 170,
+      BAR_RIGHT_X - 170 + GLOBAL_SHIFT_X,
       metaY
     );
 
     ctx.fillText(
       row.Data_miglior_posto,
-      BAR_RIGHT_X - 40,
+      BAR_RIGHT_X - 40 + GLOBAL_SHIFT_X,
       metaY
     );
   });
