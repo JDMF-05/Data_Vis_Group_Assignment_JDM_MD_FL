@@ -15,13 +15,13 @@ const ARTIST_BASELINE_Y = 200;
 const ARTIST_MAX_WIDTH = 900;
 
 // Red bars
-const BAR_LEFT_X = 100;
+const BAR_LEFT_X = 120;
 const BAR_RIGHT_X = 935;
 const BAR_WIDTH = BAR_RIGHT_X - BAR_LEFT_X;
 const BAR_HEIGHT = 52;
 
 // TEXT PADDING INSIDE BAR (aligned to red bar start)
-const BAR_PADDING_X = 44;
+const BAR_PADDING_X = 32;
 
 /* =========================
    ROW POSITIONS (ABSOLUTE)
