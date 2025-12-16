@@ -28,9 +28,9 @@ const BAR_PADDING_X = 18;
 
 const BAR_TOP_Y = [
   625,  // row 1
-  763,  // row 2
-  910,  // row 3
-  1040, // row 4
+  770,  // row 2
+  915,  // row 3
+  1042, // row 4
   1170  // row 5
 ];
 
