@@ -12,7 +12,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   status.textContent = "Loading...";
 
-  // load both files
+  /* =========================
+     LOAD DATA
+  ========================= */
+
   const [sheetRes, artistsRes] = await Promise.all([
     fetch(SHEET_URL),
     fetch(ARTISTS_URL)
@@ -27,7 +30,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   status.textContent = "Ready";
 
-  // AUTOCOMPLETE
+  /* =========================
+     AUTOCOMPLETE
+  ========================= */
+
   input.addEventListener("input", () => {
     const q = input.value;
     const results = searchArtists(q, 10);
@@ -63,10 +69,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 
-  // GENERATE POSTER
-  document.getElementById("generate_top5").onclick = () => {
+  /* =========================
+     GENERATE POSTER
+  ========================= */
+
+  document.getElementById("generate_top5").onclick = async () => {
     const query = input.value;
     const best = bestArtistForQuery(query);
+
     if (!best) {
       status.textContent = "No matching artist";
       return;
@@ -82,13 +92,18 @@ document.addEventListener("DOMContentLoaded", async () => {
     const img = new Image();
     img.crossOrigin = "anonymous";
 
-    img.onload = () => {
+    img.onload = async () => {
       canvas.width = img.width;
       canvas.height = img.height;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       canvas.style.display = "block";
 
       ctx.drawImage(img, 0, 0);
+
+      /* 🔒 FORCE FONT LOAD BEFORE CANVAS DRAW */
+      await document.fonts.load("900 120px 'Zalando Sans Expanded'");
+      await document.fonts.load("700 34px 'Zalando Sans Expanded'");
+      await document.fonts.load("400 20px 'Zalando Sans Expanded'");
 
       drawArtistName(ctx, best);
       drawSongs(ctx, top5);
@@ -101,29 +116,32 @@ document.addEventListener("DOMContentLoaded", async () => {
     img.src = TEMPLATE_URL + "?cache=" + Date.now();
   };
 
-  // DOWNLOAD
+  /* =========================
+     DOWNLOAD
+  ========================= */
+
   document.getElementById("download_btn").onclick = () => {
-  try {
-    const dataURL = canvas.toDataURL("image/png");
+    try {
+      const dataURL = canvas.toDataURL("image/png");
 
-    console.log("DataURL length:", dataURL.length);
+      if (!dataURL.startsWith("data:image/png")) {
+        console.error("Canvas returned invalid dataURL");
+        return;
+      }
 
-    if (!dataURL.startsWith("data:image/png")) {
-      console.error("Canvas returned invalid dataURL — probably tainted or empty.");
+      const link = document.createElement("a");
+      link.download = "top5-poster.png";
+      link.href = dataURL;
+      link.click();
+    } catch (e) {
+      console.error("Canvas toDataURL failed:", e);
     }
+  };
 
-    const link = document.createElement("a");
-    link.download = "top5-poster.png";
-    link.href = dataURL;
-    link.click();
+  /* =========================
+     RESET
+  ========================= */
 
-  } catch (e) {
-    console.error("Canvas toDataURL failed:", e);
-  }
-};
-
-  
-  // RESET
   document.getElementById("reset_btn").onclick = () => {
     input.value = "";
     status.textContent = "";
