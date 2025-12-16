@@ -14,25 +14,25 @@ const ARTIST_CENTER_X = 540;
 const ARTIST_BASELINE_Y = 520;
 const ARTIST_MAX_WIDTH = 900;
 
-// Red bars geometry (these match your template)
+// Red bars geometry
 const BAR_LEFT_X = 170;
 const BAR_RIGHT_X = 900;
 const BAR_WIDTH = BAR_RIGHT_X - BAR_LEFT_X;
-const BAR_HEIGHT = 52;           // height of the red highlight bar
+const BAR_HEIGHT = 52;
 const BAR_PADDING_X = 18;
 
-// 🔴 Top Y of each red bar (tuned to match the Billie reference)
+// 🔴 Top Y of each red bar (template-tuned)
 const BAR_TOPS = [
-  592, // row 1
-  742, // row 2
-  892, // row 3
+  566,  // row 1 (intentionally higher)
+  742,  // row 2
+  892,  // row 3
   1042, // row 4
-  1192 // row 5
+  1192  // row 5
 ];
 
 // Text positions relative to bar top
-const TITLE_BASELINE_FROM_TOP = 34;  // title baseline inside bar
-const META_BASELINE_FROM_TOP  = 76;  // metadata baseline below bar
+const TITLE_BASELINE_FROM_TOP = 30;
+const META_BASELINE_FROM_TOP  = 76;
 
 /* =========================
    UTIL
@@ -71,7 +71,7 @@ function drawSongs(ctx, rows) {
   rows.forEach((row, i) => {
     const barTop = BAR_TOPS[i];
 
-    // -------- SONG TITLE (INSIDE RED BAR) --------
+    /* --- SONG TITLE (INSIDE RED BAR) --- */
     ctx.fillStyle = "#000";
     ctx.textAlign = "left";
     ctx.textBaseline = "alphabetic";
@@ -82,7 +82,7 @@ function drawSongs(ctx, rows) {
     const titleSize = fitText(ctx, title, maxTitleWidth, 34, 700);
     ctx.font = `700 ${titleSize}px 'Zalando Sans Expanded', sans-serif`;
 
-    // Clip title to the red bar rectangle so it NEVER leaves the bar
+    // Clip title strictly to red bar
     ctx.save();
     ctx.beginPath();
     ctx.rect(BAR_LEFT_X, barTop, BAR_WIDTH, BAR_HEIGHT);
@@ -96,17 +96,27 @@ function drawSongs(ctx, rows) {
 
     ctx.restore();
 
-    // -------- METADATA (BELOW BAR) --------
+    /* --- METADATA (BELOW BAR) --- */
     ctx.font = "400 20px 'Zalando Sans Expanded', sans-serif";
 
     const metaY = barTop + META_BASELINE_FROM_TOP;
 
-    const appearances = `appeared ${row.Numero_comparse} times`;
-    const bestRank = `#${row.Miglior_posto_Canzone}`;
-    const bestDate = row.Data_miglior_posto;
+    ctx.fillText(
+      `appeared ${row.Numero_comparse} times`,
+      BAR_LEFT_X + BAR_PADDING_X,
+      metaY
+    );
 
-    ctx.fillText(appearances, BAR_LEFT_X + BAR_PADDING_X, metaY);
-    ctx.fillText(bestRank, BAR_RIGHT_X - 170, metaY);
-    ctx.fillText(bestDate, BAR_RIGHT_X - 40, metaY);
+    ctx.fillText(
+      `#${row.Miglior_posto_Canzone}`,
+      BAR_RIGHT_X - 170,
+      metaY
+    );
+
+    ctx.fillText(
+      row.Data_miglior_posto,
+      BAR_RIGHT_X - 40,
+      metaY
+    );
   });
 }
