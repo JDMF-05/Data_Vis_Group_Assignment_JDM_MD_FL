@@ -9,33 +9,48 @@ const TEMPLATE_URL =
    LAYOUT
 ========================= */
 
-// Artist name (higher + more left)
-const ARTIST_CENTER_X = 380;
-const ARTIST_BASELINE_Y = 360;
+// Artist name (moved right + up)
+const ARTIST_CENTER_X = 500;   // was 440
+const ARTIST_BASELINE_Y = 440; // was 470
 const ARTIST_MAX_WIDTH = 900;
 
-// Layout guides (no bars are drawn here)
+// Red bars
 const BAR_LEFT_X = 220;
 const BAR_RIGHT_X = 935;
 const BAR_WIDTH = BAR_RIGHT_X - BAR_LEFT_X;
 const BAR_HEIGHT = 52;
-
-// Titles + metadata pushed right
-const BAR_PADDING_X = 48;
+const BAR_PADDING_X = 28; // was 18 → nudges titles + appeared text right
 
 /* =========================
-   ROW LAYOUT (DYNAMIC)
+   ROW POSITIONS (ABSOLUTE)
 ========================= */
 
-const FIRST_ROW_Y = 625;
-const ROW_GAP = 100;
+const BAR_TOP_Y = [
+  625,
+  780,
+  920,
+  1050,
+  1190
+];
+
+// Title nudges
+const TITLE_NUDGE_Y = [
+  0,
+  -10,
+  -10,
+  0,
+  0
+];
+
+// Prevent touching bar edges
+const TITLE_CLAMP_Y = 14;
 
 // Metadata spacing
 const META_OFFSET_Y = 48;
 
-// Metadata columns
-const RANK_X = 760;
-const DATE_X = 900;
+// Metadata columns (nudged right)
+const RANK_X = 690; // was 660
+const DATE_X = 820; // was 780
 
 /* =========================
    UTIL
@@ -50,6 +65,10 @@ function fitText(ctx, text, maxWidth, baseSize, weight = 700) {
     ctx.font = `${weight} ${size}px 'Zalando Sans Expanded', sans-serif`;
   }
   return size;
+}
+
+function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), max);
 }
 
 function capitalizeFirstLetter(str = "") {
@@ -83,16 +102,11 @@ function drawArtistName(ctx, artist) {
 ========================= */
 
 function drawSongs(ctx, rows) {
-  // Sort by best rank (ascending)
-  const sortedRows = [...rows].sort(
-    (a, b) => a.Miglior_posto_Canzone - b.Miglior_posto_Canzone
-  );
-
-  sortedRows.forEach((row, i) => {
-    const barTop = FIRST_ROW_Y + i * ROW_GAP;
+  rows.forEach((row, i) => {
+    const barTop = BAR_TOP_Y[i];
 
     /* =====================
-       TITLE (INSIDE BAR)
+       TITLE
     ===================== */
 
     const title = row.Canzone || "";
@@ -102,10 +116,12 @@ function drawSongs(ctx, rows) {
     ctx.font = `700 ${titleSize}px 'Zalando Sans Expanded', sans-serif`;
     ctx.fillStyle = "#000";
     ctx.textAlign = "left";
-    ctx.textBaseline = "alphabetic";
+    ctx.textBaseline = "middle";
 
-    // Safe vertical position to avoid clipping
-    const titleY = barTop + BAR_HEIGHT - 14;
+    const rawTitleY = BAR_HEIGHT / 2 + (TITLE_NUDGE_Y[i] || 0);
+    const titleY =
+      barTop +
+      clamp(rawTitleY, TITLE_CLAMP_Y, BAR_HEIGHT - TITLE_CLAMP_Y);
 
     ctx.save();
     ctx.beginPath();
@@ -129,7 +145,7 @@ function drawSongs(ctx, rows) {
 
     const metaY = barTop + BAR_HEIGHT + META_OFFSET_Y;
 
-    // Appeared
+    // Appearances
     ctx.textAlign = "left";
     ctx.fillText(
       `appeared ${row.Numero_comparse} times`,
