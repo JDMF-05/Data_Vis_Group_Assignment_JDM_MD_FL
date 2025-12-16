@@ -9,18 +9,18 @@ const TEMPLATE_URL =
    LAYOUT
 ========================= */
 
-// Artist name (aligned with numbers, higher, italic)
+// Artist name (italic only, moved UP, aligned with numbers)
 const ARTIST_CENTER_X = 180;
-const ARTIST_BASELINE_Y = 340;
+const ARTIST_BASELINE_Y = 330;
 const ARTIST_MAX_WIDTH = 900;
 
-// Layout guides (no bars drawn)
+// Layout guides
 const BAR_LEFT_X = 220;
 const BAR_RIGHT_X = 935;
 const BAR_WIDTH = BAR_RIGHT_X - BAR_LEFT_X;
 const BAR_HEIGHT = 52;
 
-// Titles + metadata moved right by 2px
+// Titles + metadata moved right by 2px ONLY
 const BAR_PADDING_X = 50;
 
 /* =========================
@@ -83,7 +83,6 @@ function drawArtistName(ctx, artist) {
 ========================= */
 
 function drawSongs(ctx, rows) {
-  // Sort by best rank (ascending)
   const sortedRows = [...rows].sort(
     (a, b) => a.Miglior_posto_Canzone - b.Miglior_posto_Canzone
   );
@@ -91,9 +90,7 @@ function drawSongs(ctx, rows) {
   sortedRows.forEach((row, i) => {
     const barTop = FIRST_ROW_Y + i * ROW_GAP;
 
-    /* =====================
-       TITLE (INSIDE BAR)
-    ===================== */
+    /* ===== TITLE ===== */
 
     const title = row.Canzone || "";
     const maxTitleWidth = BAR_WIDTH - BAR_PADDING_X * 2;
@@ -119,9 +116,7 @@ function drawSongs(ctx, rows) {
 
     ctx.restore();
 
-    /* =====================
-       METADATA
-    ===================== */
+    /* ===== METADATA ===== */
 
     ctx.font = "500 28px 'Zalando Sans Expanded', sans-serif";
     ctx.textBaseline = "alphabetic";
