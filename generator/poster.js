@@ -9,32 +9,33 @@ const TEMPLATE_URL =
    LAYOUT
 ========================= */
 
-// Artist name (moved up + left)
-const ARTIST_CENTER_X = 440;
-const ARTIST_BASELINE_Y = 410;
+// Artist name (higher + more left)
+const ARTIST_CENTER_X = 380;
+const ARTIST_BASELINE_Y = 360;
 const ARTIST_MAX_WIDTH = 900;
 
-// Layout guides (NO bars drawn)
+// Layout guides (no bars are drawn here)
 const BAR_LEFT_X = 220;
 const BAR_RIGHT_X = 935;
 const BAR_WIDTH = BAR_RIGHT_X - BAR_LEFT_X;
 const BAR_HEIGHT = 52;
-const BAR_PADDING_X = 36;
+
+// Titles + metadata pushed right
+const BAR_PADDING_X = 48;
 
 /* =========================
-   ROW POSITIONS
+   ROW LAYOUT (DYNAMIC)
 ========================= */
 
-const BAR_TOP_Y = [625, 780, 920, 1050, 1190];
+const FIRST_ROW_Y = 625;
+const ROW_GAP = 155;
 
-const TITLE_NUDGE_Y = [0, -10, -10, 0, 0];
-const TITLE_CLAMP_Y = 14;
-
+// Metadata spacing
 const META_OFFSET_Y = 48;
 
-// Metadata columns (nudged right)
-const RANK_X = 720;
-const DATE_X = 860;
+// Metadata columns
+const RANK_X = 760;
+const DATE_X = 900;
 
 /* =========================
    UTIL
@@ -49,10 +50,6 @@ function fitText(ctx, text, maxWidth, baseSize, weight = 700) {
     ctx.font = `${weight} ${size}px 'Zalando Sans Expanded', sans-serif`;
   }
   return size;
-}
-
-function clamp(value, min, max) {
-  return Math.min(Math.max(value, min), max);
 }
 
 function capitalizeFirstLetter(str = "") {
@@ -74,7 +71,11 @@ function drawArtistName(ctx, artist) {
   const size = fitText(ctx, displayArtist, ARTIST_MAX_WIDTH, 140, 900);
   ctx.font = `900 ${size}px 'Zalando Sans Expanded', sans-serif`;
 
-  ctx.fillText(displayArtist, ARTIST_CENTER_X, ARTIST_BASELINE_Y);
+  ctx.fillText(
+    displayArtist,
+    ARTIST_CENTER_X,
+    ARTIST_BASELINE_Y
+  );
 }
 
 /* =========================
@@ -82,15 +83,17 @@ function drawArtistName(ctx, artist) {
 ========================= */
 
 function drawSongs(ctx, rows) {
-  // Sort by rank (ascending)
+  // Sort by best rank (ascending)
   const sortedRows = [...rows].sort(
     (a, b) => a.Miglior_posto_Canzone - b.Miglior_posto_Canzone
   );
 
   sortedRows.forEach((row, i) => {
-    const barTop = BAR_TOP_Y[i];
+    const barTop = FIRST_ROW_Y + i * ROW_GAP;
 
-    /* ===== TITLE ===== */
+    /* =====================
+       TITLE (INSIDE BAR)
+    ===================== */
 
     const title = row.Canzone || "";
     const maxTitleWidth = BAR_WIDTH - BAR_PADDING_X * 2;
@@ -99,28 +102,34 @@ function drawSongs(ctx, rows) {
     ctx.font = `700 ${titleSize}px 'Zalando Sans Expanded', sans-serif`;
     ctx.fillStyle = "#000";
     ctx.textAlign = "left";
-    ctx.textBaseline = "middle";
+    ctx.textBaseline = "alphabetic";
 
-    const rawTitleY = BAR_HEIGHT / 2 + (TITLE_NUDGE_Y[i] || 0);
-    const titleY =
-      barTop +
-      clamp(rawTitleY, TITLE_CLAMP_Y, BAR_HEIGHT - TITLE_CLAMP_Y);
+    // Safe vertical position to avoid clipping
+    const titleY = barTop + BAR_HEIGHT - 14;
 
     ctx.save();
     ctx.beginPath();
     ctx.rect(BAR_LEFT_X, barTop, BAR_WIDTH, BAR_HEIGHT);
     ctx.clip();
 
-    ctx.fillText(title, BAR_LEFT_X + BAR_PADDING_X, titleY);
+    ctx.fillText(
+      title,
+      BAR_LEFT_X + BAR_PADDING_X,
+      titleY
+    );
+
     ctx.restore();
 
-    /* ===== METADATA ===== */
+    /* =====================
+       METADATA
+    ===================== */
 
     ctx.font = "500 28px 'Zalando Sans Expanded', sans-serif";
     ctx.textBaseline = "alphabetic";
 
     const metaY = barTop + BAR_HEIGHT + META_OFFSET_Y;
 
+    // Appeared
     ctx.textAlign = "left";
     ctx.fillText(
       `appeared ${row.Numero_comparse} times`,
@@ -128,10 +137,20 @@ function drawSongs(ctx, rows) {
       metaY
     );
 
+    // Rank
     ctx.textAlign = "right";
-    ctx.fillText(`#${row.Miglior_posto_Canzone}`, RANK_X, metaY);
+    ctx.fillText(
+      `#${row.Miglior_posto_Canzone}`,
+      RANK_X,
+      metaY
+    );
 
+    // Date
     ctx.textAlign = "left";
-    ctx.fillText(row.Data_miglior_posto, DATE_X, metaY);
+    ctx.fillText(
+      row.Data_miglior_posto,
+      DATE_X,
+      metaY
+    );
   });
 }
