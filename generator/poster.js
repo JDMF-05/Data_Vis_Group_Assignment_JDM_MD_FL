@@ -9,26 +9,32 @@ const TEMPLATE_URL =
    LAYOUT
 ========================= */
 
-// Artist
+// Artist name
 const ARTIST_CENTER_X = 540;
 const ARTIST_BASELINE_Y = 520;
 const ARTIST_MAX_WIDTH = 900;
 
-// Bars (measured from template)
-const BAR_LEFT_X = 215;
-const BAR_RIGHT_X = 930;
+// 🔴 Red bars — MOVED TO THE RIGHT
+const BAR_LEFT_X = 260;
+const BAR_RIGHT_X = 975;
 const BAR_WIDTH = BAR_RIGHT_X - BAR_LEFT_X;
 const BAR_HEIGHT = 52;
 const BAR_PADDING_X = 18;
 
-// Vertical layout
-const BAR_TOP_START = 610;
-const BAR_GAP = 120;
+// Base vertical grid
+const BAR_TOP_START = 600;
+const BAR_GAP = 115;
 
-// Progressive push-down
-const EXTRA_ROW_SHIFT_Y = [95, 70, 50, 30, 15];
+// ✅ Hand-tuned row offsets (from your screenshots)
+const EXTRA_ROW_SHIFT_Y = [
+  25,   // row 1 → just a bit
+  85,   // row 2 → a lot
+  105,  // row 3 → even more
+  90,   // row 4
+  85    // row 5
+];
 
-// Metadata
+// Metadata spacing
 const META_OFFSET_Y = 26;
 
 /* =========================
@@ -70,7 +76,7 @@ function drawSongs(ctx, rows) {
       BAR_TOP_START + i * BAR_GAP + (EXTRA_ROW_SHIFT_Y[i] || 0);
 
     /* =====================
-       TITLE (INSIDE BAR)
+       TITLE — INSIDE RED BAR
     ===================== */
 
     const title = row.Canzone || "";
@@ -86,7 +92,7 @@ function drawSongs(ctx, rows) {
     const titleBaseline =
       barTop + BAR_HEIGHT / 2 + titleSize * 0.35;
 
-    // Clip strictly to red bar
+    // Hard clip so title NEVER escapes the bar
     ctx.save();
     ctx.beginPath();
     ctx.rect(BAR_LEFT_X, barTop, BAR_WIDTH, BAR_HEIGHT);
@@ -101,11 +107,10 @@ function drawSongs(ctx, rows) {
     ctx.restore();
 
     /* =====================
-       METADATA (BELOW BAR)
+       METADATA — BELOW BAR
     ===================== */
 
     ctx.font = "400 20px 'Zalando Sans Expanded', sans-serif";
-
     const metaY = barTop + BAR_HEIGHT + META_OFFSET_Y;
 
     ctx.fillText(
