@@ -14,7 +14,7 @@ const ARTIST_CENTER_X = 540;
 const ARTIST_BASELINE_Y = 520;
 const ARTIST_MAX_WIDTH = 900;
 
-// 🔴 Red bars
+// Red bars
 const BAR_LEFT_X = 260;
 const BAR_RIGHT_X = 975;
 const BAR_WIDTH = BAR_RIGHT_X - BAR_LEFT_X;
@@ -25,13 +25,13 @@ const BAR_PADDING_X = 18;
 const BAR_TOP_START = 600;
 const BAR_GAP = 115;
 
-// ✅ FIXED row alignment (monotonic, correct order)
+// FIXED row alignment (monotonic, correct order)
 const EXTRA_ROW_SHIFT_Y = [
   25,   // 1
-  50,   // 2 → up a bit
+  45,   // 2 → up a bit
   80,   // 3 (reference, unchanged)
-  100,  // 4 → slightly up but still under 3
-  130   // 5 → more up but still under 4
+  95,  // 4 → slightly up but still under 3
+  110   // 5 → more up but still under 4
 ];
 
 // 🔧 Title nudges (minor optical correction only)
