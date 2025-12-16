@@ -10,31 +10,30 @@ const TEMPLATE_URL =
 ========================= */
 
 // Artist name
-const ARTIST_CENTER_X = 500;   // moved left (was 540)
-const ARTIST_BASELINE_Y = 520;
+const ARTIST_CENTER_X = 440;   // moved further left
+const ARTIST_BASELINE_Y = 470; // moved up
 const ARTIST_MAX_WIDTH = 900;
 
 // Red bars
-const BAR_LEFT_X = 220;        // moved left (was 260)
-const BAR_RIGHT_X = 935;       // moved left (was 975)
+const BAR_LEFT_X = 220;
+const BAR_RIGHT_X = 935;
 const BAR_WIDTH = BAR_RIGHT_X - BAR_LEFT_X;
 const BAR_HEIGHT = 52;
 const BAR_PADDING_X = 18;
 
 /* =========================
    ROW POSITIONS (ABSOLUTE)
-   ⬇ change ONE value → ONE row moves
 ========================= */
 
 const BAR_TOP_Y = [
-  625,  // row 1
-  780,  // row 2
-  920,  // row 3
-  1050, // row 4
-  1190  // row 5
+  625,
+  780,
+  920,
+  1050,
+  1190
 ];
 
-// 🔧 Title nudges (minor optical correction only)
+// Title nudges
 const TITLE_NUDGE_Y = [
   0,
   -10,
@@ -47,11 +46,11 @@ const TITLE_NUDGE_Y = [
 const TITLE_CLAMP_Y = 14;
 
 // Metadata spacing
-const META_OFFSET_Y = 48;      // increased (was 42)
+const META_OFFSET_Y = 48;
 
 // Metadata columns
-const RANK_X = 660;            // moved left (was 700)
-const DATE_X = 780;            // moved left (was 820)
+const RANK_X = 660;
+const DATE_X = 780;
 
 /* =========================
    UTIL
@@ -72,18 +71,30 @@ function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max);
 }
 
+function capitalizeFirstLetter(str = "") {
+  if (!str) return "";
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
 /* =========================
    ARTIST
 ========================= */
 
 function drawArtistName(ctx, artist) {
+  const displayArtist = capitalizeFirstLetter(artist);
+
   ctx.fillStyle = "#000";
   ctx.textAlign = "center";
   ctx.textBaseline = "alphabetic";
 
-  const size = fitText(ctx, artist, ARTIST_MAX_WIDTH, 140, 900); // bigger (was 120)
+  const size = fitText(ctx, displayArtist, ARTIST_MAX_WIDTH, 140, 900);
   ctx.font = `900 ${size}px 'Zalando Sans Expanded', sans-serif`;
-  ctx.fillText(artist, ARTIST_CENTER_X, ARTIST_BASELINE_Y);
+
+  ctx.fillText(
+    displayArtist,
+    ARTIST_CENTER_X,
+    ARTIST_BASELINE_Y
+  );
 }
 
 /* =========================
@@ -100,7 +111,7 @@ function drawSongs(ctx, rows) {
 
     const title = row.Canzone || "";
     const maxTitleWidth = BAR_WIDTH - BAR_PADDING_X * 2;
-    const titleSize = fitText(ctx, title, maxTitleWidth, 44, 700); // bigger (was 36)
+    const titleSize = fitText(ctx, title, maxTitleWidth, 44, 700);
 
     ctx.font = `700 ${titleSize}px 'Zalando Sans Expanded', sans-serif`;
     ctx.fillStyle = "#000";
@@ -129,7 +140,7 @@ function drawSongs(ctx, rows) {
        METADATA
     ===================== */
 
-    ctx.font = "500 28px 'Zalando Sans Expanded', sans-serif"; // bigger (was 24)
+    ctx.font = "500 28px 'Zalando Sans Expanded', sans-serif";
     ctx.textBaseline = "alphabetic";
 
     const metaY = barTop + BAR_HEIGHT + META_OFFSET_Y;
