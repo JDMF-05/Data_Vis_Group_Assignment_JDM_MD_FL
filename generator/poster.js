@@ -28,10 +28,10 @@ const BAR_PADDING_X = 18;
 
 const BAR_TOP_Y = [
   625,  // row 1
-  770,  // row 2
-  900,  // row 3
-  1030, // row 4
-  1160  // row 5
+  775,  // row 2
+  920,  // row 3
+  1055, // row 4
+  1210  // row 5
 ];
 
 // 🔧 Title nudges (minor optical correction only)
