@@ -25,26 +25,30 @@ const BAR_PADDING_X = 18;
 const BAR_TOP_START = 600;
 const BAR_GAP = 115;
 
-// Row layout offsets (background alignment)
+// Background alignment
 const EXTRA_ROW_SHIFT_Y = [25, 85, 105, 90, 85];
 
-// 🔧 TITLE MOVEMENTS — EXACTLY AS REQUESTED
+// 🔧 Title optical nudges (UPDATED AS REQUESTED)
 const TITLE_NUDGE_Y = [
-  0,    // 1st → perfect
-  -22,  // 2nd → UP A LOT
-  -10,  // 3rd → up a bit
-  6,    // 4th → down a bit
-  24    // 5th → DOWN A LOT
+  0,    // 1 → unchanged
+  -8,   // 2 → up a bit
+  -12,  // 3 → up a bit more (but not much)
+  6,    // 4 → a bit down
+  14    // 5 → down
 ];
 
-// Metadata spacing
-const META_OFFSET_Y = 38;
+// 🔒 Clamp to prevent text touching bar edges
+const TITLE_CLAMP_Y = 14;
 
-// Right metadata column
-const META_RIGHT_X = 820;
+// Metadata spacing (CONSISTENT for all rows)
+const META_OFFSET_Y = 42;
 
-// Rank vertical offset (separate line)
-const RANK_OFFSET_Y = -14;
+// Right metadata columns (MORE SEPARATION)
+const RANK_X = 700;
+const DATE_X = 820;
+
+// Rank vertical offset (separate lines)
+const RANK_OFFSET_Y = -18;
 
 /* =========================
    UTIL
@@ -59,6 +63,10 @@ function fitText(ctx, text, maxWidth, baseSize, weight = 700) {
     ctx.font = `${weight} ${size}px 'Zalando Sans Expanded', sans-serif`;
   }
   return size;
+}
+
+function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), max);
 }
 
 /* =========================
@@ -85,42 +93,48 @@ function drawSongs(ctx, rows) {
       BAR_TOP_START + i * BAR_GAP + (EXTRA_ROW_SHIFT_Y[i] || 0);
 
     /* =====================
-       TITLE — RED BAR
+       TITLE — SAFE INSIDE BAR
     ===================== */
 
     const title = row.Canzone || "";
     const maxTitleWidth = BAR_WIDTH - BAR_PADDING_X * 2;
-    const titleSize = fitText(ctx, title, maxTitleWidth, 32, 700);
+    const titleSize = fitText(ctx, title, maxTitleWidth, 34, 700);
 
     ctx.font = `700 ${titleSize}px 'Zalando Sans Expanded', sans-serif`;
     ctx.fillStyle = "#000";
     ctx.textAlign = "left";
     ctx.textBaseline = "middle";
 
+    const rawTitleY =
+      BAR_HEIGHT / 2 + (TITLE_NUDGE_Y[i] || 0);
+
     const titleY =
       barTop +
-      BAR_HEIGHT / 2 +
-      (TITLE_NUDGE_Y[i] || 0);
+      clamp(rawTitleY, TITLE_CLAMP_Y, BAR_HEIGHT - TITLE_CLAMP_Y);
 
     ctx.save();
     ctx.beginPath();
     ctx.rect(BAR_LEFT_X, barTop, BAR_WIDTH, BAR_HEIGHT);
     ctx.clip();
 
-    ctx.fillText(title, BAR_LEFT_X + BAR_PADDING_X, titleY);
+    ctx.fillText(
+      title,
+      BAR_LEFT_X + BAR_PADDING_X,
+      titleY
+    );
 
     ctx.restore();
 
     /* =====================
-       METADATA — BELOW BAR
+       METADATA — CONSISTENT
     ===================== */
 
-    ctx.font = "400 20px 'Zalando Sans Expanded', sans-serif";
+    ctx.font = "500 22px 'Zalando Sans Expanded', sans-serif";
     ctx.textBaseline = "alphabetic";
 
     const metaBaseY = barTop + BAR_HEIGHT + META_OFFSET_Y;
 
-    // Appeared
+    // Appearance
     ctx.textAlign = "left";
     ctx.fillText(
       `appeared ${row.Numero_comparse} times`,
@@ -128,19 +142,19 @@ function drawSongs(ctx, rows) {
       metaBaseY
     );
 
-    // Rank — OWN LINE (no overlap ever)
+    // Rank (separate line)
     ctx.textAlign = "right";
     ctx.fillText(
       `#${row.Miglior_posto_Canzone}`,
-      META_RIGHT_X,
+      RANK_X,
       metaBaseY + RANK_OFFSET_Y
     );
 
-    // Date — BELOW rank
-    ctx.textAlign = "right";
+    // Date
+    ctx.textAlign = "left";
     ctx.fillText(
       row.Data_miglior_posto,
-      META_RIGHT_X,
+      DATE_X,
       metaBaseY
     );
   });
