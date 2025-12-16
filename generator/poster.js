@@ -21,17 +21,17 @@ const BAR_WIDTH = BAR_RIGHT_X - BAR_LEFT_X;
 const BAR_HEIGHT = 52;
 const BAR_PADDING_X = 18;
 
-// Vertical grid
-const BAR_TOP_START = 600;
-const BAR_GAP = 115;
+/* =========================
+   ROW POSITIONS (ABSOLUTE)
+   ⬇ change ONE value → ONE row moves
+========================= */
 
-// FIXED row alignment (monotonic, correct order)
-const EXTRA_ROW_SHIFT_Y = [
-  25,   // 1
-  48,   // 2 → up a bit
-  80,   // 3 (reference, unchanged)
-  95,  // 4 → slightly up but still under 3
-  110   // 5 → more up but still under 4
+const BAR_TOP_Y = [
+  625,  // row 1
+  763,  // row 2
+  910,  // row 3
+  1040, // row 4
+  1170  // row 5
 ];
 
 // 🔧 Title nudges (minor optical correction only)
@@ -92,8 +92,7 @@ function drawArtistName(ctx, artist) {
 
 function drawSongs(ctx, rows) {
   rows.forEach((row, i) => {
-    const barTop =
-      BAR_TOP_START + i * BAR_GAP + EXTRA_ROW_SHIFT_Y[i];
+    const barTop = BAR_TOP_Y[i];
 
     /* =====================
        TITLE
@@ -127,7 +126,7 @@ function drawSongs(ctx, rows) {
     ctx.restore();
 
     /* =====================
-       METADATA (SAME LINE)
+       METADATA
     ===================== */
 
     ctx.font = "500 24px 'Zalando Sans Expanded', sans-serif";
