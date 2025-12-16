@@ -10,7 +10,7 @@ const TEMPLATE_URL =
 ========================= */
 
 // Artist name (moved right + up)
-const ARTIST_CENTER_X = 600;
+const ARTIST_CENTER_X = 450;
 const ARTIST_BASELINE_Y = 200;
 const ARTIST_MAX_WIDTH = 900;
 
@@ -19,7 +19,7 @@ const BAR_LEFT_X = 100;
 const BAR_RIGHT_X = 935;
 const BAR_WIDTH = BAR_RIGHT_X - BAR_LEFT_X;
 const BAR_HEIGHT = 52;
-const BAR_PADDING_X = 50;
+const BAR_PADDING_X = 80;
 
 /* =========================
    ROW POSITIONS (ABSOLUTE)
