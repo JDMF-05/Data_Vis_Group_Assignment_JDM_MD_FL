@@ -57,6 +57,16 @@ function loadTenorScript() {
   document.body.appendChild(s);
 }
 
+function clearPosterUI() {
+  const canvas = document.getElementById("top5_canvas");
+  if (canvas) canvas.style.display = "none";
+
+  const downloadBtn = document.getElementById("download_btn");
+  const resetBtn = document.getElementById("reset_btn");
+  if (downloadBtn) downloadBtn.style.display = "none";
+  if (resetBtn) resetBtn.style.display = "none";
+}
+
 function clearEasterEgg() {
   const el = document.getElementById("easter_egg");
   if (!el) return;
@@ -81,11 +91,14 @@ function showEasterEggIfAny(query) {
     return false;
   }
 
+  // Easter egg is exclusive
+  clearPosterUI();
+
   el.innerHTML = match.embedHTML;
   el.style.display = "block";
   loadTenorScript();
 
-  return true; // ✅ PERFECT MATCH FOUND
+  return true;
 }
 
 /* =========================
@@ -167,9 +180,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const hasEasterEgg = showEasterEggIfAny(query);
     if (hasEasterEgg) {
-      status.textContent = "✨ Easter egg unlocked";
-      return; // ⛔ STOP HERE — no artist matching
+      status.textContent = "Easter egg unlocked";
+      return;
     }
+
+    clearEasterEgg();
 
     const best = bestArtistForQuery(query);
     if (!best) {
@@ -234,12 +249,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     input.value = "";
     status.textContent = "";
 
-    canvas.style.display = "none";
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    document.getElementById("download_btn").style.display = "none";
-    document.getElementById("reset_btn").style.display = "none";
-
+    clearPosterUI();
     clearEasterEgg();
   };
 });
