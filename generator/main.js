@@ -3,6 +3,85 @@ const SHEET_URL =
 
 let SHEET_DATA = null;
 
+/* =========================
+   EASTER EGGS
+========================= */
+
+const EASTER_EGGS = [
+  {
+    trigger: "Banana",
+    embedHTML: `
+      <div class="tenor-gif-embed" data-postid="26063026" data-share-method="host" data-aspect-ratio="1.50235" data-width="100%">
+        <a href="https://tenor.com/view/peely-the-shame-meme-cringe-caught-gif-26063026">Peely The Shame GIF</a>
+        from <a href="https://tenor.com/search/peely-gifs">Peely GIFs</a>
+      </div>
+    `
+  },
+  {
+    trigger: "Mattia Dellamonica",
+    embedHTML: `
+      <div class="tenor-gif-embed" data-postid="8510554628372069925" data-share-method="host" data-aspect-ratio="0.779116" data-width="100%">
+        <a href="https://tenor.com/view/cat-gun-gif-8510554628372069925">Cat Gun GIF</a>
+        from <a href="https://tenor.com/search/cat+gun-gifs">Cat Gun GIFs</a>
+      </div>
+    `
+  },
+  {
+    trigger: "Federico Lombardo",
+    embedHTML: `
+      <div class="tenor-gif-embed" data-postid="13290601400007972669" data-share-method="host" data-aspect-ratio="1" data-width="100%">
+        <a href="https://tenor.com/view/gundam-mobile-suit-gundam-mcdonald%27s-char-aznable-char-gundam-gif-13290601400007972669">Gundam GIF</a>
+        from <a href="https://tenor.com/search/gundam-gifs">Gundam GIFs</a>
+      </div>
+    `
+  },
+  {
+    trigger: "Joshua Moshi",
+    embedHTML: `
+      <div class="tenor-gif-embed" data-postid="5319769" data-share-method="host" data-aspect-ratio="0.715" data-width="100%">
+        <a href="https://tenor.com/view/futurama-bender-dance-gif-5319769">Bender Dancing GIF</a>
+        from <a href="https://tenor.com/search/futurama-gifs">Futurama GIFs</a>
+      </div>
+    `
+  }
+];
+
+function loadTenorScript() {
+  const old = document.getElementById("tenor-embed-js");
+  if (old) old.remove();
+
+  const s = document.createElement("script");
+  s.id = "tenor-embed-js";
+  s.async = true;
+  s.src = "https://tenor.com/embed.js";
+  document.body.appendChild(s);
+}
+
+function clearEasterEgg() {
+  const el = document.getElementById("easter_egg");
+  el.innerHTML = "";
+  el.style.display = "none";
+}
+
+function showEasterEggIfAny(query) {
+  const el = document.getElementById("easter_egg");
+  const q = normalize(query);
+
+  const match = EASTER_EGGS.find(e => normalize(e.trigger) === q);
+  if (!match) {
+    clearEasterEgg();
+    return;
+  }
+
+  el.innerHTML = match.embedHTML;
+  el.style.display = "block";
+  loadTenorScript();
+}
+
+/* =========================
+   APP
+========================= */
+
 document.addEventListener("DOMContentLoaded", async () => {
   const input = document.getElementById("artist_name");
   const status = document.getElementById("status_msg");
@@ -11,10 +90,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   const ctx = canvas.getContext("2d");
 
   status.textContent = "Loading...";
-
-  /* =========================
-     LOAD DATA
-  ========================= */
 
   const [sheetRes, artistsRes] = await Promise.all([
     fetch(SHEET_URL),
@@ -29,10 +104,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   );
 
   status.textContent = "Ready";
-
-  /* =========================
-     AUTOCOMPLETE
-  ========================= */
 
   input.addEventListener("input", () => {
     const q = input.value;
@@ -63,20 +134,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     box.style.display = "block";
   });
 
-  document.addEventListener("click", e => {
-    if (!box.contains(e.target) && e.target !== input) {
-      box.style.display = "none";
-    }
-  });
-
-  /* =========================
-     GENERATE POSTER
-  ========================= */
-
   document.getElementById("generate_top5").onclick = async () => {
     const query = input.value;
-    const best = bestArtistForQuery(query);
 
+    showEasterEggIfAny(query);
+
+    const best = bestArtistForQuery(query);
     if (!best) {
       status.textContent = "No matching artist";
       return;
@@ -95,12 +158,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     img.onload = async () => {
       canvas.width = img.width;
       canvas.height = img.height;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
       canvas.style.display = "block";
-
       ctx.drawImage(img, 0, 0);
 
-      /* 🔒 FORCE FONT LOAD BEFORE CANVAS DRAW */
       await document.fonts.load("900 120px 'Zalando Sans Expanded'");
       await document.fonts.load("700 34px 'Zalando Sans Expanded'");
       await document.fonts.load("400 20px 'Zalando Sans Expanded'");
@@ -109,47 +169,17 @@ document.addEventListener("DOMContentLoaded", async () => {
       drawSongs(ctx, top5);
 
       status.textContent = "Poster ready";
-      document.getElementById("download_btn").style.display = "inline-block";
-      document.getElementById("reset_btn").style.display = "inline-block";
+      download_btn.style.display = "inline-block";
+      reset_btn.style.display = "inline-block";
     };
 
-    img.src = TEMPLATE_URL + "?cache=" + Date.now();
+    img.src = getRandomTemplate() + "?cache=" + Date.now();
   };
-
-  /* =========================
-     DOWNLOAD
-  ========================= */
-
-  document.getElementById("download_btn").onclick = () => {
-    try {
-      const dataURL = canvas.toDataURL("image/png");
-
-      if (!dataURL.startsWith("data:image/png")) {
-        console.error("Canvas returned invalid dataURL");
-        return;
-      }
-
-      const link = document.createElement("a");
-      link.download = "top5-poster.png";
-      link.href = dataURL;
-      link.click();
-    } catch (e) {
-      console.error("Canvas toDataURL failed:", e);
-    }
-  };
-
-  /* =========================
-     RESET
-  ========================= */
 
   document.getElementById("reset_btn").onclick = () => {
     input.value = "";
-    status.textContent = "";
-
     canvas.style.display = "none";
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    document.getElementById("download_btn").style.display = "none";
-    document.getElementById("reset_btn").style.display = "none";
+    clearEasterEgg();
   };
 });
