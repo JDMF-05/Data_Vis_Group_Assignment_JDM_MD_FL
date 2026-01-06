@@ -30,7 +30,7 @@ const EASTER_EGGS = [
     trigger: "Federico Lombardo",
     embedHTML: `
       <div class="tenor-gif-embed" data-postid="13290601400007972669" data-share-method="host" data-aspect-ratio="1" data-width="100%">
-        <a href="https://tenor.com/view/gundam-mobile-suit-gundam-mcdonald%27s-char-aznable-char-gundam-gif-13290601400007972669">Gundam GIF</a>
+        <a href="https://tenor.com/view/gundam-mobile-suit-gundam-mcdonald%27s-char-aznable-char-gundam-gif-13290601400007972669">Gundam Mobile Suit Gundam GIF</a>
         from <a href="https://tenor.com/search/gundam-gifs">Gundam GIFs</a>
       </div>
     `
@@ -39,7 +39,7 @@ const EASTER_EGGS = [
     trigger: "Joshua Moshi",
     embedHTML: `
       <div class="tenor-gif-embed" data-postid="5319769" data-share-method="host" data-aspect-ratio="0.715" data-width="100%">
-        <a href="https://tenor.com/view/futurama-bender-dance-gif-5319769">Bender Dancing GIF</a>
+        <a href="https://tenor.com/view/futurama-bender-dance-gif-5319769">Bender Dancing - Futurama GIF</a>
         from <a href="https://tenor.com/search/futurama-gifs">Futurama GIFs</a>
       </div>
     `
@@ -52,6 +52,7 @@ function loadTenorScript() {
 
   const s = document.createElement("script");
   s.id = "tenor-embed-js";
+  s.type = "text/javascript";
   s.async = true;
   s.src = "https://tenor.com/embed.js";
   document.body.appendChild(s);
@@ -59,15 +60,18 @@ function loadTenorScript() {
 
 function clearEasterEgg() {
   const el = document.getElementById("easter_egg");
+  if (!el) return;
   el.innerHTML = "";
   el.style.display = "none";
 }
 
 function showEasterEggIfAny(query) {
   const el = document.getElementById("easter_egg");
-  const q = normalize(query);
+  if (!el) return;
 
+  const q = normalize(query);
   const match = EASTER_EGGS.find(e => normalize(e.trigger) === q);
+
   if (!match) {
     clearEasterEgg();
     return;
@@ -91,6 +95,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   status.textContent = "Loading...";
 
+  /* =========================
+     LOAD DATA
+  ========================= */
+
   const [sheetRes, artistsRes] = await Promise.all([
     fetch(SHEET_URL),
     fetch(ARTISTS_URL)
@@ -104,6 +112,10 @@ document.addEventListener("DOMContentLoaded", async () => {
   );
 
   status.textContent = "Ready";
+
+  /* =========================
+     AUTOCOMPLETE
+  ========================= */
 
   input.addEventListener("input", () => {
     const q = input.value;
@@ -134,12 +146,24 @@ document.addEventListener("DOMContentLoaded", async () => {
     box.style.display = "block";
   });
 
+  document.addEventListener("click", e => {
+    if (!box.contains(e.target) && e.target !== input) {
+      box.style.display = "none";
+    }
+  });
+
+  /* =========================
+     GENERATE POSTER
+  ========================= */
+
   document.getElementById("generate_top5").onclick = async () => {
     const query = input.value;
 
+    // Easter egg appears ONLY after clicking generate
     showEasterEggIfAny(query);
 
     const best = bestArtistForQuery(query);
+
     if (!best) {
       status.textContent = "No matching artist";
       return;
@@ -158,9 +182,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     img.onload = async () => {
       canvas.width = img.width;
       canvas.height = img.height;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
       canvas.style.display = "block";
+
       ctx.drawImage(img, 0, 0);
 
+      /* FORCE FONT LOAD BEFORE CANVAS DRAW */
       await document.fonts.load("900 120px 'Zalando Sans Expanded'");
       await document.fonts.load("700 34px 'Zalando Sans Expanded'");
       await document.fonts.load("400 20px 'Zalando Sans Expanded'");
@@ -169,17 +196,51 @@ document.addEventListener("DOMContentLoaded", async () => {
       drawSongs(ctx, top5);
 
       status.textContent = "Poster ready";
-      download_btn.style.display = "inline-block";
-      reset_btn.style.display = "inline-block";
+      document.getElementById("download_btn").style.display = "inline-block";
+      document.getElementById("reset_btn").style.display = "inline-block";
     };
 
+    // RANDOM TEMPLATE PICK (3 templates)
     img.src = getRandomTemplate() + "?cache=" + Date.now();
   };
 
+  /* =========================
+     DOWNLOAD
+  ========================= */
+
+  document.getElementById("download_btn").onclick = () => {
+    try {
+      const dataURL = canvas.toDataURL("image/png");
+
+      if (!dataURL.startsWith("data:image/png")) {
+        console.error("Canvas returned invalid dataURL");
+        return;
+      }
+
+      const link = document.createElement("a");
+      link.download = "top5-poster.png";
+      link.href = dataURL;
+      link.click();
+    } catch (e) {
+      console.error("Canvas toDataURL failed:", e);
+    }
+  };
+
+  /* =========================
+     RESET
+  ========================= */
+
   document.getElementById("reset_btn").onclick = () => {
     input.value = "";
+    status.textContent = "";
+
     canvas.style.display = "none";
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    document.getElementById("download_btn").style.display = "none";
+    document.getElementById("reset_btn").style.display = "none";
+
+    // clear easter egg on reset
     clearEasterEgg();
   };
 });
