@@ -10,16 +10,16 @@
     rel="stylesheet"
   >
 
-  <!-- CSS from GitHub Pages -->
+  <!-- CSS -->
   <link
     rel="stylesheet"
     href="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/style.css?v=133"
   >
 
-  <!-- Fuse.js -->
+  <!-- Fuse.js (must load before search.js) -->
   <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.min.js"></script>
 
-  <!-- JS from GitHub Pages -->
+  <!-- App scripts (ORDER MATTERS) -->
   <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/search.js?v=133"></script>
   <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/poster.js?v=133"></script>
   <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/main.js?v=133"></script>
@@ -32,16 +32,16 @@
     <input id="artist_name" placeholder="Enter artist name">
 
     <div class="button-row">
-      <button id="generate_top5">Generate Poster</button>
-      <button id="download_btn" style="display:none;">Download Poster</button>
-      <button id="reset_btn" style="display:none;">Reset</button>
+      <button id="generate_top5" type="button">Generate Poster</button>
+      <button id="download_btn" type="button" style="display:none;">Download Poster</button>
+      <button id="reset_btn" type="button" style="display:none;">Reset</button>
     </div>
 
     <p id="status_msg"></p>
 
     <canvas id="top5_canvas" width="1080" height="1920"></canvas>
 
-    <!-- Easter egg output (only filled after clicking Generate) -->
+    <!-- Easter egg output -->
     <div id="easter_egg"></div>
   </div>
 
