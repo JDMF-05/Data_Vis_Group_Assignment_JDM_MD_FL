@@ -59,13 +59,20 @@ function loadTenorScript() {
 
 function clearPosterUI() {
   const canvas = document.getElementById("top5_canvas");
-  if (canvas) canvas.style.display = "none";
+
+  if (canvas) {
+    const ctx = canvas.getContext("2d");
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    canvas.style.display = "none";
+  }
 
   const downloadBtn = document.getElementById("download_btn");
   const resetBtn = document.getElementById("reset_btn");
+
   if (downloadBtn) downloadBtn.style.display = "none";
   if (resetBtn) resetBtn.style.display = "none";
 }
+
 
 function clearEasterEgg() {
   const el = document.getElementById("easter_egg");
