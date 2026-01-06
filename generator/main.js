@@ -65,22 +65,27 @@ function clearEasterEgg() {
 }
 
 function showEasterEggIfAny(query) {
-  if (typeof normalize !== "function") return;
+  if (typeof normalize !== "function") return false;
 
   const el = document.getElementById("easter_egg");
-  if (!el) return;
+  if (!el) return false;
 
   const q = normalize(query);
-  const match = EASTER_EGGS.find(e => normalize(e.trigger) === q);
+
+  const match = EASTER_EGGS.find(
+    e => normalize(e.trigger) === q
+  );
 
   if (!match) {
     clearEasterEgg();
-    return;
+    return false;
   }
 
   el.innerHTML = match.embedHTML;
   el.style.display = "block";
   loadTenorScript();
+
+  return true; // ✅ PERFECT MATCH FOUND
 }
 
 /* =========================
@@ -160,7 +165,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   document.getElementById("generate_top5").onclick = async () => {
     const query = input.value;
 
-    showEasterEggIfAny(query);
+    const hasEasterEgg = showEasterEggIfAny(query);
+    if (hasEasterEgg) {
+      status.textContent = "✨ Easter egg unlocked";
+      return; // ⛔ STOP HERE — no artist matching
+    }
 
     const best = bestArtistForQuery(query);
     if (!best) {
