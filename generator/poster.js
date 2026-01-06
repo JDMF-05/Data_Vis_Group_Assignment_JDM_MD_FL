@@ -1,9 +1,17 @@
 /* =========================
-   TEMPLATE
+   TEMPLATES
 ========================= */
 
-const TEMPLATE_URL =
-  "https://raw.githubusercontent.com/JDMF-05/Data_Vis_Group_Assignment_JDM_MD_FL/main/generator/template_1.png";
+const TEMPLATE_URLS = [
+  "https://raw.githubusercontent.com/JDMF-05/Data_Vis_Group_Assignment_JDM_MD_FL/main/generator/template_f_1.png",
+  "https://raw.githubusercontent.com/JDMF-05/Data_Vis_Group_Assignment_JDM_MD_FL/main/generator/template_f_2.png",
+  "https://raw.githubusercontent.com/JDMF-05/Data_Vis_Group_Assignment_JDM_MD_FL/main/generator/template_f_3.png"
+];
+
+function getRandomTemplate() {
+  const i = Math.floor(Math.random() * TEMPLATE_URLS.length);
+  return TEMPLATE_URLS[i];
+}
 
 /* =========================
    LAYOUT
@@ -27,22 +35,10 @@ const BAR_PADDING_X = 140;
    ROW POSITIONS (ABSOLUTE)
 ========================= */
 
-const BAR_TOP_Y = [
-  625,
-  780,
-  920,
-  1050,
-  1190
-];
+const BAR_TOP_Y = [625, 780, 920, 1050, 1190];
 
 // Title nudges
-const TITLE_NUDGE_Y = [
-  0,
-  -10,
-  -10,
-  0,
-  0
-];
+const TITLE_NUDGE_Y = [0, -10, -10, 0, 0];
 
 // Prevent touching bar edges
 const TITLE_CLAMP_Y = 14;
@@ -62,7 +58,7 @@ function fitText(ctx, text, maxWidth, baseSize, weight = 700) {
   let size = baseSize;
   ctx.font = `${weight} ${size}px 'Zalando Sans Expanded', sans-serif`;
 
-  // OPTION 2: limit shrinking
+  // limit shrinking
   while (ctx.measureText(text).width > maxWidth && size > 32) {
     size--;
     ctx.font = `${weight} ${size}px 'Zalando Sans Expanded', sans-serif`;
@@ -93,11 +89,7 @@ function drawArtistName(ctx, artist) {
   const size = fitText(ctx, displayArtist, ARTIST_MAX_WIDTH, 140, 900);
   ctx.font = `900 ${size}px 'Zalando Sans Expanded', sans-serif`;
 
-  ctx.fillText(
-    displayArtist,
-    ARTIST_CENTER_X,
-    ARTIST_BASELINE_Y
-  );
+  ctx.fillText(displayArtist, ARTIST_CENTER_X, ARTIST_BASELINE_Y);
 }
 
 /* =========================
@@ -137,11 +129,7 @@ function drawSongs(ctx, rows) {
     ctx.rect(BAR_LEFT_X, barTop, BAR_WIDTH, BAR_HEIGHT);
     ctx.clip();
 
-    ctx.fillText(
-      title,
-      BAR_LEFT_X + BAR_PADDING_X,
-      titleY
-    );
+    ctx.fillText(title, BAR_LEFT_X + BAR_PADDING_X, titleY);
 
     ctx.restore();
 
@@ -164,18 +152,10 @@ function drawSongs(ctx, rows) {
 
     // Rank
     ctx.textAlign = "right";
-    ctx.fillText(
-      `#${row.Miglior_posto_Canzone}`,
-      RANK_X,
-      metaY
-    );
+    ctx.fillText(`#${row.Miglior_posto_Canzone}`, RANK_X, metaY);
 
     // Date
     ctx.textAlign = "left";
-    ctx.fillText(
-      row.Data_miglior_posto,
-      DATE_X,
-      metaY
-    );
+    ctx.fillText(row.Data_miglior_posto, DATE_X, metaY);
   });
 }
