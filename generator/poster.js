@@ -54,24 +54,38 @@ const DATE_X = 820;
    UTIL
 ========================= */
 
-function fitText(ctx, text, maxWidth, baseSize, weight = 700) {
-  let size = baseSize;
-  ctx.font = `${weight} ${size}px 'Zalando Sans Expanded', sans-serif`;
-
-  while (ctx.measureText(text).width > maxWidth && size > 32) {
-    size--;
-    ctx.font = `${weight} ${size}px 'Zalando Sans Expanded', sans-serif`;
-  }
-  return size;
-}
-
 function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max);
 }
 
-function capitalizeFirstLetter(str = "") {
+// Capitalize every word in artist name
+function capitalizeArtistName(str = "") {
   if (!str) return "";
-  return str.charAt(0).toUpperCase() + str.slice(1);
+  return str
+    .split(" ")
+    .map(word =>
+      word.charAt(0).toUpperCase() + word.slice(1)
+    )
+    .join(" ");
+}
+
+// Truncate text with "..." — NO font shrinking
+function truncateText(ctx, text, maxWidth, font) {
+  ctx.font = font;
+
+  if (ctx.measureText(text).width <= maxWidth) {
+    return text;
+  }
+
+  let truncated = text;
+  while (
+    truncated.length > 0 &&
+    ctx.measureText(truncated + "...").width > maxWidth
+  ) {
+    truncated = truncated.slice(0, -1);
+  }
+
+  return truncated + "...";
 }
 
 /* =========================
@@ -79,15 +93,13 @@ function capitalizeFirstLetter(str = "") {
 ========================= */
 
 function drawArtistName(ctx, artist) {
-  const displayArtist = capitalizeFirstLetter(artist);
+  const displayArtist = capitalizeArtistName(artist);
 
   ctx.fillStyle = "#000";
   ctx.textAlign = "center";
   ctx.textBaseline = "alphabetic";
 
-  const size = fitText(ctx, displayArtist, ARTIST_MAX_WIDTH, 140, 900);
-  ctx.font = `900 ${size}px 'Zalando Sans Expanded', sans-serif`;
-
+  ctx.font = `900 140px 'Zalando Sans Expanded', sans-serif`;
   ctx.fillText(displayArtist, ARTIST_CENTER_X, ARTIST_BASELINE_Y);
 }
 
@@ -96,7 +108,7 @@ function drawArtistName(ctx, artist) {
 ========================= */
 
 function drawSongs(ctx, rows) {
-  // Sort by rank, invalid ranks go last
+  // Sort by rank (invalid ranks go last)
   const sortedRows = [...rows].sort((a, b) => {
     const ra = Number(a.Miglior_posto_Canzone);
     const rb = Number(b.Miglior_posto_Canzone);
@@ -110,7 +122,6 @@ function drawSongs(ctx, rows) {
     const barTop = BAR_TOP_Y[i];
     const row = sortedRows[i];
 
-    // A row is valid ONLY if it has a title and a rank
     const hasValidSong =
       row &&
       row.Canzone &&
@@ -123,9 +134,10 @@ function drawSongs(ctx, rows) {
 
     const title = hasValidSong ? row.Canzone : "...";
     const maxTitleWidth = BAR_WIDTH - BAR_PADDING_X * 2;
-    const titleSize = fitText(ctx, title, maxTitleWidth, 44, 700);
+    const titleFont = "700 44px 'Zalando Sans Expanded', sans-serif";
+    const displayTitle = truncateText(ctx, title, maxTitleWidth, titleFont);
 
-    ctx.font = `700 ${titleSize}px 'Zalando Sans Expanded', sans-serif`;
+    ctx.font = titleFont;
     ctx.fillStyle = "#000";
     ctx.textAlign = "left";
     ctx.textBaseline = "middle";
@@ -140,10 +152,9 @@ function drawSongs(ctx, rows) {
     ctx.rect(BAR_LEFT_X, barTop, BAR_WIDTH, BAR_HEIGHT);
     ctx.clip();
 
-    ctx.fillText(title, BAR_LEFT_X + BAR_PADDING_X, titleY);
+    ctx.fillText(displayTitle, BAR_LEFT_X + BAR_PADDING_X, titleY);
     ctx.restore();
 
-    // Skip metadata if invalid
     if (!hasValidSong) continue;
 
     /* =====================
