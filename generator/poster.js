@@ -165,7 +165,12 @@ function drawSongs(ctx, rows) {
 
     ctx.save();
     ctx.beginPath();
-    ctx.rect(BAR_LEFT_X, barTop, BAR_WIDTH, BAR_HEIGHT);
+    ctx.rect(
+     BAR_LEFT_X,
+     barTop - 6,          
+     BAR_WIDTH,
+     BAR_HEIGHT + 12 
+    );
     ctx.clip();
 
     ctx.fillText(displayTitle, BAR_LEFT_X + BAR_PADDING_X, titleY);
