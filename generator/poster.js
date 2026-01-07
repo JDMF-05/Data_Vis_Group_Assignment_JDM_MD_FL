@@ -195,7 +195,7 @@ function drawSongs(ctx, rows) {
     ctx.textAlign = "right";
     ctx.fillText(`#${row.Miglior_posto_Canzone}`, RANK_X, metaY);
 
-    ctx.textAlign = "left";
+    ctx.textAlign = "right";
     ctx.fillText(row.Data_miglior_posto, DATE_X, metaY);
   }
 }
