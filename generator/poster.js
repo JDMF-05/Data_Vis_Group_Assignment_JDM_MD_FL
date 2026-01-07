@@ -41,7 +41,7 @@ const TITLE_CLAMP_Y = 14;
 
 const META_OFFSET_Y = 48;
 const RANK_X = 690;
-const DATE_X = 820;
+const DATE_X = BAR_RIGHT_X;
 
 /* =========================
    UTIL
