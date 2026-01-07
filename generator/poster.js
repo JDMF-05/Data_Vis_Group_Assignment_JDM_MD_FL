@@ -22,7 +22,7 @@ const ARTIST_CENTER_X = 450;
 const ARTIST_BASELINE_Y = 200;
 const ARTIST_MAX_WIDTH = 900;
 
-// Red bars
+// Bars
 const BAR_LEFT_X = 170;
 const BAR_RIGHT_X = 935;
 const BAR_WIDTH = BAR_RIGHT_X - BAR_LEFT_X;
@@ -60,7 +60,7 @@ function capitalizeArtistName(str = "") {
     .join(" ");
 }
 
-// Shrink ONLY artist name
+// Shrink ONLY artist name font
 function fitArtistText(ctx, text, maxWidth, baseSize) {
   let size = baseSize;
   ctx.font = `900 ${size}px 'Zalando Sans Expanded', sans-serif`;
@@ -99,13 +99,24 @@ function drawArtistName(ctx, artist) {
   const displayArtist = capitalizeArtistName(artist);
 
   ctx.fillStyle = "#000";
-  ctx.textAlign = "center";
   ctx.textBaseline = "alphabetic";
 
+  // Fit font size (artist only)
   const size = fitArtistText(ctx, displayArtist, ARTIST_MAX_WIDTH, 140);
   ctx.font = `900 ${size}px 'Zalando Sans Expanded', sans-serif`;
 
-  ctx.fillText(displayArtist, ARTIST_CENTER_X, ARTIST_BASELINE_Y);
+  // Measure width to avoid clipping
+  const textWidth = ctx.measureText(displayArtist).width;
+  const canvasWidth = ctx.canvas.width;
+
+  // Clamp center position safely
+  const safeCenterX = Math.max(
+    textWidth / 2 + 20,
+    Math.min(canvasWidth - textWidth / 2 - 20, ARTIST_CENTER_X)
+  );
+
+  ctx.textAlign = "center";
+  ctx.fillText(displayArtist, safeCenterX, ARTIST_BASELINE_Y);
 }
 
 /* =========================
@@ -137,9 +148,8 @@ function drawSongs(ctx, rows) {
 
     const title = hasValidSong ? row.Canzone : "...";
 
-    // truncation happens later here
-    const maxTitleWidth = BAR_WIDTH - BAR_PADDING_X;
-
+    // Truncate later (matches screenshot)
+    const maxTitleWidth = BAR_WIDTH - BAR_PADDING_X - 20;
     const titleFont = "700 44px 'Zalando Sans Expanded', sans-serif";
     const displayTitle = truncateText(ctx, title, maxTitleWidth, titleFont);
 
