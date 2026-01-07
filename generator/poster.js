@@ -22,7 +22,7 @@ const ARTIST_CENTER_X = 450;
 const ARTIST_BASELINE_Y = 200;
 const ARTIST_MAX_WIDTH = 900;
 
-// Red bars (SHIFTED RIGHT TO AVOID TEMPLATE NUMBERS)
+// Red bars
 const BAR_LEFT_X = 170;
 const BAR_RIGHT_X = 935;
 const BAR_WIDTH = BAR_RIGHT_X - BAR_LEFT_X;
@@ -32,21 +32,14 @@ const BAR_HEIGHT = 52;
 const BAR_PADDING_X = 140;
 
 /* =========================
-   ROW POSITIONS (ABSOLUTE)
+   ROW POSITIONS
 ========================= */
 
 const BAR_TOP_Y = [625, 780, 920, 1050, 1190];
-
-// Title nudges
 const TITLE_NUDGE_Y = [0, -10, -10, 0, 0];
-
-// Prevent touching bar edges
 const TITLE_CLAMP_Y = 14;
 
-// Metadata spacing
 const META_OFFSET_Y = 48;
-
-// Metadata columns
 const RANK_X = 690;
 const DATE_X = 820;
 
@@ -58,18 +51,28 @@ function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max);
 }
 
-// Capitalize every word in artist name
+// Capitalize every word of artist name
 function capitalizeArtistName(str = "") {
   if (!str) return "";
   return str
     .split(" ")
-    .map(word =>
-      word.charAt(0).toUpperCase() + word.slice(1)
-    )
+    .map(w => w.charAt(0).toUpperCase() + w.slice(1))
     .join(" ");
 }
 
-// Truncate text with "..." — NO font shrinking
+// Shrink ONLY artist name
+function fitArtistText(ctx, text, maxWidth, baseSize) {
+  let size = baseSize;
+  ctx.font = `900 ${size}px 'Zalando Sans Expanded', sans-serif`;
+
+  while (ctx.measureText(text).width > maxWidth && size > 60) {
+    size--;
+    ctx.font = `900 ${size}px 'Zalando Sans Expanded', sans-serif`;
+  }
+  return size;
+}
+
+// Truncate text with "..." — NO shrinking
 function truncateText(ctx, text, maxWidth, font) {
   ctx.font = font;
 
@@ -99,7 +102,9 @@ function drawArtistName(ctx, artist) {
   ctx.textAlign = "center";
   ctx.textBaseline = "alphabetic";
 
-  ctx.font = `900 140px 'Zalando Sans Expanded', sans-serif`;
+  const size = fitArtistText(ctx, displayArtist, ARTIST_MAX_WIDTH, 140);
+  ctx.font = `900 ${size}px 'Zalando Sans Expanded', sans-serif`;
+
   ctx.fillText(displayArtist, ARTIST_CENTER_X, ARTIST_BASELINE_Y);
 }
 
@@ -108,7 +113,7 @@ function drawArtistName(ctx, artist) {
 ========================= */
 
 function drawSongs(ctx, rows) {
-  // Sort by rank (invalid ranks go last)
+  // Sort by rank (invalid last)
   const sortedRows = [...rows].sort((a, b) => {
     const ra = Number(a.Miglior_posto_Canzone);
     const rb = Number(b.Miglior_posto_Canzone);
@@ -128,12 +133,13 @@ function drawSongs(ctx, rows) {
       row.Canzone.trim() !== "" &&
       !isNaN(Number(row.Miglior_posto_Canzone));
 
-    /* =====================
-       TITLE
-    ===================== */
+    /* ===== TITLE ===== */
 
     const title = hasValidSong ? row.Canzone : "...";
-    const maxTitleWidth = BAR_WIDTH - BAR_PADDING_X * 2;
+
+    // truncation happens later here
+    const maxTitleWidth = BAR_WIDTH - BAR_PADDING_X;
+
     const titleFont = "700 44px 'Zalando Sans Expanded', sans-serif";
     const displayTitle = truncateText(ctx, title, maxTitleWidth, titleFont);
 
@@ -157,9 +163,7 @@ function drawSongs(ctx, rows) {
 
     if (!hasValidSong) continue;
 
-    /* =====================
-       METADATA
-    ===================== */
+    /* ===== METADATA ===== */
 
     ctx.font = "500 28px 'Zalando Sans Expanded', sans-serif";
     ctx.textBaseline = "alphabetic";
