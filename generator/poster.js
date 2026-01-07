@@ -58,7 +58,6 @@ function fitText(ctx, text, maxWidth, baseSize, weight = 700) {
   let size = baseSize;
   ctx.font = `${weight} ${size}px 'Zalando Sans Expanded', sans-serif`;
 
-  // limit shrinking
   while (ctx.measureText(text).width > maxWidth && size > 32) {
     size--;
     ctx.font = `${weight} ${size}px 'Zalando Sans Expanded', sans-serif`;
@@ -103,14 +102,16 @@ function drawSongs(ctx, rows) {
       Number(a.Miglior_posto_Canzone) - Number(b.Miglior_posto_Canzone)
   );
 
-  sortedRows.forEach((row, i) => {
+  // Always draw exactly 5 rows
+  for (let i = 0; i < 5; i++) {
     const barTop = BAR_TOP_Y[i];
+    const row = sortedRows[i];
 
     /* =====================
        TITLE
     ===================== */
 
-    const title = row.Canzone || "";
+    const title = row ? row.Canzone : "...";
     const maxTitleWidth = BAR_WIDTH - BAR_PADDING_X * 2;
     const titleSize = fitText(ctx, title, maxTitleWidth, 44, 700);
 
@@ -130,8 +131,10 @@ function drawSongs(ctx, rows) {
     ctx.clip();
 
     ctx.fillText(title, BAR_LEFT_X + BAR_PADDING_X, titleY);
-
     ctx.restore();
+
+    // Skip metadata if row doesn't exist
+    if (!row) continue;
 
     /* =====================
        METADATA
@@ -157,5 +160,5 @@ function drawSongs(ctx, rows) {
     // Date
     ctx.textAlign = "left";
     ctx.fillText(row.Data_miglior_posto, DATE_X, metaY);
-  });
+  }
 }
