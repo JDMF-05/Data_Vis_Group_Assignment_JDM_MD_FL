@@ -96,22 +96,32 @@ function drawArtistName(ctx, artist) {
 ========================= */
 
 function drawSongs(ctx, rows) {
-  // Sort by chart rank (numeric)
-  const sortedRows = [...rows].sort(
-    (a, b) =>
-      Number(a.Miglior_posto_Canzone) - Number(b.Miglior_posto_Canzone)
-  );
+  // Sort by rank, invalid ranks go last
+  const sortedRows = [...rows].sort((a, b) => {
+    const ra = Number(a.Miglior_posto_Canzone);
+    const rb = Number(b.Miglior_posto_Canzone);
+    if (isNaN(ra)) return 1;
+    if (isNaN(rb)) return -1;
+    return ra - rb;
+  });
 
-  // Always draw exactly 5 rows
+  // Always draw 5 rows
   for (let i = 0; i < 5; i++) {
     const barTop = BAR_TOP_Y[i];
     const row = sortedRows[i];
+
+    // A row is valid ONLY if it has a title and a rank
+    const hasValidSong =
+      row &&
+      row.Canzone &&
+      row.Canzone.trim() !== "" &&
+      !isNaN(Number(row.Miglior_posto_Canzone));
 
     /* =====================
        TITLE
     ===================== */
 
-    const title = row ? row.Canzone : "...";
+    const title = hasValidSong ? row.Canzone : "...";
     const maxTitleWidth = BAR_WIDTH - BAR_PADDING_X * 2;
     const titleSize = fitText(ctx, title, maxTitleWidth, 44, 700);
 
@@ -133,8 +143,8 @@ function drawSongs(ctx, rows) {
     ctx.fillText(title, BAR_LEFT_X + BAR_PADDING_X, titleY);
     ctx.restore();
 
-    // Skip metadata if row doesn't exist
-    if (!row) continue;
+    // Skip metadata if invalid
+    if (!hasValidSong) continue;
 
     /* =====================
        METADATA
@@ -145,7 +155,6 @@ function drawSongs(ctx, rows) {
 
     const metaY = barTop + BAR_HEIGHT + META_OFFSET_Y;
 
-    // Appearances
     ctx.textAlign = "left";
     ctx.fillText(
       `appeared ${row.Numero_comparse} times`,
@@ -153,11 +162,9 @@ function drawSongs(ctx, rows) {
       metaY
     );
 
-    // Rank
     ctx.textAlign = "right";
     ctx.fillText(`#${row.Miglior_posto_Canzone}`, RANK_X, metaY);
 
-    // Date
     ctx.textAlign = "left";
     ctx.fillText(row.Data_miglior_posto, DATE_X, metaY);
   }
