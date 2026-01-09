@@ -4,14 +4,34 @@ body {
   font-family: "Poppins", sans-serif;
   background: transparent;
   color: #fff;
+
   display: flex;
   justify-content: center;
+  align-items: flex-start;
 }
 
 .container {
   width: 480px;
   max-width: 100%;
   background: transparent;
+
+  display: flex;
+  flex-direction: column;
+}
+
+h1 {
+  margin: 0 0 8px 0;
+}
+
+.subtitle {
+  position: static;
+  width: auto;
+  max-width: 100%;
+  margin: 0 0 24px 0;
+
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.75);
 }
 
 input {
@@ -52,14 +72,6 @@ button {
   border: 1px solid #333;
   border-radius: 8px;
   background: rgba(0,0,0,0.35);
-}
-
-.subtitle {
-  margin-top: 10px;
-  margin-bottom: 24px;
-  font-size: 14px;
-  line-height: 1.5;
-  color: rgba(255, 255, 255, 0.75);
 }
 
 .autocomplete-box {
