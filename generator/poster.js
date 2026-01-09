@@ -103,7 +103,7 @@ function drawArtistName(ctx, artist) {
 
   // Fit font size (artist only)
   const size = fitArtistText(ctx, displayArtist, ARTIST_MAX_WIDTH, 140);
-  ctx.font = `italic 900 ${size}px 'Zalando Sans Expanded', sans-serif`;
+  ctx.font = `900 ${size}px 'Zalando Sans Expanded', sans-serif`;
 
   // Measure width to avoid clipping
   const textWidth = ctx.measureText(displayArtist).width;
@@ -116,8 +116,15 @@ function drawArtistName(ctx, artist) {
   );
 
   ctx.textAlign = "center";
-  ctx.fillText(displayArtist, safeCenterX, ARTIST_BASELINE_Y);
+
+  // faking italic since font doesn't permit it
+  ctx.save();
+  ctx.translate(safeCenterX, ARTIST_BASELINE_Y);
+  ctx.transform(1, 0, -0.25, 1, 0, 0);
+  ctx.fillText(displayArtist, 0, 0);
+  ctx.restore();
 }
+
 
 /* =========================
    SONGS
