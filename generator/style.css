@@ -17,8 +17,6 @@ body.modal-open {
 .container {
   width: 480px;
   max-width: 100%;
-  background: transparent;
-
   display: flex;
   flex-direction: column;
 }
@@ -31,7 +29,7 @@ h1 {
   margin: 0 0 24px 0;
   font-size: 14px;
   line-height: 1.5;
-  color: rgba(255, 255, 255, 0.75);
+  color: rgba(255,255,255,0.75);
 }
 
 input {
@@ -165,7 +163,7 @@ button {
   display: none;
   max-height: 200px;
   overflow-y: auto;
-  z-index: 999999;
+  z-index: 1000001;
 }
 
 .autocomplete-item {
