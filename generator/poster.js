@@ -103,7 +103,7 @@ function drawArtistName(ctx, artist) {
 
   // Fit font size (artist only)
   const size = fitArtistText(ctx, displayArtist, ARTIST_MAX_WIDTH, 140);
-  ctx.font = `900 ${size}px 'Zalando Sans Expanded', sans-serif`;
+  ctx.font = `italic 900 ${size}px 'Zalando Sans Expanded', sans-serif`;
 
   // Measure width to avoid clipping
   const textWidth = ctx.measureText(displayArtist).width;
