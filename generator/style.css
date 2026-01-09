@@ -54,6 +54,14 @@ button {
   background: rgba(0,0,0,0.35);
 }
 
+.subtitle {
+  margin-top: 10px;
+  margin-bottom: 24px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.75);
+}
+
 .autocomplete-box {
   position: fixed;
   background: rgba(0,0,0,0.9);
