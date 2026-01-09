@@ -129,56 +129,66 @@ document.addEventListener("DOMContentLoaded", async () => {
   ========================= */
 
   document.getElementById("generate_top5").onclick = async () => {
-    clearPosterUI();
+  const query = input.value;
 
-    const best = bestArtistForQuery(input.value);
-    if (!best) {
-      status.textContent = "No matching artist";
-      return;
-    }
+  // Totally not eastereggs (must run first)
+  const hasEasterEgg = showEasterEggIfAny(query);
+  if (hasEasterEgg) {
+    status.textContent = "Easter egg unlocked";
+    return;
+  }
 
-    const rows = SHEET_DATA
-      .filter(r => normalize(r.Artista) === normalize(best))
-      .sort((a, b) => (+b.Somma_rank) - (+a.Somma_rank))
-      .slice(0, 5);
+  clearPosterUI();
 
-    const img = new Image();
-    img.crossOrigin = "anonymous";
+  const best = bestArtistForQuery(query);
+  if (!best) {
+    status.textContent = "No matching artist";
+    return;
+  }
 
-    img.onload = async () => {
-      canvas.width = img.width;
-      canvas.height = img.height;
-      ctx.drawImage(img, 0, 0);
+  const rows = SHEET_DATA
+    .filter(r => normalize(r.Artista) === normalize(best))
+    .sort((a, b) => (+b.Somma_rank) - (+a.Somma_rank))
+    .slice(0, 5);
 
-      await document.fonts.load("900 120px 'Zalando Sans Expanded'");
-      await document.fonts.load("700 34px 'Zalando Sans Expanded'");
-      await document.fonts.load("400 20px 'Zalando Sans Expanded'");
+  const img = new Image();
+  img.crossOrigin = "anonymous";
 
-      drawArtistName(ctx, best);
-      drawSongs(ctx, rows);
+  img.onload = async () => {
+    canvas.width = img.width;
+    canvas.height = img.height;
+    ctx.drawImage(img, 0, 0);
 
-      const ratio = 0.35;
-      previewCanvas.width = canvas.width;
-      previewCanvas.height = canvas.height * ratio;
+    await document.fonts.load("900 120px 'Zalando Sans Expanded'");
+    await document.fonts.load("700 34px 'Zalando Sans Expanded'");
+    await document.fonts.load("400 20px 'Zalando Sans Expanded'");
 
-      previewCanvas
-        .getContext("2d")
-        .drawImage(
-          canvas,
-          0, 0,
-          canvas.width, previewCanvas.height,
-          0, 0,
-          previewCanvas.width, previewCanvas.height
-        );
+    drawArtistName(ctx, best);
+    drawSongs(ctx, rows);
 
-      preview.style.display = "block";
-      status.textContent = "Poster ready";
-      document.getElementById("download_btn").style.display = "inline-block";
-      document.getElementById("reset_btn").style.display = "inline-block";
-    };
+    const ratio = 0.35;
+    previewCanvas.width = canvas.width;
+    previewCanvas.height = canvas.height * ratio;
 
-    img.src = getRandomTemplate() + "?cache=" + Date.now();
+    previewCanvas
+      .getContext("2d")
+      .drawImage(
+        canvas,
+        0, 0,
+        canvas.width, previewCanvas.height,
+        0, 0,
+        previewCanvas.width, previewCanvas.height
+      );
+
+    preview.style.display = "block";
+    status.textContent = "Poster ready";
+    document.getElementById("download_btn").style.display = "inline-block";
+    document.getElementById("reset_btn").style.display = "inline-block";
   };
+
+  img.src = getRandomTemplate() + "?cache=" + Date.now();
+};
+
 
   document.getElementById("download_btn").onclick = () => {
     const link = document.createElement("a");
