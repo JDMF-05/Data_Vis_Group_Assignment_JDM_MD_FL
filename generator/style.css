@@ -156,7 +156,7 @@ button {
 }
 
 .autocomplete-box {
-  position: fixed;
+  position: absolute;
   background: rgba(0,0,0,0.9);
   border: 1px solid #444;
   border-radius: 4px;
