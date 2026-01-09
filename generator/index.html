@@ -13,16 +13,16 @@
   <!-- CSS -->
   <link
     rel="stylesheet"
-    href="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/style.css?v=151"
+    href="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/style.css?v=152"
   >
 
   <!-- Fuse.js -->
   <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.min.js"></script>
 
-  <!-- App scripts -->
-  <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/search.js?v=151"></script>
-  <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/poster.js?v=151"></script>
-  <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/main.js?v=151"></script>
+  <!-- App scripts (ORDER MATTERS) -->
+  <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/search.js?v=152"></script>
+  <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/poster.js?v=152"></script>
+  <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/main.js?v=152"></script>
 </head>
 
 <body>
@@ -45,10 +45,10 @@
 
     <p id="status_msg"></p>
 
-    <!-- Hidden full canvas (render target) -->
+    <!-- hidden render target -->
     <canvas id="top5_canvas" width="1080" height="1920"></canvas>
 
-    <!-- Poster preview -->
+    <!-- poster preview -->
     <div id="poster_preview" class="poster-preview" style="display:none;">
       <div class="poster-preview-inner">
         <canvas id="preview_canvas"></canvas>
@@ -61,7 +61,7 @@
 
   <div id="autocomplete" class="autocomplete-box"></div>
 
-  <!-- Modal -->
+  <!-- modal -->
   <div id="poster_modal" class="poster-modal">
     <button id="close_modal" class="close-modal">✕</button>
     <canvas id="modal_canvas"></canvas>
