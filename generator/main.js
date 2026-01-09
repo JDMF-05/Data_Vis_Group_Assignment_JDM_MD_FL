@@ -13,10 +13,13 @@ function clearPosterUI() {
 
   const canvas = document.getElementById("top5_canvas");
   if (canvas) {
-    const ctx = canvas.getContext("2d");
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    canvas.getContext("2d").clearRect(0, 0, canvas.width, canvas.height);
     canvas.style.display = "none";
   }
+
+  const modal = document.getElementById("poster_modal");
+  if (modal) modal.classList.remove("open");
+  document.body.classList.remove("modal-open");
 
   document.getElementById("download_btn").style.display = "none";
   document.getElementById("reset_btn").style.display = "none";
@@ -29,6 +32,8 @@ function clearPosterUI() {
 document.addEventListener("DOMContentLoaded", async () => {
   const input = document.getElementById("artist_name");
   const status = document.getElementById("status_msg");
+  const box = document.getElementById("autocomplete");
+
   const canvas = document.getElementById("top5_canvas");
   const ctx = canvas.getContext("2d");
 
@@ -39,7 +44,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const modalCanvas = document.getElementById("modal_canvas");
   const closeModal = document.getElementById("close_modal");
 
-  /* ===== MODAL HELPERS ===== */
+  /* ===== MODAL ===== */
 
   function openModal() {
     modal.classList.add("open");
@@ -81,6 +86,45 @@ document.addEventListener("DOMContentLoaded", async () => {
   status.textContent = "Ready";
 
   /* =========================
+     AUTOCOMPLETE (FIXED)
+  ========================= */
+
+  input.addEventListener("input", () => {
+    const q = input.value;
+    const results = searchArtists(q, 10);
+
+    box.innerHTML = "";
+    if (!q || !results.length) {
+      box.style.display = "none";
+      return;
+    }
+
+    const r = input.getBoundingClientRect();
+    box.style.left = `${r.left + window.scrollX}px`;
+    box.style.top = `${r.bottom + window.scrollY + 4}px`;
+    box.style.width = `${r.width}px`;
+
+    results.forEach(a => {
+      const item = document.createElement("div");
+      item.className = "autocomplete-item";
+      item.textContent = a.original;
+      item.onclick = () => {
+        input.value = a.original;
+        box.style.display = "none";
+      };
+      box.appendChild(item);
+    });
+
+    box.style.display = "block";
+  });
+
+  document.addEventListener("click", e => {
+    if (!box.contains(e.target) && e.target !== input) {
+      box.style.display = "none";
+    }
+  });
+
+  /* =========================
      GENERATE POSTER
   ========================= */
 
@@ -107,10 +151,12 @@ document.addEventListener("DOMContentLoaded", async () => {
       ctx.drawImage(img, 0, 0);
 
       await document.fonts.load("900 120px 'Zalando Sans Expanded'");
+      await document.fonts.load("700 34px 'Zalando Sans Expanded'");
+      await document.fonts.load("400 20px 'Zalando Sans Expanded'");
+
       drawArtistName(ctx, best);
       drawSongs(ctx, rows);
 
-      /* ===== PREVIEW ===== */
       const ratio = 0.35;
       previewCanvas.width = canvas.width;
       previewCanvas.height = canvas.height * ratio;
@@ -132,6 +178,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     };
 
     img.src = getRandomTemplate() + "?cache=" + Date.now();
+  };
+
+  document.getElementById("download_btn").onclick = () => {
+    const link = document.createElement("a");
+    link.download = "top5-poster.png";
+    link.href = canvas.toDataURL("image/png");
+    link.click();
   };
 
   document.getElementById("reset_btn").onclick = () => {
