@@ -13,16 +13,16 @@
   <!-- CSS -->
   <link
     rel="stylesheet"
-    href="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/style.css?v=152"
+    href="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/style.css?v=153"
   >
 
   <!-- Fuse.js -->
   <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.min.js"></script>
 
   <!-- App scripts (ORDER MATTERS) -->
-  <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/search.js?v=152"></script>
-  <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/poster.js?v=152"></script>
-  <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/main.js?v=152"></script>
+  <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/search.js?v=153"></script>
+  <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/poster.js?v=153"></script>
+  <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/main.js?v=153"></script>
 </head>
 
 <body>
@@ -36,6 +36,9 @@
     </p>
 
     <input id="artist_name" placeholder="Enter artist name">
+
+    <!-- 🔽 AUTOCOMPLETE MUST BE HERE -->
+    <div id="autocomplete" class="autocomplete-box"></div>
 
     <div class="button-row">
       <button id="generate_top5" type="button">Generate Poster</button>
@@ -58,8 +61,6 @@
 
     <div id="easter_egg"></div>
   </div>
-
-  <div id="autocomplete" class="autocomplete-box"></div>
 
   <!-- modal -->
   <div id="poster_modal" class="poster-modal">
