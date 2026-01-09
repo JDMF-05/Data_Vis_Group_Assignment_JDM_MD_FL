@@ -13,16 +13,16 @@
   <!-- CSS -->
   <link
     rel="stylesheet"
-    href="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/style.css?v=149"
+    href="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/style.css?v=151"
   >
 
-  <!-- Fuse.js (must load before search.js) -->
+  <!-- Fuse.js -->
   <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.min.js"></script>
 
-  <!-- App scripts (ORDER MATTERS) -->
-  <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/search.js?v=149"></script>
-  <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/poster.js?v=149"></script>
-  <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/main.js?v=149"></script>
+  <!-- App scripts -->
+  <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/search.js?v=151"></script>
+  <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/poster.js?v=151"></script>
+  <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/main.js?v=151"></script>
 </head>
 
 <body>
@@ -45,12 +45,26 @@
 
     <p id="status_msg"></p>
 
+    <!-- Hidden full canvas (render target) -->
     <canvas id="top5_canvas" width="1080" height="1920"></canvas>
 
-    <!-- Easter egg output -->
+    <!-- Poster preview -->
+    <div id="poster_preview" class="poster-preview" style="display:none;">
+      <div class="poster-preview-inner">
+        <canvas id="preview_canvas"></canvas>
+        <div class="preview-label">Click to see full poster</div>
+      </div>
+    </div>
+
     <div id="easter_egg"></div>
   </div>
 
   <div id="autocomplete" class="autocomplete-box"></div>
+
+  <!-- Modal -->
+  <div id="poster_modal" class="poster-modal">
+    <button id="close_modal" class="close-modal">✕</button>
+    <canvas id="modal_canvas"></canvas>
+  </div>
 </body>
 </html>
