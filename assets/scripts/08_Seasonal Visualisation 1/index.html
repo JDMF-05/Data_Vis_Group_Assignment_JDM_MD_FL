@@ -1,71 +1,113 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Artist – Poster Generator</title>
+<hr><column-set gutter="4.0rem" mobile-hide-empty="false" mobile-stack="true"><column-unit slot="0" span="4">
+        <h1><text-icon icon="south-east-arrow"></text-icon>Seasonal<br><span style="color: rgb(0, 0, 0);"><text-icon icon="south-east-arrow"></text-icon></span>genres<br>
+<br>
+</h1>
+        <p>
+&nbsp;
+ &nbsp; This analysis utilizes a heatmap visualization to address two key questions regarding music consumption patterns:<br>
+<text-icon icon="rightwards-arrow"></text-icon> How do Genres vary by season?<br><text-icon icon="rightwards-arrow"></text-icon> Which are the most listened genres by season?<br>
+        <br>
 
-  <!-- Google Font -->
-  <link
-    href="https://fonts.googleapis.com/css2?family=Zalando+Sans+Expanded:wght@400;700;900&display=swap"
-    rel="stylesheet"
-  >
+&nbsp; &nbsp; Our primary objective is to identify seasonally reliant genres, those that exhibit a significant spike in listening activity corresponding to a specific time of year, and determine the most popular genre for each season.<br>
 
-  <!-- CSS -->
-  <link
-    rel="stylesheet"
-    href="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/style.css?v=157"
-  >
+        <br>
+<br>
+<b>Part 1: Chart Variables</b><br>
+        </p>
+<text-icon icon="rightwards-arrow"></text-icon>Chart Type: Heat Map.<br>
+<text-icon icon="rightwards-arrow"></text-icon>X-Axis: The various seasons.<br>
+            
 
-  <!-- Fuse.js -->
-  <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.min.js"></script>
 
-  <!-- App scripts (ORDER MATTERS) -->
-  <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/search.js?v=157"></script>
-  <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/poster.js?v=157"></script>
-  <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/main.js?v=157"></script>
-</head>
+<text-icon icon="rightwards-arrow"></text-icon>Y-Axis: The Genres.<br>
+            
 
-<body>
-  <div class="container">
-    <h1>Artist – Poster Generator</h1>
 
-    <p class="subtitle">
-      Create a custom, downloadable poster featuring your favorite artist's top hits.
-      Simply enter an artist's name, and the tool instantly generates a stylish image
-      displaying their 5 most-streamed songs, ready for you to save and share.
-    </p>
+<text-icon icon="rightwards-arrow"></text-icon>Visualization: Colours are used to divide and &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;represent the various genres.<br>
+           
 
-    <input id="artist_name" placeholder="Enter artist name">
 
-    <!-- 🔽 AUTOCOMPLETE MUST BE HERE -->
-    <div id="autocomplete" class="autocomplete-box"></div>
 
-    <div class="button-row">
-      <button id="generate_top5" type="button">Generate Poster</button>
-      <button id="download_btn" type="button" style="display:none;">Download Poster</button>
-      <button id="reset_btn" type="button" style="display:none;">Reset</button>
-    </div>
 
-    <p id="status_msg"></p>
+<text-icon icon="rightwards-arrow"></text-icon>Scaled Values: Used due to Pop’s overwhelming<br>&nbsp; &nbsp;
+ &nbsp;dominance over other genres<h3><br>
+Result: What the Data Actually Shows</h3><p>&nbsp; &nbsp; Thanks to our analysis we can see that multiple genres heavily rely on the season, such as “Holiday &amp; Seasonal” in winter or “R&amp;B/Soul/Funk” in spring. This supports the hypothesis that certain genres are highly dependent on the time of year.
+ &nbsp; &nbsp; &nbsp; &nbsp;</p>
+        <br><b>The most popular genres per season are:</b><h3><b>Winter</b>:<br>
+</h3><text-icon icon="rightwards-arrow"></text-icon> Holiday &amp; Seasonal<br>
+<text-icon icon="rightwards-arrow"></text-icon> Italian Disco &amp; Dance<br>
+<text-icon icon="rightwards-arrow"></text-icon> Jazz &amp; Blues<br>
+<text-icon icon="rightwards-arrow"></text-icon> Metal<br>
+<text-icon icon="rightwards-arrow"></text-icon> Soundtrack &amp; Stage<br>
+<text-icon icon="rightwards-arrow"></text-icon> Classical &amp; Orchestral<br>
 
-    <!-- hidden render target -->
-    <canvas id="top5_canvas" width="1080" height="1920"></canvas>
 
-    <!-- poster preview -->
-    <div id="poster_preview" class="poster-preview" style="display:none;">
-      <div class="poster-preview-inner">
-        <canvas id="preview_canvas"></canvas>
-        <div class="preview-label">Click to see full poster</div>
-      </div>
-    </div>
+<h3><b><br>
+Spring</b>:</h3>
+<p>
+<text-icon icon="rightwards-arrow"></text-icon> Experimental &amp; Avant-Garde<br>
+<text-icon icon="rightwards-arrow"></text-icon> Folk / Acoustic / Roots<br>
+<text-icon icon="rightwards-arrow"></text-icon> Metal<br>
+<text-icon icon="rightwards-arrow"></text-icon> Hip-Hop and Rap<br>
+<text-icon icon="rightwards-arrow"></text-icon> Pop<br>
+<text-icon icon="rightwards-arrow"></text-icon> R&amp;B / Soul / Funk<br>
+<text-icon icon="rightwards-arrow"></text-icon> Soundtrack &amp; Stage<br>
+</p>
 
-    <div id="easter_egg"></div>
-  </div>
+<h3><b><br>
+Summer</b>:</h3>
+<p>
+<text-icon icon="rightwards-arrow"></text-icon> Caribbean &amp; Afro-Caribbean<br>
+<text-icon icon="rightwards-arrow"></text-icon> Latin &amp; Regional Mexican<br>
+<text-icon icon="rightwards-arrow"></text-icon> Asian &amp; Middle Eastern<br>
+<text-icon icon="rightwards-arrow"></text-icon> Electronic &amp; Dance<br>
+<text-icon icon="rightwards-arrow"></text-icon> Comedy / Novelty / Spoken Word<br>
+<text-icon icon="rightwards-arrow"></text-icon> Country &amp; Americana<br>
+<text-icon icon="rightwards-arrow"></text-icon> Experimental &amp; Avant-Garde<br>
+<text-icon icon="rightwards-arrow"></text-icon> Jazz &amp; Blues<br>
+<text-icon icon="rightwards-arrow"></text-icon> Pop<br>
+</p>
 
-  <!-- modal -->
-  <div id="poster_modal" class="poster-modal">
-    <button id="close_modal" class="close-modal">✕</button>
-    <canvas id="modal_canvas"></canvas>
-  </div>
-</body>
-</html>
+<h3><b><br>
+Fall</b>:</h3>
+<p>
+<text-icon icon="rightwards-arrow"></text-icon> African Contemporary &amp; Diaspora<br>
+<text-icon icon="rightwards-arrow"></text-icon> Caribbean &amp; Afro-Caribbean<br>
+<text-icon icon="rightwards-arrow"></text-icon> Pop<br>
+<text-icon icon="rightwards-arrow"></text-icon> Rock &amp; Alternative<br>
+<text-icon icon="rightwards-arrow"></text-icon> Electronic &amp; Dance<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+</p>
+
+        <div><b></b></div>
+    </column-unit><column-unit slot="1" span="8">
+  		<!-- SPAZIO INIZIALE PRIMA DEI GRAFICI -->
+    	<div style="height: 190px;"></div>
+        <div class="cargo-flourish-sticky">
+            <div class="cargo-flourish-wrapper">
+                <iframe class="cargo-flourish-iframe" frameborder="0" sandbox="allow-same-origin allow-forms allow-scripts allow-downloads allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation" scrolling="no" src="https://flo.uri.sh/visualisation/26583033/embed"></iframe>
+
+                <!-- Link originale -->
+                <div class="custom-link-wrapper">
+                    <a class="custom-link" href="https://public.flourish.studio/visualisation/26583033/" target="_blank">
+Explore the full visualization</a>
+                </div>
+
+<!-- NUOVO LINK SOTTO -->
+<div class="custom-link-wrapper">
+    <a class="custom-link" href="https://visualization.cargo.site/visual-1-extend">
+&nbsp;Read the visualization protocol 
+</a>
+</div>
+</div></div>
+  </column-unit></column-set>
