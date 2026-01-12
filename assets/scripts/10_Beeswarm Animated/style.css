@@ -1,176 +1,126 @@
-body {
-  margin: 0;
-  padding: 40px 0;
-  font-family: "Poppins", sans-serif;
-  background: transparent;
-  color: #fff;
-
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
+/* ===============================
+   PAGE BACKGROUND
+================================= */
+[id="P3134116640"].page {
+    background-color: #000000;
 }
 
-body.modal-open {
-  overflow: hidden;
+/* ===============================
+   STICKY CONTAINER
+================================= */
+.cargo-flourish3-sticky {
+    position: sticky;
+    top: 20px;
+    align-self: flex-start;
 }
 
-.container {
-  width: 480px;
-  max-width: 100%;
-  display: flex;
-  flex-direction: column;
+/* ===============================
+   FIX PER CARGO: abilita sticky
+================================= */
+.column-set,
+.column-unit {
+    overflow: visible !important;
 }
 
-h1 {
-  margin: 0 0 8px 0;
+/* ===============================
+   WRAPPER GRAFICO
+   Nasconde la scritta "Made with Flourish"
+================================= */
+.cargo-flourish3-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding-top: 56.25%; /* 16:9 */
+    box-sizing: border-box;
+    overflow: hidden; /* fondamentale per tagliare il watermark */
 }
 
-.subtitle {
-  margin: 0 0 24px 0;
-  font-size: 14px;
-  line-height: 1.5;
-  color: rgba(255,255,255,0.75);
+/* ===============================
+   IFRAME
+================================= */
+.cargo-flourish3-iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100% + 50px); /* spinge il watermark fuori dal wrapper */
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    display: block;
 }
 
-input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #444;
-  border-radius: 6px;
-  font-size: 15px;
-  background: transparent;
-  color: #fff;
+/* ===============================
+   CUSTOM LINK SOTTO IL GRAFICO
+================================= */
+.cargo-flourish3-sticky .custom-link-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 5px;
 }
 
-.button-row {
-  display: flex;
-  gap: 10px;
-  margin-top: 12px;
+.cargo-flourish3-sticky .custom-link {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 14px;
+    line-height: 1.4;
+    color: #888888;
+    text-decoration: none;
+    position: relative;
+    transition: color 0.3s ease;
 }
 
-button {
-  padding: 10px 16px;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
+.cargo-flourish3-sticky .custom-link:hover {
+    color: #ffffff;
 }
 
-/* ===== PREVIEW ===== */
-
-.poster-preview {
-  margin-top: 20px;
-  cursor: pointer;
+.cargo-flourish3-sticky .custom-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: 0;
+    left: 0;
+    background-color: #ffffff;
+    transition: width 0.4s ease-in-out;
 }
 
-.poster-preview-inner {
-  position: relative;
-  border-radius: 16px;
-  overflow: hidden;
-  border: 1px solid #333;
+.cargo-flourish3-sticky .custom-link:hover::after {
+    width: 100%;
 }
 
-.poster-preview-inner::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08);
-  pointer-events: none;
-}
+/* ===============================
+   MOBILE
+================================= */
+@media (max-width: 768px) {
 
-#preview_canvas {
-  width: 100%;
-  display: block;
-}
+    .cargo-flourish3-sticky {
+        position: relative !important;
+        top: auto !important;
+        align-self: auto !important;
+    }
 
-.preview-label {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  padding: 10px 0;
-  text-align: center;
-  font-size: 12px;
-  color: rgba(255,255,255,0.85);
-  background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
-}
+    .cargo-flourish3-wrapper {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding-top: 0 !important;
+        height: 750px !important;
+        margin-top: 20px !important;
+        overflow: hidden !important;
+    }
 
-/* ===== MODAL ===== */
+    .cargo-flourish3-iframe {
+        width: 100% !important;
+        height: 100% !important;
+    }
 
-.poster-modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.85);
-  z-index: 1000000;
+    .cargo-flourish3-sticky .custom-link-wrapper {
+        justify-content: flex-start !important;
+        margin-top: 10px !important;
+        padding-right: 10px !important;
+    }
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.25s ease;
-}
-
-.poster-modal.open {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-#modal_canvas {
-  max-width: 90vw;
-  max-height: 90vh;
-  transform: scale(0.95);
-  transition: transform 0.25s ease;
-}
-
-.poster-modal.open #modal_canvas {
-  transform: scale(1);
-}
-
-.close-modal {
-  position: absolute;
-  top: 16px;
-  left: 16px;
-  background: rgba(0,0,0,0.6);
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  font-size: 20px;
-  padding: 6px 12px;
-  cursor: pointer;
-}
-
-/* ===== OTHERS ===== */
-
-#top5_canvas {
-  display: none;
-}
-
-#easter_egg {
-  display: none;
-  margin-top: 16px;
-  padding: 12px;
-  border: 1px solid #333;
-  border-radius: 8px;
-  background: rgba(0,0,0,0.35);
-}
-
-.autocomplete-box {
-  position: absolute;
-  background: rgba(0,0,0,0.9);
-  border: 1px solid #444;
-  border-radius: 4px;
-  display: none;
-  max-height: 200px;
-  overflow-y: auto;
-  z-index: 1000001;
-}
-
-.autocomplete-item {
-  padding: 10px;
-  cursor: pointer;
-}
-
-.autocomplete-item:hover {
-  background: rgba(255,255,255,0.1);
+    .cargo-flourish3-sticky .custom-link {
+        font-size: 13px !important;
+    }
 }
