@@ -1,71 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Artist – Poster Generator</title>
+<hr><column-set gutter="1" mobile-hide-empty="false" mobile-stack="true"><column-unit slot="0" span="4">
+        <p>&nbsp; &nbsp; The objective is to determine if music genre preferences shift according to the season. We are analyzing a dataset comparing five genres (Comedy, Electronic, Folk, Metal, Rock) across Winter, Spring, Summer, and Fall to identify seasonal correlations.<br>
+        </p>
+        
+        <h3>Part 2: Chart Variables</h3>
 
-  <!-- Google Font -->
-  <link
-    href="https://fonts.googleapis.com/css2?family=Zalando+Sans+Expanded:wght@400;700;900&display=swap"
-    rel="stylesheet"
-  >
+        <text-icon icon="rightwards-arrow"></text-icon> Chart Type: Bar Chart.<br>
+        <text-icon icon="rightwards-arrow"></text-icon> X-Axis: The various seasons.<br>
+        <text-icon icon="rightwards-arrow"></text-icon> Y-Axis: The scaled listening value.<br>
+        <text-icon icon="rightwards-arrow"></text-icon> Visualization: Colours are used to divide and
 
-  <!-- CSS -->
-  <link
-    rel="stylesheet"
-    href="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/style.css?v=157"
-  >
+represent the various genres.
 
-  <!-- Fuse.js -->
-  <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.min.js"></script>
+ &nbsp; &nbsp;<br>
 
-  <!-- App scripts (ORDER MATTERS) -->
-  <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/search.js?v=157"></script>
-  <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/poster.js?v=157"></script>
-  <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/main.js?v=157"></script>
-</head>
+        <h3><br>Result: What the Data Actually Shows</h3>
+        <b>Winter:</b><br>
+&nbsp; &nbsp; Dominated by Metal (1).
+ &nbsp;Rock &amp; Alternative is the only other significant genre visible (0.35).<br>
+        <br><b>Spring:</b><br>
+&nbsp; &nbsp; Folk takes the lead (1), closely followed by Metal (0.88). Electronic appears moderately (0.39).<br>
+        <br><b>Summer:</b><br>
+&nbsp; &nbsp; Surprisingly, Comedy / Novelty and Electronic spikes to the top spot (1).<br>
+        <br><b>Fall:</b><br>
+&nbsp; &nbsp; Rock reaches peak popularity (1). Electronic rebounds strongly (0.89), while Comedy retains some popularity (0.4).<br>
+        <br>
 
-<body>
-  <div class="container">
-    <h1>Artist – Poster Generator</h1>
+        <h3>Discussion: Analysis and Hypotheses</h3>
+&nbsp; &nbsp; Distinct genres dominate in different seasons (Metal in Winter, Rock in Fall, Folk in Spring, Comedy in Summer).<span style="letter-spacing: 0px;"> The results show a clear contrast in mood: the high concentration on core genres (Rock/Metal) in Winter suggests a preference for familiar music, while the massive spike in Comedy/Novelty in Summer challenges the idea of continuous musical listening during the holiday season, pointing instead towards a preference for lighthearted or spoken-word entertainment.</span><br>
 
-    <p class="subtitle">
-      Create a custom, downloadable poster featuring your favorite artist's top hits.
-      Simply enter an artist's name, and the tool instantly generates a stylish image
-      displaying their 5 most-streamed songs, ready for you to save and share.
-    </p>
+        <h3><br>Extra: Additional Information</h3>
+&nbsp; &nbsp; The "Summer of Fun" Anomaly:<br>
+The massive spike in Comedy/Novelty and Electronic during Summer suggests a seasonal preference for lighthearted entertainment or spoken word content during holidays, contrasting sharply with the serious tone of Winter.<br>
+        <text-icon icon="rightwards-arrow"></text-icon>Electronic's Peak:<br>
+&nbsp; &nbsp; Electronic &amp; Dance performs well in most seasons but struggles in the extreme season of Winter.<br>
+        <text-icon icon="rightwards-arrow"></text-icon>Winter Minimalism:<br>
+&nbsp; &nbsp; Winter shows the least variety in genres, &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; suggesting listeners stick to a narrower range of &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; favorites (primarily Rock) during the colder months.<br>
+        <br>
+        <br>
 
-    <input id="artist_name" placeholder="Enter artist name">
+        <div>&nbsp; &nbsp; We can thus see that Summer is the season with the most amount of different music genres, possibly due to the various music festivals that promote more than a singular genre.<br>
+<br>
+<br>
+</div>
 
-    <!-- 🔽 AUTOCOMPLETE MUST BE HERE -->
-    <div id="autocomplete" class="autocomplete-box"></div>
+        <br>
+    </column-unit><column-unit slot="1" span="8">
+        <!-- SPAZIO INIZIALE PRIMA DEI GRAFICI -->
+        <div class="cargo-flourish2-sticky">
+            <div class="cargo-flourish2-wrapper">
+                <iframe class="cargo-flourish2-iframe" sandbox="allow-same-origin allow-forms allow-scripts allow-downloads allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation" scrolling="no" src="https://flo.uri.sh/visualisation/26584238/embed" title="Interactive or visual content">
+                </iframe>
+            </div>
 
-    <div class="button-row">
-      <button id="generate_top5" type="button">Generate Poster</button>
-      <button id="download_btn" type="button" style="display:none;">Download Poster</button>
-      <button id="reset_btn" type="button" style="display:none;">Reset</button>
-    </div>
+            <!-- Link personalizzati sotto il grafico -->
+            <div class="custom-link-wrapper">
+                <a class="custom-link" href="https://public.flourish.studio/visualisation/26584238/" target="_blank">&nbsp;Explore the full visualization</a>
+            </div>
 
-    <p id="status_msg"></p>
-
-    <!-- hidden render target -->
-    <canvas id="top5_canvas" width="1080" height="1920"></canvas>
-
-    <!-- poster preview -->
-    <div id="poster_preview" class="poster-preview" style="display:none;">
-      <div class="poster-preview-inner">
-        <canvas id="preview_canvas"></canvas>
-        <div class="preview-label">Click to see full poster</div>
-      </div>
-    </div>
-
-    <div id="easter_egg"></div>
-  </div>
-
-  <!-- modal -->
-  <div id="poster_modal" class="poster-modal">
-    <button id="close_modal" class="close-modal">✕</button>
-    <canvas id="modal_canvas"></canvas>
-  </div>
-</body>
-</html>
+            <div class="custom-link-wrapper">
+                <a class="custom-link" href="https://visualization.cargo.site/visual-2-extend" target="_self">
+Read the visualization protocol</a>
+            </div>
+        </div>
+    </column-unit></column-set>
