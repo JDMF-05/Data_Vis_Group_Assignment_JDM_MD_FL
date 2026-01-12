@@ -285,5 +285,9 @@ Seasonality plays a major role in listening behavior. Winter favors heavier and 
 Finally, the data reveals increasing chart concentration in the streaming era. While the late 1960s showed the highest artist diversity, modern charts are dominated by fewer unique artists, with established superstars accounting for a growing share of top placements. This suggests reduced accessibility for new artists and a shift toward a more centralized, superstar-driven music landscape.
 
 ## Next steps
-Tellus rutrum tellus pellentesque eu. Dictum sit amet justo donec enim. Aliquam malesuada bibendum arcu vitae elementum curabitur vitae. Sed faucibus turpis in eu mi bibendum neque egestas congue. Tellus in metus vulputate eu scelerisque felis imperdiet proin. Dolor magna eget est lorem ipsum dolor. Sit amet mattis vulputate enim nulla. Elit pellentesque habitant morbi tristique senectus et.
+This project can be expanded by adding new layers of analysis that build on the existing framework. Including streaming numbers, radio airplay, and audience engagement data would make it possible to explore popularity across multiple dimensions, not just chart rankings.
+
+The analysis could also be extended to support more detailed genre representations, such as allowing songs to belong to multiple genres or examining subgenre groupings, reflecting the increasingly hybrid nature of modern music. Adding a geographic component would enable comparisons between national trends and regional listening patterns across the United States.
+
+Finally, more advanced techniques such as network analysis and predictive modeling could be used to study artist collaborations, genre interactions, and potential future shifts in musical trends, adding a forward-looking perspective to the project. All of these extensions would involve more complex modeling and a longer development timeline.
 
