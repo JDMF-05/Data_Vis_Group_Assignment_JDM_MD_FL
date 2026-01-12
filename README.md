@@ -43,7 +43,9 @@ up to most recent published date of November 22, 2025.
 [Main datasource (Billboard)](https://www.billboard.com/)
 
 ## Data pre-processing
-The original Billboard Hot 100 dataset provides a rich historical record of chart performance but requires extensive preprocessing to be suitable for long-term, genre based analysis. This section documents the full pipeline used to clean, enrich and standardize the data before visualization.
+The original Billboard Hot 100 dataset provides a rich historical record of chart performance but requires extensive preprocessing to be suitable for long-term, genre based analysis. 
+
+This section documents the full pipeline used to clean, enrich and standardize the data before visualization.
 
 ### Dataset Overview
 
@@ -102,7 +104,6 @@ Genres were retrieved by querying multiple external APIs using combinations of s
 
 Multiple APIs were required because no single service provided consistent coverage across all decades and artist formats.
 
-Motivation:  
 Using several APIs increased genre coverage and reduced systematic bias caused by incomplete or modern databases.
 
 ### Performer Normalization
@@ -113,9 +114,9 @@ Solution:
 - Temporarily reduce the performer field to the primary credited artist
 - Perform genre lookup
 - Restore the original performer string afterward
-  
+
+Example: 
 ```md
-Example:  
 “Uptown Funk” – Mark Ronson feat. Bruno Mars  
     |
     v
@@ -128,18 +129,20 @@ genre retrieved
 original performer restored
 ```
 
-Motivation:  
 This significantly improved match rates while preserving original artist information for analysis.
 
 ### Duplicate-Based Genre Filling
 
 Many song–artist combinations appear repeatedly across multiple weeks.
 
-Approach:
-- Query each unique song–artist combination only once
-- Propagate the retrieved genre to all matching rows
+Approach: 
+```md
+Query each unique song–artist combination only once 
+    |
+    v
+Propagate the retrieved genre to all matching rows
+```
 
-Motivation:  
 This reduced computational cost and API calls while maintaining internal consistency across weekly chart entries.
 
 ### Manual Genre Completion
@@ -151,7 +154,6 @@ Method:
 - Manually assign genres
 - Reintegrate the results into the dataset via script
 
-Motivation:  
 Manual completion ensured full genre coverage, particularly for older, obscure, or region-specific songs.
 
 ### Error Correction & Genre Normalization
@@ -163,7 +165,6 @@ Corrections included:
 - Removing non-musical or malformed labels
 - Mapping synonymous genres to a standardized naming convention
 
-Motivation:  
 This step reduced noise and prevented artificial genre fragmentation in later analyses.
 
 ### Macrogenre Classification
@@ -192,7 +193,6 @@ To address this, genres were grouped into 19 macrogenres:
 - Comedy / Novelty / Spoken Word  
 - Italian Disco & Dance  
 
-Motivation:  
 Macrogenres allow meaningful long-term comparisons while preserving stylistic diversity.
 
 ### Fuzzy Matching Algorithm
@@ -214,7 +214,6 @@ Example:
 
 The macrogenre with the highest score was selected. If all scores were zero, the entry was labeled “Error” for manual inspection.
 
-Motivation:  
 This approach balances precision and flexibility, allowing robust classification of complex or multigenre labels.
 
 ### Final Data Cleaning
