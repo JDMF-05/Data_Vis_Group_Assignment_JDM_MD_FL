@@ -15,7 +15,7 @@ For the site development we used cargo, while it's a very useful tool, it doesn'
 
 So we've reuploded the structure on cargo in this part of the repository:
 
-[<img src="../images/05.png" width="800" alt="Placeholder image">]()
+[<img src="../images/023.png" width="800" alt="Placeholder image">]()
 
 ## Which is which
 ### Menu icon
