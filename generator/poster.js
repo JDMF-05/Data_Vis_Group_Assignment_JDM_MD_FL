@@ -1,57 +1,53 @@
-/* =========================
-   TEMPLATES
-========================= */
-
+// List of poster background templates.
+// One of these is randomly selected each time a poster is generated.
 const TEMPLATE_URLS = [
   "https://raw.githubusercontent.com/JDMF-05/Data_Vis_Group_Assignment_JDM_MD_FL/main/generator/template_f_1.png",
   "https://raw.githubusercontent.com/JDMF-05/Data_Vis_Group_Assignment_JDM_MD_FL/main/generator/template_f_2.png",
   "https://raw.githubusercontent.com/JDMF-05/Data_Vis_Group_Assignment_JDM_MD_FL/main/generator/template_f_3.png"
 ];
 
+// Returns a random template URL from the list above
 function getRandomTemplate() {
   const i = Math.floor(Math.random() * TEMPLATE_URLS.length);
   return TEMPLATE_URLS[i];
 }
 
-/* =========================
-   LAYOUT
-========================= */
-
-// Artist name
+// Layout values for positioning the artist name
 const ARTIST_CENTER_X = 450;
 const ARTIST_BASELINE_Y = 200;
 const ARTIST_MAX_WIDTH = 900;
 
-// Bars
+// Horizontal layout values for song bars
 const BAR_LEFT_X = 170;
 const BAR_RIGHT_X = 935;
 const BAR_WIDTH = BAR_RIGHT_X - BAR_LEFT_X;
 const BAR_HEIGHT = 52;
 
-// Text padding inside bars
+// Horizontal padding used when drawing text inside bars
 const BAR_PADDING_X = 140;
 
-/* =========================
-   ROW POSITIONS
-========================= */
-
+// Vertical positions for each song row
 const BAR_TOP_Y = [625, 780, 920, 1050, 1190];
+
+// Small vertical adjustments for song titles to match design
 const TITLE_NUDGE_Y = [0, -10, -10, 0, 0];
+
+// Limits how far titles can move vertically inside the bar
 const TITLE_CLAMP_Y = 14;
 
+// Vertical spacing for metadata below each bar
 const META_OFFSET_Y = 48;
+
+// X positions for rank number and date text
 const RANK_X = 690;
 const DATE_X = BAR_RIGHT_X;
 
-/* =========================
-   UTIL
-========================= */
-
+// Ensures a value stays within a minimum and maximum range
 function clamp(value, min, max) {
   return Math.min(Math.max(value, min), max);
 }
 
-// Capitalize every word of artist name
+// Capitalizes the first letter of every word in the artist name
 function capitalizeArtistName(str = "") {
   if (!str) return "";
   return str
@@ -60,7 +56,8 @@ function capitalizeArtistName(str = "") {
     .join(" ");
 }
 
-// Shrink ONLY artist name font
+// Reduces font size until the artist name fits within the allowed width
+// This only affects the artist name, not other text
 function fitArtistText(ctx, text, maxWidth, baseSize) {
   let size = baseSize;
   ctx.font = `900 ${size}px 'Zalando Sans Expanded', sans-serif`;
@@ -72,7 +69,7 @@ function fitArtistText(ctx, text, maxWidth, baseSize) {
   return size;
 }
 
-// Truncate text with "..." — NO shrinking
+// Shortens text and adds "..." if it exceeds the available width
 function truncateText(ctx, text, maxWidth, font) {
   ctx.font = font;
 
@@ -91,25 +88,22 @@ function truncateText(ctx, text, maxWidth, font) {
   return truncated + "...";
 }
 
-/* =========================
-   ARTIST
-========================= */
-
+// Draws the artist name at the top of the poster
 function drawArtistName(ctx, artist) {
   const displayArtist = capitalizeArtistName(artist);
 
   ctx.fillStyle = "#000";
   ctx.textBaseline = "alphabetic";
 
-  // Fit font size (artist only)
+// Adjust font size so the name fits without overflowing
   const size = fitArtistText(ctx, displayArtist, ARTIST_MAX_WIDTH, 140);
   ctx.font = `900 ${size}px 'Zalando Sans Expanded', sans-serif`;
 
-  // Measure width to avoid clipping
+// Measure text width to keep it safely inside the canvas
   const textWidth = ctx.measureText(displayArtist).width;
   const canvasWidth = ctx.canvas.width;
 
-  // Clamp center position safely
+// Prevent the text from being clipped near the edges
   const safeCenterX = Math.max(
     textWidth / 2 + 20,
     Math.min(canvasWidth - textWidth / 2 - 20, ARTIST_CENTER_X)
@@ -117,7 +111,7 @@ function drawArtistName(ctx, artist) {
 
   ctx.textAlign = "center";
 
-  // faking italic since font doesn't permit it
+// Apply a skew transformation to visually simulate italic text
   ctx.save();
   ctx.translate(safeCenterX, ARTIST_BASELINE_Y);
   ctx.transform(1, 0, -0.25, 1, 0, 0);
@@ -125,13 +119,9 @@ function drawArtistName(ctx, artist) {
   ctx.restore();
 }
 
-
-/* =========================
-   SONGS
-========================= */
-
+// Draws the list of top songs and their metadata
 function drawSongs(ctx, rows) {
-  // Sort by rank (invalid last)
+// Sort songs by best chart position (invalid values are pushed last)
   const sortedRows = [...rows].sort((a, b) => {
     const ra = Number(a.Miglior_posto_Canzone);
     const rb = Number(b.Miglior_posto_Canzone);
@@ -140,22 +130,21 @@ function drawSongs(ctx, rows) {
     return ra - rb;
   });
 
-  // Always draw 5 rows
+// Always render exactly five rows on the poster
   for (let i = 0; i < 5; i++) {
     const barTop = BAR_TOP_Y[i];
     const row = sortedRows[i];
 
+// Check whether the current row contains valid song data
     const hasValidSong =
       row &&
       row.Canzone &&
       row.Canzone.trim() !== "" &&
       !isNaN(Number(row.Miglior_posto_Canzone));
 
-    /* ===== TITLE ===== */
-
     const title = hasValidSong ? row.Canzone : "...";
 
-    // Truncate later (matches screenshot)
+// Calculate available width for the title text
     const maxTitleWidth = BAR_WIDTH - BAR_PADDING_X - 20;
     const titleFont = "700 44px 'Zalando Sans Expanded', sans-serif";
     const displayTitle = truncateText(ctx, title, maxTitleWidth, titleFont);
@@ -165,18 +154,20 @@ function drawSongs(ctx, rows) {
     ctx.textAlign = "left";
     ctx.textBaseline = "middle";
 
+// Adjust title position slightly for visual balance
     const rawTitleY = BAR_HEIGHT / 2 + (TITLE_NUDGE_Y[i] || 0);
     const titleY =
       barTop +
       clamp(rawTitleY, TITLE_CLAMP_Y, BAR_HEIGHT - TITLE_CLAMP_Y);
 
+// Clip the title so it never overflows the bar area
     ctx.save();
     ctx.beginPath();
     ctx.rect(
      BAR_LEFT_X,
-     barTop - 6,          
+     barTop - 6,
      BAR_WIDTH,
-     BAR_HEIGHT + 12 
+     BAR_HEIGHT + 12
     );
     ctx.clip();
 
@@ -185,8 +176,7 @@ function drawSongs(ctx, rows) {
 
     if (!hasValidSong) continue;
 
-    /* ===== METADATA ===== */
-
+// Draw metadata below the bar (appearances, rank, date)
     ctx.font = "500 28px 'Zalando Sans Expanded', sans-serif";
     ctx.textBaseline = "alphabetic";
 
