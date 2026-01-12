@@ -4,40 +4,41 @@
   <meta charset="UTF-8">
   <title>Artist – Poster Generator</title>
 
-  <!-- Google Font -->
+  <!-- Google font used across the UI and posters -->
   <link
     href="https://fonts.googleapis.com/css2?family=Zalando+Sans+Expanded:wght@400;700;900&display=swap"
     rel="stylesheet"
   >
 
-  <!-- CSS -->
+  <!-- Main stylesheet -->
   <link
     rel="stylesheet"
     href="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/style.css?v=157"
   >
 
-  <!-- Fuse.js -->
+  <!-- Fuse.js enables fuzzy search for artist names -->
   <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.min.js"></script>
 
-  <!-- App scripts (ORDER MATTERS) -->
+  <!-- App scripts (order matters due to dependencies) -->
   <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/search.js?v=157"></script>
   <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/poster.js?v=157"></script>
   <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/main.js?v=157"></script>
 </head>
 
 <body>
+  <!-- Main app container -->
   <div class="container">
     <h1>Artist – Poster Generator</h1>
 
     <p class="subtitle">
       Create a custom, downloadable poster featuring your favorite artist's top hits.
-      Simply enter an artist's name, and the tool instantly generates a stylish image
-      displaying their 5 most-streamed songs, ready for you to save and share.
+      Simply enter an artist's name to generate a poster showing their 5 most-streamed songs.
     </p>
 
+    <!-- Artist search input -->
     <input id="artist_name" placeholder="Enter artist name">
 
-    <!-- 🔽 AUTOCOMPLETE MUST BE HERE -->
+    <!-- Autocomplete results appear here -->
     <div id="autocomplete" class="autocomplete-box"></div>
 
     <div class="button-row">
@@ -46,12 +47,13 @@
       <button id="reset_btn" type="button" style="display:none;">Reset</button>
     </div>
 
+    <!-- Status feedback for the user -->
     <p id="status_msg"></p>
 
-    <!-- hidden render target -->
+    <!-- Hidden canvas used to render the full poster -->
     <canvas id="top5_canvas" width="1080" height="1920"></canvas>
 
-    <!-- poster preview -->
+    <!-- Poster preview (click to open full-size view) -->
     <div id="poster_preview" class="poster-preview" style="display:none;">
       <div class="poster-preview-inner">
         <canvas id="preview_canvas"></canvas>
@@ -59,10 +61,11 @@
       </div>
     </div>
 
+    <!-- Optional easter egg container -->
     <div id="easter_egg"></div>
   </div>
 
-  <!-- modal -->
+  <!-- Modal showing the full poster -->
   <div id="poster_modal" class="poster-modal">
     <button id="close_modal" class="close-modal">✕</button>
     <canvas id="modal_canvas"></canvas>
