@@ -1,71 +1,110 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Artist – Poster Generator</title>
+<br>
 
-  <!-- Google Font -->
-  <link
-    href="https://fonts.googleapis.com/css2?family=Zalando+Sans+Expanded:wght@400;700;900&display=swap"
-    rel="stylesheet"
-  >
+<div style="max-width: 900px; font-size: 0.9rem; line-height: 1.5; font-family: inherit;">
+  <h1>
+    <a href="#seasonal-visualisation-2" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" rel="history" style="color: inherit; text-decoration: none; cursor: pointer; display: inline-block; transition: transform 0.15s; transform: scale(1);">
+      <text-icon icon="leftwards-arrow"></text-icon>back
+ &nbsp; &nbsp;</a><br>
+<br>
+  </h1></div>
 
-  <!-- CSS -->
-  <link
-    rel="stylesheet"
-    href="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/style.css?v=157"
-  >
 
-  <!-- Fuse.js -->
-  <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.min.js"></script>
+<h1><text-icon icon="south-east-arrow"></text-icon>Seasonal<br><span style="color: rgb(0, 0, 0);"><text-icon icon="south-east-arrow"></text-icon></span>genres<br>
+<br></h1><div style="max-width: 900px; font-size: 0.9rem; line-height: 1.5; font-family: inherit;"><p><span> <b>Goal<br>
+</b><br> &nbsp; &nbsp;
+Show the seasonal difference between a selected set of macrogenres.<br>
+<br>
+<br>
+<b>Creating the Subdataset:</b>
+ <br>
+<br>
+   Same steps as “Seasonal Genre 1” This time we kept only the rows for:<br>
+</span></p><div style="max-width: 900px; font-size: 0.9rem; line-height: 1.5; font-family: inherit;">
+  <ul style="list-style: none; padding-left: 0;">
+    <li><text-icon icon="rightwards-arrow"></text-icon> “African Contemporary &amp; Diaspora”</li>
+    <li><text-icon icon="rightwards-arrow"></text-icon> “Asian &amp; Middle Eastern”</li>
+    <li><text-icon icon="rightwards-arrow"></text-icon> “Comedy / Novelty / Spoken Word”</li>
+    <li><text-icon icon="rightwards-arrow"></text-icon> “Pop”</li>
+    <li><text-icon icon="rightwards-arrow"></text-icon> “Holiday &amp; Seasonal”</li>
+    <li><text-icon icon="rightwards-arrow"></text-icon> “Experimental &amp; Avant-Garde”</li><li><br></li><li><br></li>
+  </ul>
+</div>
 
-  <!-- App scripts (ORDER MATTERS) -->
-  <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/search.js?v=157"></script>
-  <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/poster.js?v=157"></script>
-  <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/main.js?v=157"></script>
-</head>
 
-<body>
-  <div class="container">
-    <h1>Artist – Poster Generator</h1>
+<div style="max-width: 900px; font-size: 0.9rem; line-height: 1.5; font-family: inherit;"><strong>Final Structure</strong><br>
 
-    <p class="subtitle">
-      Create a custom, downloadable poster featuring your favorite artist's top hits.
-      Simply enter an artist's name, and the tool instantly generates a stylish image
-      displaying their 5 most-streamed songs, ready for you to save and share.
-    </p>
 
-    <input id="artist_name" placeholder="Enter artist name">
-
-    <!-- 🔽 AUTOCOMPLETE MUST BE HERE -->
-    <div id="autocomplete" class="autocomplete-box"></div>
-
-    <div class="button-row">
-      <button id="generate_top5" type="button">Generate Poster</button>
-      <button id="download_btn" type="button" style="display:none;">Download Poster</button>
-      <button id="reset_btn" type="button" style="display:none;">Reset</button>
-    </div>
-
-    <p id="status_msg"></p>
-
-    <!-- hidden render target -->
-    <canvas id="top5_canvas" width="1080" height="1920"></canvas>
-
-    <!-- poster preview -->
-    <div id="poster_preview" class="poster-preview" style="display:none;">
-      <div class="poster-preview-inner">
-        <canvas id="preview_canvas"></canvas>
-        <div class="preview-label">Click to see full poster</div>
-      </div>
-    </div>
-
-    <div id="easter_egg"></div>
   </div>
 
-  <!-- modal -->
-  <div id="poster_modal" class="poster-modal">
-    <button id="close_modal" class="close-modal">✕</button>
-    <canvas id="modal_canvas"></canvas>
+<br>
+
+<p></p>
+
+  <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+    <tbody>
+      <tr>
+        <td style="border: 1px solid #777; padding: 8px;"><strong>season</strong></td>
+        <td style="border: 1px solid #777; padding: 8px;">The season</td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid #777; padding: 8px;"><strong>genre</strong></td>
+        <td style="border: 1px solid #777; padding: 8px;">The macrogenre</td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid #777; padding: 8px;"><strong>value_original</strong></td>
+        <td style="border: 1px solid #777; padding: 8px;">Not scaled rank point count</td>
+      </tr>
+      <tr>
+        <td style="border: 1px solid #777; padding: 8px;"><strong>value_scaled</strong></td>
+        <td style="border: 1px solid #777; padding: 8px;">Scaled rank point count</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- DOWNLOAD LINKS ALLA FINE -->
+  <div style="margin-top: 1.5rem;">
+    <a onclick="forceDownload(
+        'https://raw.githubusercontent.com/JDMF-05/Data_Vis_Group_Assignment_JDM_MD_FL/main/datasets%20(for%20documentation)/Bigdataset.zip',
+        'Bigdataset.zip'
+      );" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" style="color: inherit; cursor: pointer; font-weight: 600; text-decoration: none; display: inline-block; transition: transform 0.15s; transform: scale(1);">
+ <br>Download The Main Dataset (25.12 MB)
+ &nbsp; &nbsp;</a><br>
+<br>
   </div>
-</body>
-</html>
+
+  <div style="margin-top: 0.5rem;">
+    <a onclick="forceDownload(
+        'https://raw.githubusercontent.com/JDMF-05/Data_Vis_Group_Assignment_JDM_MD_FL/main/datasets%20(for%20documentation)/season_barchart.zip',
+        'season_barchart.zip'
+      );" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" style="color: inherit; cursor: pointer; font-weight: 600; text-decoration: none; display: inline-block; transition: transform 0.15s; transform: scale(1);">
+ Download The Barchart Dataset (0.92 KB)
+ &nbsp; &nbsp;</a>
+  </div>
+
+</div>
+
+<!-- DOWNLOAD METHOD FOR CARGO -->
+<script>
+async function forceDownload(url, filename) {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) throw new Error("Network error: " + response.status);
+
+    const blob = await response.blob();
+    const blobUrl = URL.createObjectURL(blob);
+
+    const link = document.createElement('a');
+    link.href = blobUrl;
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+
+    document.body.removeChild(link);
+    URL.revokeObjectURL(blobUrl);
+
+  } catch (err) {
+    console.error("Download failed:", err);
+    alert("Download failed (see console).");
+  }
+}
+</script>
