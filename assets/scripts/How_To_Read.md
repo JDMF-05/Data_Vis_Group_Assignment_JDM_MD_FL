@@ -29,26 +29,26 @@ So we've reuploded the structure on cargo in this part of the repository, follow
 ### Info
 [<img src="../images/010.png" width="800" alt="Placeholder image">]()
 ### Introduction
-[<img src="../images/012.png" width="800" alt="Placeholder image">]()
+[<img src="../images/011.png" width="800" alt="Placeholder image">]()
 ### Year by year
-[<img src="../images/013.png" width="800" alt="Placeholder image">]()
+[<img src="../images/012.png" width="800" alt="Placeholder image">]()
 ### Seasonal Visualization 1
-[<img src="../images/014.png" width="800" alt="Placeholder image">]()
+[<img src="../images/013.png" width="800" alt="Placeholder image">]()
 ### Seasonal Visualization 2
-[<img src="../images/015.png" width="800" alt="Placeholder image">]()
+[<img src="../images/014.png" width="800" alt="Placeholder image">]()
 ### Beeswarm Animated
-[<img src="../images/016.png" width="800" alt="Placeholder image">]()
+[<img src="../images/015.png" width="800" alt="Placeholder image">]()
 ### Preview
-[<img src="../images/017.png" width="800" alt="Placeholder image">]()
+[<img src="../images/016.png" width="800" alt="Placeholder image">]()
 ### Credits 
-[<img src="../images/018.png" width="800" alt="Placeholder image">]()
+[<img src="../images/017.png" width="800" alt="Placeholder image">]()
 ### Source
-[<img src="../images/019.png" width="800" alt="Placeholder image">]()
+[<img src="../images/018.png" width="800" alt="Placeholder image">]()
 ### Visual 1 extend
-[<img src="../images/020.png" width="800" alt="Placeholder image">]()
+[<img src="../images/019.png" width="800" alt="Placeholder image">]()
 ### Visual 2 extend
-[<img src="../images/021.png" width="800" alt="Placeholder image">]()
+[<img src="../images/020.png" width="800" alt="Placeholder image">]()
 ### Visual 3 extend
-[<img src="../images/022.png" width="800" alt="Placeholder image">]()
+[<img src="../images/021.png" width="800" alt="Placeholder image">]()
 ### Visual 4 extend
-[<img src="../images/023.png" width="800" alt="Placeholder image">]()
+[<img src="../images/022.png" width="800" alt="Placeholder image">]()
