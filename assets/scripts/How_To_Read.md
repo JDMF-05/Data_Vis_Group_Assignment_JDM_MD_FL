@@ -13,7 +13,7 @@ Authors: [Joshua David Moshi](https://github.com/JDMF-05), [Federico Lombardo](h
 
 For the site development we used cargo, while it's a very useful tool, it doesn't permit us to have the full .html, .css and .js files.
 
-So we've reuploded the structure on cargo in this part of the repository, following the seemless page division on cargo:
+So we've reuploded the structure on cargo in this part of the repository:
 
 [<img src="../images/05.png" width="800" alt="Placeholder image">]()
 
