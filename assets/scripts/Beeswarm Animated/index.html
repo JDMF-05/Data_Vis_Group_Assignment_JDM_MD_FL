@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Artist – Poster Generator</title>
+
+  <!-- Google Font -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Zalando+Sans+Expanded:wght@400;700;900&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- CSS -->
+  <link
+    rel="stylesheet"
+    href="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/style.css?v=157"
+  >
+
+  <!-- Fuse.js -->
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.min.js"></script>
+
+  <!-- App scripts (ORDER MATTERS) -->
+  <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/search.js?v=157"></script>
+  <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/poster.js?v=157"></script>
+  <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/main.js?v=157"></script>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Artist – Poster Generator</h1>
+
+    <p class="subtitle">
+      Create a custom, downloadable poster featuring your favorite artist's top hits.
+      Simply enter an artist's name, and the tool instantly generates a stylish image
+      displaying their 5 most-streamed songs, ready for you to save and share.
+    </p>
+
+    <input id="artist_name" placeholder="Enter artist name">
+
+    <!-- 🔽 AUTOCOMPLETE MUST BE HERE -->
+    <div id="autocomplete" class="autocomplete-box"></div>
+
+    <div class="button-row">
+      <button id="generate_top5" type="button">Generate Poster</button>
+      <button id="download_btn" type="button" style="display:none;">Download Poster</button>
+      <button id="reset_btn" type="button" style="display:none;">Reset</button>
+    </div>
+
+    <p id="status_msg"></p>
+
+    <!-- hidden render target -->
+    <canvas id="top5_canvas" width="1080" height="1920"></canvas>
+
+    <!-- poster preview -->
+    <div id="poster_preview" class="poster-preview" style="display:none;">
+      <div class="poster-preview-inner">
+        <canvas id="preview_canvas"></canvas>
+        <div class="preview-label">Click to see full poster</div>
+      </div>
+    </div>
+
+    <div id="easter_egg"></div>
+  </div>
+
+  <!-- modal -->
+  <div id="poster_modal" class="poster-modal">
+    <button id="close_modal" class="close-modal">✕</button>
+    <canvas id="modal_canvas"></canvas>
+  </div>
+</body>
+</html>
