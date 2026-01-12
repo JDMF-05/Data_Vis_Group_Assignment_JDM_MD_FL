@@ -1,71 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Artist – Poster Generator</title>
+<column-set gutter="0.0rem" mobile-hide-empty="false" mobile-stack="true"><column-unit slot="0">
+    <!-- Intestazione -->
+    <h1 style="margin-bottom: 1rem;">
+      <br>
+<text-icon icon="south-east-arrow"></text-icon>Our<br>
 
-  <!-- Google Font -->
-  <link
-    href="https://fonts.googleapis.com/css2?family=Zalando+Sans+Expanded:wght@400;700;900&display=swap"
-    rel="stylesheet"
-  >
 
-  <!-- CSS -->
-  <link
-    rel="stylesheet"
-    href="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/style.css?v=157"
-  >
+<span style="color: rgb(0, 0, 0);"><text-icon icon="south-east-arrow"></text-icon></span>Source &nbsp;&nbsp;<br>
 
-  <!-- Fuse.js -->
-  <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.min.js"></script>
+&nbsp;&nbsp; &nbsp;&nbsp;</h1><div style="width: 100%;"><div style="text-align: center"><h2 style="display: inline-block; justify-content: center; align-items: center; width: 100%; min-height: 10rem; padding: 1rem; margin: 0px; box-sizing: border-box; border: 0.5rem solid transparent; background: rgb(0, 17, 255); padding-top: 3.0rem; padding-right: 1.0rem; padding-bottom: 3.2rem;">1 Source of<br>Information
+</h2></div></div><br><br>
+  </column-unit><column-unit slot="1">
+    <!-- Intestazione -->
+    <h1 style="margin-bottom: 1rem;">
+      <br>
+<text-icon icon="south-east-arrow"></text-icon> Artist<br>
 
-  <!-- App scripts (ORDER MATTERS) -->
-  <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/search.js?v=157"></script>
-  <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/poster.js?v=157"></script>
-  <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/main.js?v=157"></script>
-</head>
 
-<body>
-  <div class="container">
-    <h1>Artist – Poster Generator</h1>
+<span style="color: rgb(0, 0, 0);"><text-icon icon="south-east-arrow"></text-icon></span>
 
-    <p class="subtitle">
-      Create a custom, downloadable poster featuring your favorite artist's top hits.
-      Simply enter an artist's name, and the tool instantly generates a stylish image
-      displaying their 5 most-streamed songs, ready for you to save and share.
-    </p>
+Data<br>
+<br>
+</h1>
 
-    <input id="artist_name" placeholder="Enter artist name">
-
-    <!-- 🔽 AUTOCOMPLETE MUST BE HERE -->
-    <div id="autocomplete" class="autocomplete-box"></div>
-
-    <div class="button-row">
-      <button id="generate_top5" type="button">Generate Poster</button>
-      <button id="download_btn" type="button" style="display:none;">Download Poster</button>
-      <button id="reset_btn" type="button" style="display:none;">Reset</button>
+    <!-- Box Blu --><div style="width: 100%;"><div style="text-align: center"><h2 style="display: inline-block; justify-content: center; align-items: center; width: 100%; min-height: 10rem; padding: 1rem; margin: 0px; box-sizing: border-box; border: 0.5rem solid transparent; background: rgba(0, 17, 255, 0.7); color: white; padding-top: 3.0rem; padding-bottom: 3.2rem;">&nbsp;More than<br>5000 Artists</h2></div>
     </div>
+  </column-unit><column-unit slot="2">
+    <!-- Intestazione -->
+    <h1 style="margin-bottom: 1rem;">
+      <br>
+<text-icon icon="south-east-arrow"></text-icon>Listens
+ &nbsp;&nbsp;<br>
 
-    <p id="status_msg"></p>
+<br>
+<br>
+</h1>
 
-    <!-- hidden render target -->
-    <canvas id="top5_canvas" width="1080" height="1920"></canvas>
-
-    <!-- poster preview -->
-    <div id="poster_preview" class="poster-preview" style="display:none;">
-      <div class="poster-preview-inner">
-        <canvas id="preview_canvas"></canvas>
-        <div class="preview-label">Click to see full poster</div>
-      </div>
+    <!-- Box Blu -->
+    <div style="width: 100%;">
+      <div style="text-align: center"><h2 style="display: inline-block; justify-content: center; align-items: center; width: 100%; min-height: 10rem; padding: 1rem; margin: 0px; box-sizing: border-box; border: 0.5rem solid transparent; background: rgba(0, 17, 255, 0.4); color: white; padding-top: 3rem; padding-bottom: 3.2rem;">1 billion+<br>streams</h2></div>
     </div>
-
-    <div id="easter_egg"></div>
-  </div>
-
-  <!-- modal -->
-  <div id="poster_modal" class="poster-modal">
-    <button id="close_modal" class="close-modal">✕</button>
-    <canvas id="modal_canvas"></canvas>
-  </div>
-</body>
-</html>
+  </column-unit></column-set>
