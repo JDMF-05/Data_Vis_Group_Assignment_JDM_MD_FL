@@ -1,71 +1,72 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Artist – Poster Generator</title>
+<hr><br>
+<column-set gutter="6.3rem" mobile-hide-empty="false" mobile-stack="true"><column-unit slot="0"><h1><text-icon icon="south-east-arrow"></text-icon>Credits</h1><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<h2>
+SUPSI academic year 2025/2026<br>
+<br>
+Visualization and Website designer:<br>
+Mattia Dellamonica<br>
+<br>
+Dataset Manager:<br>
+Joshua David Moshi<br><br>Team leader:<br>
+Federico Lombardo&nbsp;</h2>
+</column-unit><column-unit slot="1"><section class="consigli"><br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<h2>
 
-  <!-- Google Font -->
-  <link
-    href="https://fonts.googleapis.com/css2?family=Zalando+Sans+Expanded:wght@400;700;900&display=swap"
-    rel="stylesheet"
-  >
+Give us your suggestions</h2>
+  <!-- Aggiunto target="_blank" per non chiudere la pagina dopo l'invio -->
+  <form action="https://formsubmit.co/mattia.dellamonica2004@gmail.com" method="POST">
+    
+    <!-- CAMPI NASCOSTI UTILI -->
+    <!-- Oggetto dell'email per riconoscerla subito -->
+    <input name="_subject" type="hidden" value="Nuovo consiglio dal sito SUPSI!">
+    <!-- Evita il captcha per ora (rimuovi questa riga se ricevi troppo spam) -->
+    <input name="_captcha" type="hidden" value="false">
+    <!-- Pagina di ringraziamento (opzionale, altrimenti mostra quella di default) -->
+    <!-- <input type="hidden" name="_next" value="https://tuosito.cargo.site/grazie"> -->
 
-  <!-- CSS -->
-  <link
-    rel="stylesheet"
-    href="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/style.css?v=157"
-  >
+    <input name="name" placeholder="Name" required="" type="text">
+    <input name="email" placeholder="Email" required="" type="email">
+    <textarea name="message" placeholder="Suggestion" required=""></textarea>
+    <button type="submit">Send</button>
+  </form>
+</section>
 
-  <!-- Fuse.js -->
-  <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.min.js"></script>
+<style>
+.consigli { max-width: 600px; margin: auto; padding: 20px; font-family: sans-serif; }
+.consigli input, .consigli textarea { width: 100%; margin: 10px 0; padding: 10px; font-size: 16px; border: 1px solid #ccc; }
+.consigli button { padding: 10px 20px; background: #333; color: #fff; border: none; cursor: pointer; }
+.consigli button:hover { background: #555; }
+</style>
 
-  <!-- App scripts (ORDER MATTERS) -->
-  <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/search.js?v=157"></script>
-  <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/poster.js?v=157"></script>
-  <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/main.js?v=157"></script>
-</head>
 
-<body>
-  <div class="container">
-    <h1>Artist – Poster Generator</h1>
-
-    <p class="subtitle">
-      Create a custom, downloadable poster featuring your favorite artist's top hits.
-      Simply enter an artist's name, and the tool instantly generates a stylish image
-      displaying their 5 most-streamed songs, ready for you to save and share.
-    </p>
-
-    <input id="artist_name" placeholder="Enter artist name">
-
-    <!-- 🔽 AUTOCOMPLETE MUST BE HERE -->
-    <div id="autocomplete" class="autocomplete-box"></div>
-
-    <div class="button-row">
-      <button id="generate_top5" type="button">Generate Poster</button>
-      <button id="download_btn" type="button" style="display:none;">Download Poster</button>
-      <button id="reset_btn" type="button" style="display:none;">Reset</button>
-    </div>
-
-    <p id="status_msg"></p>
-
-    <!-- hidden render target -->
-    <canvas id="top5_canvas" width="1080" height="1920"></canvas>
-
-    <!-- poster preview -->
-    <div id="poster_preview" class="poster-preview" style="display:none;">
-      <div class="poster-preview-inner">
-        <canvas id="preview_canvas"></canvas>
-        <div class="preview-label">Click to see full poster</div>
-      </div>
-    </div>
-
-    <div id="easter_egg"></div>
-  </div>
-
-  <!-- modal -->
-  <div id="poster_modal" class="poster-modal">
-    <button id="close_modal" class="close-modal">✕</button>
-    <canvas id="modal_canvas"></canvas>
-  </div>
-</body>
-</html>
+</column-unit></column-set>
