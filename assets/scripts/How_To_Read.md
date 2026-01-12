@@ -1,0 +1,54 @@
+SUPSI 2024-25  
+Data Visualization course, C-D3202E 
+Teacher Giovanni Profeta
+
+
+# What Makes Music Change?
+Authors: [Joshua David Moshi](https://github.com/JDMF-05), [Federico Lombardo](https://github.com/2vinaa), [Mattia Dellamonica](https://github.com/MDellam)
+
+[What Makes Music Change?](https://visualization.cargo.site/)
+
+
+## How to read
+
+For the site development we used cargo, while it's a very useful tool, it doesn't permit us to have the full .html, .css and .js files.
+
+So we've reuploded the structure on cargo in this part of the repository, following the seemless page division on cargo:
+
+[<img src="assets/images/01.png" width="800" alt="Placeholder image">]()
+
+## Which is which
+### Menu icon
+[<img src="assets/images/01.png" width="800" alt="Placeholder image">]()
+### Site Menu
+[<img src="assets/images/01.png" width="800" alt="Placeholder image">]()
+### Home page
+[<img src="assets/images/01.png" width="800" alt="Placeholder image">]()
+### Genre
+[<img src="assets/images/01.png" width="800" alt="Placeholder image">]()
+### Info
+[<img src="assets/images/01.png" width="800" alt="Placeholder image">]()
+### Introduction
+[<img src="assets/images/01.png" width="800" alt="Placeholder image">]()
+### Year by year
+[<img src="assets/images/01.png" width="800" alt="Placeholder image">]()
+### Seasonal Visualization 1
+[<img src="assets/images/01.png" width="800" alt="Placeholder image">]()
+### Seasonal Visualization 2
+[<img src="assets/images/01.png" width="800" alt="Placeholder image">]()
+### Beeswarm Animated
+[<img src="assets/images/01.png" width="800" alt="Placeholder image">]()
+### Preview
+[<img src="assets/images/01.png" width="800" alt="Placeholder image">]()
+### Credits 
+[<img src="assets/images/01.png" width="800" alt="Placeholder image">]()
+### Source
+[<img src="assets/images/01.png" width="800" alt="Placeholder image">]()
+### Visual 1 extend
+[<img src="assets/images/01.png" width="800" alt="Placeholder image">]()
+### Visual 2 extend
+[<img src="assets/images/01.png" width="800" alt="Placeholder image">]()
+### Visual 3 extend
+[<img src="assets/images/01.png" width="800" alt="Placeholder image">]()
+### Visual 4 extend
+[<img src="assets/images/01.png" width="800" alt="Placeholder image">]()
