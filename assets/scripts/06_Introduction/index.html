@@ -1,71 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Artist – Poster Generator</title>
-
-  <!-- Google Font -->
-  <link
-    href="https://fonts.googleapis.com/css2?family=Zalando+Sans+Expanded:wght@400;700;900&display=swap"
-    rel="stylesheet"
-  >
-
-  <!-- CSS -->
-  <link
-    rel="stylesheet"
-    href="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/style.css?v=157"
-  >
-
-  <!-- Fuse.js -->
-  <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.min.js"></script>
-
-  <!-- App scripts (ORDER MATTERS) -->
-  <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/search.js?v=157"></script>
-  <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/poster.js?v=157"></script>
-  <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/main.js?v=157"></script>
-</head>
-
-<body>
-  <div class="container">
-    <h1>Artist – Poster Generator</h1>
-
-    <p class="subtitle">
-      Create a custom, downloadable poster featuring your favorite artist's top hits.
-      Simply enter an artist's name, and the tool instantly generates a stylish image
-      displaying their 5 most-streamed songs, ready for you to save and share.
-    </p>
-
-    <input id="artist_name" placeholder="Enter artist name">
-
-    <!-- 🔽 AUTOCOMPLETE MUST BE HERE -->
-    <div id="autocomplete" class="autocomplete-box"></div>
-
-    <div class="button-row">
-      <button id="generate_top5" type="button">Generate Poster</button>
-      <button id="download_btn" type="button" style="display:none;">Download Poster</button>
-      <button id="reset_btn" type="button" style="display:none;">Reset</button>
-    </div>
-
-    <p id="status_msg"></p>
-
-    <!-- hidden render target -->
-    <canvas id="top5_canvas" width="1080" height="1920"></canvas>
-
-    <!-- poster preview -->
-    <div id="poster_preview" class="poster-preview" style="display:none;">
-      <div class="poster-preview-inner">
-        <canvas id="preview_canvas"></canvas>
-        <div class="preview-label">Click to see full poster</div>
-      </div>
-    </div>
-
-    <div id="easter_egg"></div>
-  </div>
-
-  <!-- modal -->
-  <div id="poster_modal" class="poster-modal">
-    <button id="close_modal" class="close-modal">✕</button>
-    <canvas id="modal_canvas"></canvas>
-  </div>
-</body>
-</html>
+<column-set gutter="0.0rem" mobile-hide-empty="false" mobile-stack="true"><column-unit slot="0" span="5"><h1><text-icon icon="south-east-arrow"></text-icon>Introduction</h1><br>
+<br>
+<br>
+<br>
+&nbsp; &nbsp; The main objective of this project is to analyze different aspects in the Musical Landscape. Our goals are to not only understand which genres dominate accross the U.S but also try to find a listening trend based on various aspects in order to be able to improve marketing strategies, playlist curation and artist promotion.<br>
+ &nbsp; &nbsp;In order to understand this project it is required to have a moderate understanding of the musical markets and to be comfortable with reading charts, graphs and maps.<br>
+ &nbsp; &nbsp;We want this project to used to better develop targeted campaigns or strategic recommendations for record labels or simply by music enjoyers to get a better feel for the landscape.<br>
+<br>
+&nbsp; &nbsp; Popularity is ranked using a Point-Based System in order to calculate the variable “Value” that is used in all of our graphs. A songs “Value” is the sum of the points based on its weekly chart position. When the song achieves the rank No. 1 it gains 100 points, No.2 gains 99 points and so on. streaming companies.<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+</column-unit><column-unit slot="1" span="7"></column-unit></column-set>
