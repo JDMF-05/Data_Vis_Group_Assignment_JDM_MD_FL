@@ -1,3 +1,4 @@
+/* Base page styling and centering */
 body {
   margin: 0;
   padding: 40px 0;
@@ -10,10 +11,12 @@ body {
   align-items: flex-start;
 }
 
+/* Prevent background scrolling when the modal is open */
 body.modal-open {
   overflow: hidden;
 }
 
+/* Main application container */
 .container {
   width: 480px;
   max-width: 100%;
@@ -21,10 +24,12 @@ body.modal-open {
   flex-direction: column;
 }
 
+/* Page title */
 h1 {
   margin: 0 0 8px 0;
 }
 
+/* Subtitle text under the title */
 .subtitle {
   margin: 0 0 24px 0;
   font-size: 14px;
@@ -32,6 +37,7 @@ h1 {
   color: rgba(255,255,255,0.75);
 }
 
+/* Artist name input field */
 input {
   width: 100%;
   padding: 10px;
@@ -42,12 +48,14 @@ input {
   color: #fff;
 }
 
+/* Row holding the action buttons */
 .button-row {
   display: flex;
   gap: 10px;
   margin-top: 12px;
 }
 
+/* Shared button styling */
 button {
   padding: 10px 16px;
   border-radius: 6px;
@@ -56,13 +64,13 @@ button {
   font-weight: 600;
 }
 
-/* ===== PREVIEW ===== */
-
+/* Clickable poster preview container */
 .poster-preview {
   margin-top: 20px;
   cursor: pointer;
 }
 
+/* Preview frame with rounded corners and border */
 .poster-preview-inner {
   position: relative;
   border-radius: 16px;
@@ -70,6 +78,7 @@ button {
   border: 1px solid #333;
 }
 
+/* Subtle inner border overlay for the preview */
 .poster-preview-inner::after {
   content: "";
   position: absolute;
@@ -78,11 +87,13 @@ button {
   pointer-events: none;
 }
 
+/* Scaled down preview canvas */
 #preview_canvas {
   width: 100%;
   display: block;
 }
 
+/* Label shown at the bottom of the preview */
 .preview-label {
   position: absolute;
   bottom: 0;
@@ -94,8 +105,7 @@ button {
   background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
 }
 
-/* ===== MODAL ===== */
-
+/* Full screen modal overlay for the poster */
 .poster-modal {
   position: fixed;
   inset: 0;
@@ -111,11 +121,13 @@ button {
   transition: opacity 0.25s ease;
 }
 
+/* Visible modal state */
 .poster-modal.open {
   opacity: 1;
   pointer-events: auto;
 }
 
+/* Full size poster canvas inside the modal */
 #modal_canvas {
   max-width: 90vw;
   max-height: 90vh;
@@ -123,10 +135,12 @@ button {
   transition: transform 0.25s ease;
 }
 
+/* Slight zoom in animation when modal opens */
 .poster-modal.open #modal_canvas {
   transform: scale(1);
 }
 
+/* Close button inside the modal */
 .close-modal {
   position: absolute;
   top: 16px;
@@ -140,12 +154,12 @@ button {
   cursor: pointer;
 }
 
-/* ===== OTHERS ===== */
-
+/* Hidden canvas used for offscreen rendering */
 #top5_canvas {
   display: none;
 }
 
+/* Container used to display easter egg content */
 #easter_egg {
   display: none;
   margin-top: 16px;
@@ -155,6 +169,7 @@ button {
   background: rgba(0,0,0,0.35);
 }
 
+/* Autocomplete dropdown container */
 .autocomplete-box {
   position: absolute;
   background: rgba(0,0,0,0.9);
@@ -166,11 +181,13 @@ button {
   z-index: 1000001;
 }
 
+/* Individual autocomplete option */
 .autocomplete-item {
   padding: 10px;
   cursor: pointer;
 }
 
+/* Hover effect for autocomplete options */
 .autocomplete-item:hover {
   background: rgba(255,255,255,0.1);
 }
