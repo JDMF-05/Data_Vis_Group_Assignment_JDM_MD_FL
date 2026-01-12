@@ -1,71 +1,59 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Artist – Poster Generator</title>
+<hr>
+<br>
 
-  <!-- Google Font -->
-  <link
-    href="https://fonts.googleapis.com/css2?family=Zalando+Sans+Expanded:wght@400;700;900&display=swap"
-    rel="stylesheet"
-  >
+<column-set gutter="6.3rem" mobile-hide-empty="false" mobile-stack="true"><column-unit slot="0" span="4">
 
-  <!-- CSS -->
-  <link
-    rel="stylesheet"
-    href="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/style.css?v=157"
-  >
+    <h1>
+        <text-icon icon="south-east-arrow"></text-icon>Top<br>
+        <span style="color: rgb(0, 0, 0);"><text-icon icon="south-east-arrow"></text-icon></span>Artist
+<br>
 
-  <!-- Fuse.js -->
-  <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.min.js"></script>
+&nbsp; &nbsp;&nbsp;</h1>
 
-  <!-- App scripts (ORDER MATTERS) -->
-  <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/search.js?v=157"></script>
-  <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/poster.js?v=157"></script>
-  <script defer src="https://jdmf-05.github.io/Data_Vis_Group_Assignment_JDM_MD_FL/generator/main.js?v=157"></script>
-</head>
-
-<body>
-  <div class="container">
-    <h1>Artist – Poster Generator</h1>
-
-    <p class="subtitle">
-      Create a custom, downloadable poster featuring your favorite artist's top hits.
-      Simply enter an artist's name, and the tool instantly generates a stylish image
-      displaying their 5 most-streamed songs, ready for you to save and share.
+    <p>&nbsp; &nbsp; In this Animated Beeswarm we want to find the answer to the question:<br>
+“What is the frequency of appearance for each &nbsp;artists?”<br>
+&nbsp; &nbsp; In this analysis we want to find how many times each artist has been featured on the Billboard Top 50 to see if repeated artists have increased or decreased over the years.
+ &nbsp; &nbsp;<br><br>
     </p>
 
-    <input id="artist_name" placeholder="Enter artist name">
+<h3>Part 1: Chart Variables</h3>
 
-    <!-- 🔽 AUTOCOMPLETE MUST BE HERE -->
-    <div id="autocomplete" class="autocomplete-box"></div>
+<p>
+<text-icon icon="rightwards-arrow"></text-icon> Chart Type: Beeswarm<br>
 
-    <div class="button-row">
-      <button id="generate_top5" type="button">Generate Poster</button>
-      <button id="download_btn" type="button" style="display:none;">Download Poster</button>
-      <button id="reset_btn" type="button" style="display:none;">Reset</button>
+<text-icon icon="rightwards-arrow"></text-icon> X-Axis: Count, Indicates how many times and artist appears in the Billboard Top 100 during a given year.<br>
+
+<text-icon icon="rightwards-arrow"></text-icon> Size: Each dot is influenced by the variable &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; “Value”, which indicates the importance of the artist in a given year.<br><br>
+</p><h3>Result: What the Data Actually Shows</h3>&nbsp; &nbsp; The data suggests a clear trend towards increased chart concentration, particularly in the streaming era. While music experienced its highest level of artist diversity in the late 1960s, recent years have seen:
+ &nbsp; &nbsp;<br><br>
+
+    <h3>Discussion: Analysis and Hypotheses</h3>&nbsp; &nbsp; The observed shifts confirm the objective that the number of artists in the top charts decrease over time.<br>
+<text-icon icon="rightwards-arrow"></text-icon>Fewer Unique Artists: Overall distinct artists &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;breaking into Hot 50 are decreasing.<br><text-icon icon="rightwards-arrow"></text-icon>Higher Count for the Elite: Established &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;superstars secure more total chart entries than historically.<i><br>
+    </i>
+
+    <br>
+<br><br><br>
+
+  </column-unit><column-unit slot="1" span="8">
+    <!-- SPAZIO INIZIALE PRIMA DEI GRAFICI -->
+    <div style="height: 130px;"></div>
+
+    <div class="cargo-flourish3-sticky">
+        <div class="cargo-flourish3-wrapper">
+            <iframe class="cargo-flourish3-iframe" frameborder="0" sandbox="allow-same-origin allow-forms allow-scripts allow-downloads allow-popups allow-popups-to-escape-sandbox allow-top-navigation-by-user-activation" scrolling="no" src="https://flo.uri.sh/visualisation/26602166/embed" title="Interactive or visual content">
+            </iframe>
+        </div>
+
+        <!-- Primo link sotto l'iframe -->
+        <div class="custom-link-wrapper" style="margin-top: 0px;">
+            <a class="custom-link" href="https://public.flourish.studio/visualisation/26602166/" target="_blank">
+&nbsp; &nbsp;Explore the full visualization</a>
+        </div>
+
+        <!-- Secondo link sotto l'iframe -->
+        <div class="custom-link-wrapper"><a class="custom-link" href="https://visualization.cargo.site/visual-4-extend" target="_self">Read the visualization protocol</a>
+        </div>
+
     </div>
 
-    <p id="status_msg"></p>
-
-    <!-- hidden render target -->
-    <canvas id="top5_canvas" width="1080" height="1920"></canvas>
-
-    <!-- poster preview -->
-    <div id="poster_preview" class="poster-preview" style="display:none;">
-      <div class="poster-preview-inner">
-        <canvas id="preview_canvas"></canvas>
-        <div class="preview-label">Click to see full poster</div>
-      </div>
-    </div>
-
-    <div id="easter_egg"></div>
-  </div>
-
-  <!-- modal -->
-  <div id="poster_modal" class="poster-modal">
-    <button id="close_modal" class="close-modal">✕</button>
-    <canvas id="modal_canvas"></canvas>
-  </div>
-</body>
-</html>
+  </column-unit></column-set>
