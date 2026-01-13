@@ -22,7 +22,7 @@ In order to understand this project it is required to have a moderate understand
 
 We want this project to used to better develop targeted campaigns or strategic recommendations for record labels or simply by music enjoyers to get a better feel for the landscape.
 
-Popularity is ranked using a Point-Based System in order to calculate the variable “Value” that is used in all of our graphs. A songs “Value” is the sum of the points based on its weekly chart position. When the song achieves the rank No. 1 it gains 100 points, No.2 gains 99 points and so on. streaming companies.
+Popularity is ranked using a Point-Based System in order to calculate the variable “Value” that is used in all of our graphs. A songs “Value” is the sum of the points based on its weekly chart position. When the song achieves the rank No. 1 it gains 100 points, No.2 gains 99 points and so on.
 
 ## Data sources
 Name of the original dataset:
