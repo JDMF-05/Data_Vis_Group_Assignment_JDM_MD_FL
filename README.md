@@ -12,7 +12,9 @@ Authors: [Joshua David Moshi](https://github.com/JDMF-05), [Federico Lombardo](h
 Since the site was done using cargo and it is only possible to set it to public by paying, below there are the informations to access the viewer account
 
 Account email: ropoyi6337@gopicta.com
+
 Account password: DataViz2025
+
 [Cargo Login](https://visualization.cargo.site/)
 
 [What Makes Music Change?](https://visualization.cargo.site/)
