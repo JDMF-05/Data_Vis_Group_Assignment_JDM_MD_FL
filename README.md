@@ -6,8 +6,20 @@ Teacher Giovanni Profeta
 # What Makes Music Change?
 Authors: [Joshua David Moshi](https://github.com/JDMF-05), [Federico Lombardo](https://github.com/2vinaa), [Mattia Dellamonica](https://github.com/MDellam)
 
+
+#### To see the site
+
+Since the site was done using cargo and it is only possible to set it to public by paying, below there are the informations to access the viewer account
+
+Account email: ropoyi6337@gopicta.com
+Account password: DataViz2025
+[Cargo Login](https://visualization.cargo.site/)
+
 [What Makes Music Change?](https://visualization.cargo.site/)
 
+#### To see the github repository
+
+[Github Repository](https://github.com/JDMF-05/Data_Vis_Group_Assignment_JDM_MD_FL)
 
 ## Abstract
 
