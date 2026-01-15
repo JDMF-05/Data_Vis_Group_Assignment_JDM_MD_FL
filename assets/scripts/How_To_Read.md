@@ -15,7 +15,7 @@ For the site development we used cargo, while it's a very useful tool, it doesn'
 
 So we've reuploded the structure on cargo in this part of the repository:
 
-[<img src="../images/023.png" width="800" alt="Placeholder image">]()
+[<img src="../images/025.png" width="800" alt="Placeholder image">]()
 
 ## Which is which
 ### Menu icon
@@ -32,13 +32,15 @@ So we've reuploded the structure on cargo in this part of the repository:
 [<img src="../images/011.png" width="800" alt="Placeholder image">]()
 ### Year by year
 [<img src="../images/012.png" width="800" alt="Placeholder image">]()
+### Extra Year by year
+[<img src="../images/026.png" width="800" alt="Placeholder image">]()
 ### Seasonal Visualization 1
 [<img src="../images/013.png" width="800" alt="Placeholder image">]()
 ### Seasonal Visualization 2
 [<img src="../images/014.png" width="800" alt="Placeholder image">]()
 ### Beeswarm Animated
 [<img src="../images/015.png" width="800" alt="Placeholder image">]()
-### Preview
+### Generatore
 [<img src="../images/016.png" width="800" alt="Placeholder image">]()
 ### Credits 
 [<img src="../images/017.png" width="800" alt="Placeholder image">]()
@@ -52,3 +54,5 @@ So we've reuploded the structure on cargo in this part of the repository:
 [<img src="../images/021.png" width="800" alt="Placeholder image">]()
 ### Visual 4 extend
 [<img src="../images/022.png" width="800" alt="Placeholder image">]()
+### Visual 5 extend
+[<img src="../images/027.png" width="800" alt="Placeholder image">]()
