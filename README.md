@@ -252,7 +252,12 @@ This Area Chart answers the question:“How does genre trend change in time?"
 Our objective is to determine how music popularity, measured by Top 100 presence, has evolved from 1960 to 2025, revealing the rise and decline of various musical genres throughout the years.
 
 [<img src="assets/images/01.png" width="800" alt="Placeholder image">]()
+[<img src="assets/images/02.png" width="800" alt="Placeholder image">]()
 
+### Origin of The Genre
+When discussing various musical genres we tend to overlook their cultural origins in favor of focusing on rhythm and instrumentation, despite them being extremely important and defining elements of each sound understanding “where” a sound comes from provides an essential and fascinating lens through which to understand “why” it exists.
+
+[<img src="assets/images/03.png" width="800" alt="Placeholder image">]()
 ### Seasonal Genres (1 & 2)
 #### 1
  This analysis utilizes a heatmap visualization to address two key questions regarding music consumption patterns:
@@ -263,11 +268,11 @@ Our objective is to determine how music popularity, measured by Top 100 presence
  
  Our primary objective is to identify seasonally reliant genres, those that exhibit a significant spike in listening activity corresponding to a specific time of year, and determine the most popular genre for each season.
 
-[<img src="assets/images/02.png" width="800" alt="Placeholder image">]()
+[<img src="assets/images/04.png" width="800" alt="Placeholder image">]()
 #### 2
  The objective is to determine if music genre preferences shift according to the season. We are analyzing a dataset comparing five genres (Comedy, Electronic, Folk, Metal, Rock) across Winter, Spring, Summer, and Fall to identify seasonal correlations.
 
-[<img src="assets/images/03.png" width="800" alt="Placeholder image">]()
+[<img src="assets/images/05.png" width="800" alt="Placeholder image">]()
 ### Top Artist
  In this Animated Beeswarm we want to find the answer to the question:
  
@@ -275,7 +280,7 @@ Our objective is to determine how music popularity, measured by Top 100 presence
  
  In this analysis we want to find how many times each artist has been featured on the Billboard Top 50 to see if repeated artists have increased or decreased over the years.
 
- [<img src="assets/images/04.png" width="800" alt="Placeholder image">]()
+ [<img src="assets/images/024.png" width="800" alt="Placeholder image">]()
 ## Key findings
 This project highlights clear long-term, seasonal, and structural trends in popular music shaped by cultural shifts and the rise of streaming platforms. Rock & Alternative dominated the charts for over three decades before declining after the late 1980s, while Hip-Hop & Rap surged post 1988 and became the defining genre of modern music, largely replacing Jazz & Blues, which evolved into more niche and fragmented forms. Electronic & Dance music shows cyclical relevance, transitioning from underground innovation in the 1990s to globally accessible EDM in the 2010s.
 
