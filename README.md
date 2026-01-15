@@ -4,6 +4,8 @@ Teacher Giovanni Profeta
 
 
 # What Makes Music Change?
+[What Makes Music Change?](https://visualization.cargo.site/)
+
 Authors: [Joshua David Moshi](https://github.com/JDMF-05), [Federico Lombardo](https://github.com/2vinaa), [Mattia Dellamonica](https://github.com/MDellam)
 
 
@@ -309,3 +311,10 @@ The analysis could also be extended to support more detailed genre representatio
 
 Finally, more advanced techniques such as network analysis and predictive modeling could be used to study artist collaborations, genre interactions, and potential future shifts in musical trends, adding a forward-looking perspective to the project. All of these extensions would involve more complex modeling and a longer development timeline.
 
+SUPSI 2024-25  
+Data Visualization course, C-D3202E 
+Teacher Giovanni Profeta
+
+Authors: [Joshua David Moshi](https://github.com/JDMF-05), [Federico Lombardo](https://github.com/2vinaa), [Mattia Dellamonica](https://github.com/MDellam)
+
+[What Makes Music Change?](https://visualization.cargo.site/)
