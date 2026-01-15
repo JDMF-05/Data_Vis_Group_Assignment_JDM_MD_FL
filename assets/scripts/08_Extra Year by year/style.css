@@ -1,51 +1,14 @@
-[id="B0208721161"] bodycopy {
+[id="O3758637463"] bodycopy {
 	
+.cargo-flourish-sticky {
+    position: sticky;
+    top: 20px;
+    align-self: start;
 }
-@media only screen and (max-width: 600px) {
 
-  /* === COLONNA GRAFICI === */
-  column-unit[slot="1"] {
-    width: 100% !important;
-    margin-top: -44rem;
-  }
-
-  /* Disattiva layout largo desktop */
-  column-unit[slot="1"] > div {
-    position: relative !important;
-    top: 0 !important;
-    width: 100% !important;
-  }
-
-  /* === BOX GRAFICO 1 === */
-  column-unit[slot="1"] > div > div:first-child {
-    width: 100% !important;
-    height: 275px !important;
-    margin: 0 auto !important;
-  }
-
-  .chart1-iframe {
-    width: 100% !important;
-    height: 300px !important;
-    position: relative !important;
-  }
-
-  /* === BOX GRAFICO 2 === */
-  column-unit[slot="1"] > div > div:nth-child(2) {
-    width: 100% !important;
-    height: 200px !important;
-    margin: 1rem auto 0 auto !important;
-    left: 0 !important;
-  }
-
-  .chart2-iframe {
-    width: 100% !important;
-    height: 223px !important;
-    position: relative !important;
-  }
-
-  /* === LINK FINALI === */
-  column-unit[slot="1"] a {
-    font-size: 0.9rem;
-  }
-
+@media (max-width: 768px) {
+    .cargo-flourish-sticky {
+        position: relative;
+        top: auto;
+    }
 }
