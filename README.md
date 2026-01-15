@@ -13,9 +13,7 @@ Authors: [Joshua David Moshi](https://github.com/JDMF-05), [Federico Lombardo](h
 
 Since the site was done using cargo and it is only possible to set it to public by paying, below there are the informations to access the viewer account
 
-Account email: ropoyi6337@gopicta.com
-
-Account password: DataViz2025
+Account email and password can be found in the submitted folder in the file named "account_informations_cargo.txt"
 
 [Cargo Login](https://visualization.cargo.site/)
 
