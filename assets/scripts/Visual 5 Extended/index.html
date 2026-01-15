@@ -2,7 +2,7 @@
 
 <div style="max-width: 900px; font-size: 0.9rem; line-height: 1.5; font-family: inherit;">
   <h1>
-    <a href="#beeswarm-animated" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" rel="history" style="color: inherit; text-decoration: none; cursor: pointer; display: inline-block; transition: transform 0.15s; transform: scale(1);">
+    <a href="#extra-year-by-year" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" rel="history" style="color: inherit; text-decoration: none; cursor: pointer; display: inline-block; transition: transform 0.15s; transform: scale(1);">
       <text-icon icon="leftwards-arrow"></text-icon>back
  &nbsp; &nbsp; &nbsp; &nbsp; 
 &nbsp; &nbsp; </a><br><br>
@@ -12,55 +12,60 @@
 <h1>
   
 
-<text-icon icon="south-east-arrow"></text-icon>Top<br>
-        <span style="color: rgb(0, 0, 0);"><text-icon icon="south-east-arrow"></text-icon></span>Artist
+<text-icon icon="south-east-arrow"></text-icon>Origin<br>
+        <span style="color: rgb(0, 0, 0);"><text-icon icon="south-east-arrow"></text-icon></span>Genre
 
 <br><br>
 </h1>
 
 <div style="max-width: 900px; font-size: 0.9rem; line-height: 1.5; font-family: inherit;">
   <p><b>Goal:<br>
-</b><br>
-&nbsp; &nbsp; &nbsp; &nbsp; In this analysis, we want to determine how many times each artist has appeared in the Billboard Top 50, and whether the number of repeated artists in the charts has changed over the years.
- &nbsp; &nbsp;<br><br>
+</b><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Show the origins of each macrogenre &nbsp;&nbsp;<br><br>
 <br>
 
     <b>Creating the Subdataset:</b><br>
-  </p>
 
-  <ul style="list-style: none; padding-left: 0;">
-    <li>
-      <text-icon icon="rightwards-arrow"></text-icon>
-      <b>Parsed Dates and Calculated Points</b><br>
-&nbsp; &nbsp; &nbsp; We converted all dates into years only, extracting the year from the original “YYYY-MM-DD” format. Ranking &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;positions were transformed into a point system (Position 1 = 100 points, Position 2 = 99, etc.).
- &nbsp; &nbsp;</li><br>
+</p>
 
-    <li>
-      <text-icon icon="rightwards-arrow"></text-icon>
-      <b>Cleaned Performer Strings</b><br>
-&nbsp; &nbsp; &nbsp; Performer names were cleaned by removing unnecessary characters, fixing whitespace, resolving unmatched symbols, correcting typos, and discarding incomplete or meaningless entries.
- &nbsp; &nbsp;</li><br>
+<ul style="list-style: none; padding-left: 0;">
+  <li>
+    <text-icon icon="rightwards-arrow"></text-icon>
+    <b>Checked Genre Origins within Each Macrogenre</b><br>
+&nbsp; &nbsp; &nbsp; We first, with the help of chatGPT, analyzed the origins associated with each genre composing a given macrogenre, ensuring all contributing genres were correctly mapped to their respective origins.
+ &nbsp; 
+&nbsp;&nbsp;</li><br>
 
-    <li>
-      <text-icon icon="rightwards-arrow"></text-icon>
-      <b>Applied the “Lloyd Price Rule”</b><br>
-&nbsp; &nbsp; &nbsp; A custom mapping preserved unusual artist names. Collaborations were split using regex keywords (feat, ft, with, and, x, /, +, vs). Special cases like Lloyd Price were handled by summing solo and collaboration counts.
- &nbsp; &nbsp;</li><br>
+  <li>
+    <text-icon icon="rightwards-arrow"></text-icon>
+    <b>Aggregated Origins and Genre Counts</b><br>
+&nbsp; &nbsp; &nbsp; After removing the original genre column, we summed all origin values and combined them with the total counts of genres belonging to each macrogenre.
+ &nbsp; 
+&nbsp;&nbsp;</li><br>
 
-    <li>
-      <text-icon icon="rightwards-arrow"></text-icon>
-      <b>Expanded Performer Rows and Aggregated Artist Activity by Year</b><br>
-&nbsp; &nbsp; &nbsp; Each performer received their own row after splitting collaborations. Appearances were aggregated by artist and year.
- &nbsp; &nbsp;</li><br>
+  <li>
+    <text-icon icon="rightwards-arrow"></text-icon>
+    <b>Converted Origin Counts to Percentages</b><br>
+&nbsp; &nbsp; &nbsp; The absolute counts for each origin were replaced with their corresponding percentages relative to the total size of the macrogenre.
+ &nbsp; 
+&nbsp;&nbsp;</li><br>
 
-    <li>
-      <text-icon icon="rightwards-arrow"></text-icon>
-      <b>Selected the Top 50 Artists per Year</b><br>
-&nbsp; &nbsp; &nbsp; Only the top 50 artists per year were retained to ensure readability and enable visualization.
- &nbsp; &nbsp;</li>
-  </ul>
+  <li>
+    <text-icon icon="rightwards-arrow"></text-icon>
+    <b>Validated Geographic Coordinates</b><br>
+&nbsp; &nbsp; &nbsp; We verified and assigned latitude and longitude values for each country to enable accurate geographic representation.
+ &nbsp; 
+&nbsp;&nbsp;</li><br>
 
-  <br>
+  <li>
+    <text-icon icon="rightwards-arrow"></text-icon>
+    <b>Structured Final Macrogenre Columns</b><br>
+&nbsp; &nbsp; &nbsp; Finally, we created one column per macrogenre containing only the percentage distribution of each origin within that macrogenre.
+ &nbsp; 
+&nbsp;&nbsp;</li>
+</ul>
+
+<br>
+
 <br><br>
   <b>Final Structure<br>
 <br>
@@ -68,27 +73,36 @@
   <p></p>
 
   <table style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
-    <tbody>
-      <tr>
-        <td style="border: 1px solid #777; padding: 8px;"><strong>Year</strong></td>
-        <td style="border: 1px solid #777; padding: 8px;">The year</td>
-      </tr>
-      <tr>
-        <td style="border: 1px solid #777; padding: 8px;"><strong>Artist</strong></td>
-        <td style="border: 1px solid #777; padding: 8px;">The name of the artist</td>
-      </tr>
-      <tr>
-        <td style="border: 1px solid #777; padding: 8px;"><strong>Count</strong></td>
-        <td style="border: 1px solid #777; padding: 8px;">Number of appearances in the rankings per year</td>
-      </tr>
-      <tr>
-        <td style="border: 1px solid #777; padding: 8px;"><strong>Rank</strong></td>
-        <td style="border: 1px solid #777; padding: 8px;">Total rank points accumulated per year</td>
-      </tr>
-    </tbody>
-  </table>
+  <tbody>
+    <tr>
+      <td style="border: 1px solid #777; padding: 8px;"><strong>Macrogenre</strong></td>
+      <td style="border: 1px solid #777; padding: 8px;">The macrogenre</td>
+    </tr>
+    <tr>
+      <td style="border: 1px solid #777; padding: 8px;"><strong>Origin</strong></td>
+      <td style="border: 1px solid #777; padding: 8px;">The origins of each genre composing the macrogenre</td>
+    </tr>
+    <tr>
+      <td style="border: 1px solid #777; padding: 8px;"><strong>Latitude</strong></td>
+      <td style="border: 1px solid #777; padding: 8px;">The latitude of each country</td>
+    </tr>
+    <tr>
+      <td style="border: 1px solid #777; padding: 8px;"><strong>Longitude</strong></td>
+      <td style="border: 1px solid #777; padding: 8px;">The longitude of each country</td>
+    </tr>
+    <tr>
+      <td style="border: 1px solid #777; padding: 8px;"><strong>All Genres</strong></td>
+      <td style="border: 1px solid #777; padding: 8px;">The percentage of each origin composing the macrogenre</td>
+    </tr>
+    <tr>
+      <td style="border: 1px solid #777; padding: 8px;"><strong>One Column per Macrogenre</strong></td>
+      <td style="border: 1px solid #777; padding: 8px;">The percentage of each origin composing the macrogenre</td>
+    </tr>
+  </tbody>
+</table>
 
-  <!-- DOWNLOAD LINKS -->
+
+  <!--  DOWNLOAD LINKS  -->
   <div style="margin-top: 1.5rem;">
     <a onclick="forceDownload(
         'https://raw.githubusercontent.com/JDMF-05/Data_Vis_Group_Assignment_JDM_MD_FL/main/datasets%20(for%20documentation)/Bigdataset.zip',
@@ -100,10 +114,12 @@ Download The Main Dataset (25.12 MB)
  </a><br><br>
   </div>
 
-  <div style="margin-top: 0.5rem;"><a onclick="forceDownload(
-        'https://raw.githubusercontent.com/JDMF-05/Data_Vis_Group_Assignment_JDM_MD_FL/main/datasets%20(for%20documentation)/year_beeswarm.zip',
-        'year_beeswarm.zip'
-      );" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" style="color: inherit; cursor: pointer; font-weight: 600; text-decoration: none; display: inline-block; transition: transform 0.15s; transform: scale(1);">Download The Beeswarm Dataset (31 KB) 
-&nbsp; &nbsp; </a>
-  </div>
+  <div style="margin-top: 0.5rem;">
+  <a onclick="forceDownload(
+        'https://raw.githubusercontent.com/JDMF-05/Data_Vis_Group_Assignment_JDM_MD_FL/main/datasets%20(for%20documentation)/origins.zip',
+        'origins.zip'
+      );" onmouseout="this.style.transform='scale(1)';" onmouseover="this.style.transform='scale(1.05)';" style="color: inherit; cursor: pointer; font-weight: 600; text-decoration: none; display: inline-block; transition: transform 0.15s; transform: scale(1);">Download The Origins Dataset (31 KB)
+ </a>
+</div>
+
 </div>
