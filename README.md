@@ -11,9 +11,9 @@ Authors: [Joshua David Moshi](https://github.com/JDMF-05), [Federico Lombardo](h
 
 #### To see the site
 
-Since the site was done using cargo and it is only possible to set it to public by paying, below there are the informations to access the viewer account
+Since the site was done using cargo and it is only possible to set it to public by paying. 
 
-Account email and password can be found in the submitted folder in the file named "account_informations_cargo.txt"
+Viewer account email and password can be found in the submitted folder in the file named "account_informations_cargo.txt", by entering with this account the site can be seen
 
 [Cargo Login](https://visualization.cargo.site/)
 
