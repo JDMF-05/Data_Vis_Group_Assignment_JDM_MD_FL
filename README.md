@@ -307,6 +307,8 @@ The analysis could also be extended to support more detailed genre representatio
 
 Finally, more advanced techniques such as network analysis and predictive modeling could be used to study artist collaborations, genre interactions, and potential future shifts in musical trends, adding a forward-looking perspective to the project. All of these extensions would involve more complex modeling and a longer development timeline.
 
+## References
+
 SUPSI 2024-25  
 Data Visualization course, C-D3202E 
 Teacher Giovanni Profeta
