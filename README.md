@@ -11,9 +11,9 @@ Authors: [Joshua David Moshi](https://github.com/JDMF-05), [Federico Lombardo](h
 
 #### To see the site
 
-Since the site was done using cargo and it is only possible to set it to public by paying. 
+Due to Cargo platform limitations, the project is accessible through a viewer account.
 
-Viewer account email and password can be found in the submitted folder in the file named "account_informations_cargo.txt", by entering with this account the site can be seen
+Access credentials are provided in the submitted folder, in the file "viewer_account_infos".
 
 [Cargo Login](https://visualization.cargo.site/)
 
@@ -27,14 +27,12 @@ Viewer account email and password can be found in the submitted folder in the fi
 
 This project analyzes trends in U.S. popular music using historical *Billboard Hot 100* data from 1960 to 2025. By combining a point-based popularity metric with genre and macrogenre classification, the study explores how musical styles, seasonality, and artist presence have evolved over time. The resulting insights provide a concise overview of long-term changes in the musical landscape.
 
-
-
 ## Introduction
 The main objective of this project is to analyze different aspects in the Musical Landscape. Our goals are to not only understand which genres dominate accross the U.S but also try to find a listening trend based on various aspects in order to be able to improve marketing strategies, playlist curation and artist promotion.
 
 In order to understand this project it is required to have a moderate understanding of the musical markets and to be comfortable with reading charts, graphs and maps.
 
-We want this project to used to better develop targeted campaigns or strategic recommendations for record labels or simply by music enjoyers to get a better feel for the landscape.
+We want this project to be used to better develop targeted campaigns or strategic recommendations for record labels or simply by music enjoyers to get a better feel for the landscape.
 
 Popularity is ranked using a Point-Based System in order to calculate the variable “Value” that is used in all of our graphs. A songs “Value” is the sum of the points based on its weekly chart position. When the song achieves the rank No. 1 it gains 100 points, No.2 gains 99 points and so on.
 
@@ -211,7 +209,7 @@ Macrogenres allow meaningful long-term comparisons while preserving stylistic di
 
 ### Fuzzy Matching Algorithm
 
-To automate macrogenre assignment, fuzzy matching algorithm was implemented.
+To automate macrogenre assignment,a fuzzy matching algorithm was implemented.
 
 Scoring rules:
 - Exact keyword match: +4 points
