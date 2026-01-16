@@ -76,4 +76,7 @@ The final poster can be downloaded as a PNG image using a client-side export of 
 
 The interface includes a reset mechanism to clear the current state and generate a new poster. Additionally, a small set of hidden Easter eggs is implemented, triggering alternative visual content when specific artist names are entered. These features are isolated from the main generation logic and do not affect standard functionality.
 
+### Limitations
+
+The generator relies on historical chart data and does not reflect real-timestreaming popularity. Visual templates are predefined and do not adapt to genre-specific aesthetics.
 
