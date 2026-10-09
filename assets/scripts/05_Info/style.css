@@ -1,5 +1,19 @@
+
+
+
+
 [id="K0358370180"].page {
 	background-color: #000000;
+}
+
+/* Impedisce al contenitore di allungare verticalmente le 3 colonne */
+[id="K0358370180"] column-set {
+  align-items: flex-start !important;
+}
+
+/* Fa adagiare ciascuna colonna esattamente alla propria altezza contenuta */
+[id="K0358370180"] column-unit {
+  height: fit-content !important;
 }
 @media only screen and (max-width: 600px) {
 
@@ -49,3 +63,35 @@
   }
 
 }
+
+
+/* === SFONDI SEMI-TRASPARENTI SULLE COLONNE === */
+[id="K0358370180"] column-unit {
+  min-height: 400px !important; /* Permette alla colonna di ingrandirsi se lo schermo è stretto */
+  height: auto !important;
+  overflow: visible !important; /* Evita che il testo contenuto venga tagliato fuori */
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important; 
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease !important;
+  transform-origin: center center;
+  position: relative;
+}
+
+/* Prima colonna: sfumatura blu solida al 15% di opacità */
+[id="K0358370180"] column-unit:nth-child(1) {
+  background-color: rgba(0, 17, 255, 0.5) !important;
+}
+
+/* Seconda colonna: sfumatura blu media al 10% di opacità */
+[id="K0358370180"] column-unit:nth-child(2) {
+  background-color: rgba(0, 17, 255, 0.3) !important;
+}
+
+/* Terza colonna: sfumatura blu scura al 05% di opacità */
+[id="K0358370180"] column-unit:nth-child(3) {
+  background-color: rgba(0, 17, 255, 0.2) !important;
+}
+
+
+
