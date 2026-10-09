@@ -11,13 +11,7 @@ Authors: [Joshua David Moshi](https://github.com/JDMF-05), [Federico Lombardo](h
 
 #### To see the site
 
-Due to Cargo platform limitations, the project is accessible through a viewer account.
-
-Access credentials are provided in the submitted folder, in the file "viewer_account_infos".
-
-[Cargo Login](https://visualization.cargo.site/)
-
-[What Makes Music Change?](https://visualization.cargo.site/)
+[What Makes Music Change?](https://whatmakesmusicchange.cargo.site/)
 
 #### To see the github repository
 
