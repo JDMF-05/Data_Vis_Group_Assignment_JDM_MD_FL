@@ -1,126 +1,21 @@
-/* ===============================
-   PAGE BACKGROUND
-================================= */
-[id="P3134116640"].page {
-    background-color: #000000;
+/* Blocca solo il background del contenuto, senza min-height dell'intera pagina */
+.intro-block {
+  background-color: #000000;
+  padding: 2rem; /* spazio interno */
 }
 
-/* ===============================
-   STICKY CONTAINER
-================================= */
-.cargo-flourish3-sticky {
-    position: sticky;
-    top: 20px;
-    align-self: flex-start;
+/* Contenuto testo */
+.intro-block .intro-content {
+  color: #ffffff;
 }
 
-/* ===============================
-   FIX PER CARGO: abilita sticky
-================================= */
-.column-set,
-.column-unit {
-    overflow: visible !important;
+/* Titoli */
+.intro-block h1 {
+  margin: 0 0 1rem 0; /* margine inferiore ridotto */
+  font-size: 2rem;
 }
 
-/* ===============================
-   WRAPPER GRAFICO
-   Nasconde la scritta "Made with Flourish"
-================================= */
-.cargo-flourish3-wrapper {
-    position: relative;
-    width: 100%;
-    max-width: 1000px;
-    margin: 0 auto;
-    padding-top: 56.25%; /* 16:9 */
-    box-sizing: border-box;
-    overflow: hidden; /* fondamentale per tagliare il watermark */
-}
-
-/* ===============================
-   IFRAME
-================================= */
-.cargo-flourish3-iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: calc(100% + 50px); /* spinge il watermark fuori dal wrapper */
-    border: none;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    display: block;
-}
-
-/* ===============================
-   CUSTOM LINK SOTTO IL GRAFICO
-================================= */
-.cargo-flourish3-sticky .custom-link-wrapper {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 5px;
-}
-
-.cargo-flourish3-sticky .custom-link {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    font-size: 14px;
-    line-height: 1.4;
-    color: #888888;
-    text-decoration: none;
-    position: relative;
-    transition: color 0.3s ease;
-}
-
-.cargo-flourish3-sticky .custom-link:hover {
-    color: #ffffff;
-}
-
-.cargo-flourish3-sticky .custom-link::after {
-    content: '';
-    position: absolute;
-    width: 0;
-    height: 1px;
-    bottom: 0;
-    left: 0;
-    background-color: #ffffff;
-    transition: width 0.4s ease-in-out;
-}
-
-.cargo-flourish3-sticky .custom-link:hover::after {
-    width: 100%;
-}
-
-/* ===============================
-   MOBILE
-================================= */
-@media (max-width: 768px) {
-
-    .cargo-flourish3-sticky {
-        position: relative !important;
-        top: auto !important;
-        align-self: auto !important;
-    }
-
-    .cargo-flourish3-wrapper {
-        width: 100% !important;
-        max-width: 100% !important;
-        padding-top: 0 !important;
-        height: 750px !important;
-        margin-top: 20px !important;
-        overflow: hidden !important;
-    }
-
-    .cargo-flourish3-iframe {
-        width: 100% !important;
-        height: 100% !important;
-    }
-
-    .cargo-flourish3-sticky .custom-link-wrapper {
-        justify-content: flex-start !important;
-        margin-top: 10px !important;
-        padding-right: 10px !important;
-    }
-
-    .cargo-flourish3-sticky .custom-link {
-        font-size: 13px !important;
-    }
+.intro-block p {
+  margin: 0 0 1rem 0; /* margine inferiore dei paragrafi */
+  line-height: 1.5;
 }
