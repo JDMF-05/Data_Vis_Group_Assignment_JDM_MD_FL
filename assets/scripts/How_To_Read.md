@@ -40,6 +40,8 @@ So we've reuploded the structure on cargo in this part of the repository:
 [<img src="../images/014.png" width="800" alt="Placeholder image">]()
 ### Beeswarm Animated
 [<img src="../images/015.png" width="800" alt="Placeholder image">]()
+### Conclusions
+[<img src="../images/015.png" width="800" alt="Placeholder image">]()
 ### Generatore
 [<img src="../images/016.png" width="800" alt="Placeholder image">]()
 ### Credits 
