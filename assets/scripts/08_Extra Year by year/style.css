@@ -1,3 +1,10 @@
+h1 {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Spazio tra il simbolo e il testo */
+}
+
+
 [id="O3758637463"] bodycopy {
 	
 .cargo-flourish-sticky {
