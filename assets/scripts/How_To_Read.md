@@ -35,7 +35,7 @@ So we've reuploded the structure on cargo in this part of the repository:
 ### Extra Year by year
 [<img src="../images/026.png" width="800" alt="Placeholder image">]()
 ### Seasonal Visualization 1
-[<img src="../images/013.png" width="800" alt="Placeholder image">]()
+[<img src="../images/013_2.png" width="800" alt="Placeholder image">]()
 ### Seasonal Visualization 2
 [<img src="../images/014.png" width="800" alt="Placeholder image">]()
 ### Beeswarm Animated
