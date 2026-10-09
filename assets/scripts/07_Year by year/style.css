@@ -1,6 +1,26 @@
+#chartB {
+	 width: calc(100% - 40px;);
+                height: 250px;
+                margin-top: 0px;
+                margin-bottom: 0px;
+                margin-left: 40px;
+          
+                position: relative;
+                overflow: hidden;
+}
+h1 {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Spazio tra il simbolo e il testo */
+}
+
 [id="B0208721161"] bodycopy {
 	
 }
+
+
+
+
 @media only screen and (max-width: 600px) {
 
   /* === COLONNA GRAFICI === */
