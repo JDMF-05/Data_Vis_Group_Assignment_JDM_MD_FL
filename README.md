@@ -280,7 +280,7 @@ When discussing various musical genres we tend to overlook their cultural origin
  
  Our primary objective is to identify seasonally reliant genres, those that exhibit a significant spike in listening activity corresponding to a specific time of year, and determine the most popular genre for each season.
 
-[<img src="assets/images/04.png" width="800" alt="Placeholder image">]()
+[<img src="assets/images/04_2.png" width="800" alt="Placeholder image">]()
 #### 2
  The objective is to determine if music genre preferences shift according to the season. We are analyzing a dataset comparing five genres (Comedy, Electronic, Folk, Metal, Rock) across Winter, Spring, Summer, and Fall to identify seasonal correlations.
 
