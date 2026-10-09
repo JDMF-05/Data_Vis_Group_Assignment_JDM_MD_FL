@@ -5,12 +5,18 @@
     background-color: #000000;
 }
 
+h1 {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Spazio tra il simbolo e il testo */
+}
+
 /* ===============================
    STICKY CONTAINER PER IL SECONDO GRAFICO
 ================================= */
 .cargo-flourish-sticky {
     position: sticky;
-    top: 20px;   /* distanza dal top della finestra */
+    top: 20px;
     align-self: start;
 }
 
@@ -23,7 +29,7 @@
     width: 100%;
     max-width: 1000px;       /* maximum width for large screens */
     margin: 0 auto;          /* centrato orizzontalmente */
-    padding-top: 56.25%;     /* 16:9 aspect ratio */
+    padding-top: 75%;     /* 16:9 aspect ratio */
     box-sizing: border-box;
 }
 
