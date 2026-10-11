@@ -282,7 +282,7 @@ When discussing various musical genres we tend to overlook their cultural origin
 ### Top Artist
  In this Animated Beeswarm we want to find the answer to the question:
  
- “What is the frequency of appearance for each  artists?”
+ “What is the frequency of appearance for each artist?”
  
  In this analysis we want to find how many times each artist has been featured on the Billboard Top 50 to see if repeated artists have increased or decreased over the years.
 
