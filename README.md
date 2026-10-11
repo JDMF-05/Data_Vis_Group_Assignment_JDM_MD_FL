@@ -43,7 +43,7 @@ billboard.com (official source), kaggle.com, and  data.world 
 
 Time coverage:
 This dataset spans over six decades, from 1958, 
-up to most recent published date of November 22, 2025.
+up to the most recent published date of November 22, 2025.
 
 
 [Main datasource (Billboard)](https://www.billboard.com/)
