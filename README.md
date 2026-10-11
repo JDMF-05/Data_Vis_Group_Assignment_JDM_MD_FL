@@ -22,7 +22,7 @@ Authors: [Joshua David Moshi](https://github.com/JDMF-05), [Federico Lombardo](h
 This project analyzes trends in U.S. popular music using historical *Billboard Hot 100* data from 1960 to 2025. By combining a point-based popularity metric with genre and macrogenre classification, the study explores how musical styles, seasonality, and artist presence have evolved over time. The resulting insights provide a concise overview of long-term changes in the musical landscape.
 
 ## Introduction
-The main objective of this project is to analyze different aspects in the Musical Landscape. Our goals are to not only understand which genres dominate accross the U.S but also try to find a listening trend based on various aspects in order to be able to improve marketing strategies, playlist curation and artist promotion.
+The main objective of this project is to analyze different aspects in the Musical Landscape. Our goals are to not only understand which genres dominate across the U.S but also try to find a listening trend based on various aspects in order to be able to improve marketing strategies, playlist curation and artist promotion.
 
 In order to understand this project it is required to have a moderate understanding of the musical markets and to be comfortable with reading charts, graphs and maps.
 
